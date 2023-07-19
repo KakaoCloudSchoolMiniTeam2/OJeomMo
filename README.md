@@ -2,9 +2,11 @@
 ## 주제: 오점뭐(오늘 점심 뭐먹지?)     
 팀원: 김연수, 김준연, 김종민, 김태민, 이상현, 최현지
 
----
+
 #### 커밋 컨벤션
 https://gitmoji.dev/
+#### 노션
+https://www.notion.so/b5d14ad21b4f44adbd3de4d7f7dcb7ed
 
 ---
 
