@@ -1,4 +1,4 @@
-package org.kcsmini2.ojeommo.board.entity;
+package org.kcsmini2.ojeommo.board.data.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
