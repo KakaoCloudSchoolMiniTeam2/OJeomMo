@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.kcsmini2.ojummo.member.entity.Member;
+import org.kcsmini2.ojeommo.member.entity.Member;
 
 import java.time.LocalDateTime;
 
