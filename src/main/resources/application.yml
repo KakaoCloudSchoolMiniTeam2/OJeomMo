@@ -18,3 +18,7 @@ spring:
     sql:
       init:
         mode: always
+jwt:
+  issuer: ojeommo
+  secret_key: aaaaaaaabaaaaaaaaaaaaabaaaaaaaaabaaaaaaaaaa
+#  비밀키 값 추후에 환경변수로 옮길 것.
