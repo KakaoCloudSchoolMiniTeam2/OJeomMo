@@ -18,6 +18,13 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * 작성자: 김준연
+ *
+ * 설명: JWT 발급과 유효성 검증, 클레임 속성 읽어오기 테스트
+ *
+ * 최종 수정 일자: 2023/07/21
+ */
 @SpringBootTest
 class TokenProviderTest {
 
@@ -55,20 +62,6 @@ class TokenProviderTest {
         memberRepository.deleteById(testMember.getId());
     }
 
-    @DisplayName("그냥 유저넣기 테스트")
-    @Test
-    void joinMember() {
-        // given  유저 생성
-        Member testMember = memberRepository.save(Member.builder()
-                .id("testid")
-                .name("kjy")
-                .nickname("kjynick")
-                .email("user@gmail.com")
-                .pw("test")
-                .build());
-
-        assertThat(memberRepository.findById("testid").get().getId()).isEqualTo(testMember.getId());
-    }
 
     @DisplayName("validToken(): 만료된 토큰인 경우에 유효성 검증에 실패한다.")
     @Test
