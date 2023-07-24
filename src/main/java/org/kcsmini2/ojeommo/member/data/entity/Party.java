@@ -14,12 +14,12 @@ public class Party {
 
     @Id
     @Column(name = "member_id")
-    private Long memberId;
+    private String memberId;
 
     @OneToOne
     @MapsId
     @JoinColumn(name = "member_id")
-    private Member member;
+    private PartyPk.Member member;
 
     @Id
     @Column(name = "board_id")
@@ -34,7 +34,7 @@ public class Party {
     private LocalDateTime joinedAt;
 
     @Builder
-    public Party(Member member, Board board, LocalDateTime joinedAt) {
+    public Party(PartyPk.Member member, Board board, LocalDateTime joinedAt) {
         this.member = member;
         this.board = board;
         this.joinedAt = joinedAt;

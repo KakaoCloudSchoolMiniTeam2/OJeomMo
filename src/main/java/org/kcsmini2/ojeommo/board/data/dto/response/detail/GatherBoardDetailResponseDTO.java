@@ -1,4 +1,4 @@
-package org.kcsmini2.ojeommo.board.data.dto.responese.detail;
+package org.kcsmini2.ojeommo.board.data.dto.response.detail;
 
 import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
 import org.kcsmini2.ojeommo.category.entity.Category;
