@@ -52,4 +52,8 @@ public class GatherBoard {
         this.bumpedAt = bumpedAt;
         this.category = category;
     }
+
+    public void bumped(LocalDateTime bumpedAt) {
+        this.bumpedAt = bumpedAt;
+    }
 }

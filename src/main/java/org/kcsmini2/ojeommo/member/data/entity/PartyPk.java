@@ -1,4 +1,4 @@
-package org.kcsmini2.ojeommo.member.entity;
+package org.kcsmini2.ojeommo.member.data.entity;
 
 import java.io.Serializable;
 
