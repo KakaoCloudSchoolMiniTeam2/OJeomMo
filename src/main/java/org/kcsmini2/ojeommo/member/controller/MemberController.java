@@ -1,26 +1,49 @@
 package org.kcsmini2.ojeommo.member.controller;
 
-import org.kcsmini2.ojeommo.member.service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.RequiredArgsConstructor;
+import org.kcsmini2.ojeommo.member.dto.SignRequest;
+import org.kcsmini2.ojeommo.member.dto.SignResponse;
+import org.kcsmini2.ojeommo.member.repository.MemberRepository;
+import org.kcsmini2.ojeommo.member.service.SignService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 작성자: 김준연
  *
  * 설명: member 컨트롤러 작성
  *
- * 최종 수정 일자: 2023/07/22
+ * 최종 수정 일자: 2023/07/24
  */
-@Controller
+@RestController
+@RequiredArgsConstructor
 public class MemberController {
 
-    @Autowired
-    MemberService memberService;
-
-    @RequestMapping("/member/join")
-    public String join() {
-
+    private final MemberRepository memberRepository;
+    private final SignService signService;
+    @PostMapping("/register")
+    public ResponseEntity<Boolean> signup(SignRequest request) throws Exception {
+        return new ResponseEntity<>(signService.register(request), HttpStatus.OK);
     }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<SignResponse> signin(SignRequest request) throws Exception {
+        return new ResponseEntity<>(signService.login(request), HttpStatus.OK);
+    }
+
+//    @PostMapping("/login")
+//    public String logIn(SignRequest request,
+//                        Model model ) {
+//        try {
+//            SignResponse signResponse = signService.login(request);
+//        }catch (Exception e) {
+//
+//        }
+//
+//        return "";
+//    }
+
 
 }
