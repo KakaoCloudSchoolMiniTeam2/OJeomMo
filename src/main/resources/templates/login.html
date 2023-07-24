@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<script>
+
+</script>
+
+<body>
+
+<div class="container mt-5">
+    <form action="/login" method="post">
+        <label for="idInput">Id</label>
+        <input type="text" id="idInput" name="id" required>
+        <label for="pwInput">Pw</label>
+        <input type="text" id="pwInput" name="pw" required>
+        <button type="submit">로그인</button>
+    </form>
+</div>
+
+
+</body>
