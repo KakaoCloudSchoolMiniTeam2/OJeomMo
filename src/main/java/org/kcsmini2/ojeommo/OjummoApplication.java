@@ -1,4 +1,4 @@
-package org.kcsmini2.ojummo;
+package org.kcsmini2.ojeommo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
