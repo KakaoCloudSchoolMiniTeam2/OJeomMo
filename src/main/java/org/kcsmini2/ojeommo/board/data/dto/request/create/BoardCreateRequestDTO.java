@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.kcsmini2.ojeommo.board.data.entity.Board;
-import org.kcsmini2.ojeommo.member.data.entity.PartyPk;
+import org.kcsmini2.ojeommo.member.data.entity.Member;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +20,7 @@ public class BoardCreateRequestDTO {
 
     // DTO를 Entity로 변환
     @Builder
-    public Board toEntity(PartyPk.Member author){
+    public Board toEntity(Member author){
         // Board board = new Board(author, title, content,createdAt)
         Board board = Board.builder()
                 .author(author)

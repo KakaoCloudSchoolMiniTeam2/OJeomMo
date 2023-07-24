@@ -3,7 +3,7 @@ package org.kcsmini2.ojeommo.board.data;
 import lombok.Getter;
 import lombok.ToString;
 import org.kcsmini2.ojeommo.board.data.entity.Board;
-import org.kcsmini2.ojeommo.member.data.entity.PartyPk;
+import org.kcsmini2.ojeommo.member.data.entity.Member;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +13,7 @@ public class BoardDTO {
 
     @ToString.Include
     private Long id;
-    private PartyPk.Member author;
+    private Member author;
     private String title;
     private String content;
     private LocalDateTime createdAt;

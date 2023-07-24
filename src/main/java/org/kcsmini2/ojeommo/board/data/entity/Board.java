@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.kcsmini2.ojeommo.member.data.entity.PartyPk;
+import org.kcsmini2.ojeommo.member.data.entity.Member;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +19,7 @@ public class Board {
 
     @ManyToOne
     @JoinColumn(name = "author_id")
-    private PartyPk.Member author;
+    private Member author;
 
     @Column
     private String title;
@@ -31,7 +31,7 @@ public class Board {
     private LocalDateTime createdAt;
 
     @Builder
-    public Board(PartyPk.Member author, String content, String title, LocalDateTime createdAt) {
+    public Board(Member author, String content, String title, LocalDateTime createdAt) {
         this.author = author;
         this.title = title;
         this.content = content;

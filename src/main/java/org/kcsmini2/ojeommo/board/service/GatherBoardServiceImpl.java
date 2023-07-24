@@ -12,7 +12,7 @@ import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
 import org.kcsmini2.ojeommo.board.repository.BoardRepository;
 import org.kcsmini2.ojeommo.board.repository.GatherBoardRepository;
 import org.kcsmini2.ojeommo.board.repository.MemberRepository;
-import org.kcsmini2.ojeommo.member.data.entity.PartyPk;
+import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +28,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     // 게시글 생성
     @Override
     public void createBoard(BoardCreateRequestDTO requestDTO, MemberDTO memberDTO){
-        PartyPk.Member author = memberRepository.findById(memberDTO.getId()).orElseThrow();
+        Member author = memberRepository.findById(memberDTO.getId()).orElseThrow();
         Board board = requestDTO.toEntity(author);
 
         GatherBoardCreateRequestDTO gatherBoardCreateRequestDTO = (GatherBoardCreateRequestDTO)requestDTO;

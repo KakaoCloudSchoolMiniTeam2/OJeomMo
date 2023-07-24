@@ -3,6 +3,7 @@ package org.kcsmini2.ojeommo.member.data.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.kcsmini2.ojeommo.board.data.entity.Board;
+import org.kcsmini2.ojeommo.member.data.entity.Member;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +20,7 @@ public class Party {
     @OneToOne
     @MapsId
     @JoinColumn(name = "member_id")
-    private PartyPk.Member member;
+    private Member member;
 
     @Id
     @Column(name = "board_id")
@@ -34,7 +35,7 @@ public class Party {
     private LocalDateTime joinedAt;
 
     @Builder
-    public Party(PartyPk.Member member, Board board, LocalDateTime joinedAt) {
+    public Party(Member member, Board board, LocalDateTime joinedAt) {
         this.member = member;
         this.board = board;
         this.joinedAt = joinedAt;
