@@ -3,73 +3,34 @@ package org.kcsmini2.ojeommo.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor
-public class Member implements UserDetails {
+@Builder @AllArgsConstructor @NoArgsConstructor
+public class Member {
 
     @Id
     private String id;
 
-    @Column
     private String pw;
 
-    @Column
     private String nickname;
 
-    @Column
     private String name;
 
-    @Column
+    @Column(unique = true)
     private String email;
 
-    @Builder
-    public Member(String id, String pw, String nickname, String name, String email) {
-        this.id = id;
-        this.pw = pw;
-        this.nickname = nickname;
-        this.name = name;
-        this.email = email;
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<Authority> roles = new ArrayList<>();
+
+    public void setRoles(List<Authority> role) {
+        this.roles = role;
+        role.forEach(o -> o.setMember(this));
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return pw;
-    }
-
-    @Override
-    public String getUsername() {
-        return name;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
 }

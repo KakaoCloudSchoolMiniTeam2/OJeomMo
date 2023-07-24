@@ -2,10 +2,7 @@ package org.kcsmini2.ojeommo.member.dto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.kcsmini2.ojeommo.member.entity.Member;
 
 /**
@@ -13,10 +10,11 @@ import org.kcsmini2.ojeommo.member.entity.Member;
  *
  * 설명: Member 엔티티를 Contoller 단에서 사용하기위한 DTO
  *
- * 최종 수정 일자: 2023/07/21
+ * 최종 수정 일자: 2023/07/24
  */
 @NoArgsConstructor
 @Getter
+@Setter
 public class MemberDTO {
     private String token;
     private String id;
