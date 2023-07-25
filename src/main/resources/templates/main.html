@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{/fragment/header :: headerFragment}"></head>
+<body>
+<nav th:replace="~{/fragment/navbar :: navbarFragment}"></nav>
+<div class="container">
+    <div class="content-margin"></div>
+    <div class="content">
+        <div class="board-wrapper">
+            <ul class="board">
+                <li class="article">
+
+                </li>
+                <li class="article">
+
+                </li>
+                <li class="article">
+
+                </li>
+                <li class="article">
+
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="content-margin">
+        <div th:replace="~{/fragment/profile :: profileFragment}"></div>
+    </div>
+</div>
+</body>
+</html>
