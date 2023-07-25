@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public interface GatherBoardService {
 
 
-    public void createBoard(BoardCreateRequestDTO requestDTO, MemberDTO memberDTO) throws Exception;
+    public void createBoard(BoardCreateRequestDTO requestDTO, MemberDTO memberDTO);
 
     public BoardDetailResponseDTO readBoard(Long boardId, MemberDTO memberDTO);
 

@@ -1,6 +1,7 @@
 package org.kcsmini2.ojeommo.board.data;
 
 import lombok.*;
+import org.kcsmini2.ojeommo.member.data.entity.Member;
 
 /**
  * 작성자: 김준연
@@ -28,5 +29,18 @@ public class MemberDTO {
         this.nickname = nickname;
         this.name = name;
         this.email = email;
+    }
+
+    public MemberDTO(Member member) {
+//        this.token = member.token;
+        this.id = member.getId();
+        this.pw = member.getPw();
+        this.nickname = member.getNickname();
+        this.name = member.getName();
+        this.email = member.getEmail();
+    }
+
+    public static MemberDTO from(Member member) {
+        return new MemberDTO(member);
     }
 }

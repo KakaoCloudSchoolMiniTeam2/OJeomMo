@@ -1,5 +1,6 @@
 package org.kcsmini2.ojeommo.board.data.dto.response.detail;
 
+import lombok.Data;
 import org.kcsmini2.ojeommo.board.data.entity.Board;
 
 import java.time.LocalDateTime;
@@ -7,6 +8,7 @@ import java.time.LocalDateTime;
 /**
 *   게시글 상세보기 페이지
 */
+@Data
 public class BoardDetailResponseDTO {
     private Long id;
     private String title;

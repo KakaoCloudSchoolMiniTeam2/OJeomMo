@@ -25,7 +25,8 @@ public class Member {
     private String email;
 
     @Builder
-    public Member(String pw, String nickname, String name, String email) {
+    public Member(String id, String pw, String nickname, String name, String email) {
+        this.id = id;
         this.pw = pw;
         this.nickname = nickname;
         this.name = name;
