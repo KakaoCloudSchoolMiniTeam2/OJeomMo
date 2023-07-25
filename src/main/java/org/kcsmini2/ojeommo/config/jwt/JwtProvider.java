@@ -91,13 +91,10 @@ public class JwtProvider {
     // 토큰 검증
     public boolean validateToken(String token) {
         try {
-            System.out.println("validation... " + token);
-
             Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
             // 만료되었을 시 false
             return !claims.getBody().getExpiration().before(new Date());
         } catch (Exception e) {
-            System.out.println("three");
             return false;
         }
     }
