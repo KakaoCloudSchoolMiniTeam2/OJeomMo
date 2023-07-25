@@ -9,6 +9,7 @@ import org.kcsmini2.ojeommo.board.data.dto.response.detail.BoardDetailResponseDT
 import org.kcsmini2.ojeommo.board.data.entity.Board;
 import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
 import org.kcsmini2.ojeommo.board.repository.BoardRepository;
+import org.kcsmini2.ojeommo.board.repository.CategoryRepository;
 import org.kcsmini2.ojeommo.board.repository.GatherBoardRepository;
 import org.kcsmini2.ojeommo.board.repository.MemberRepository;
 import org.kcsmini2.ojeommo.category.entity.Category;
@@ -37,6 +38,8 @@ class GatherBoardServiceImplTest {
     BoardRepository boardRepository;
     @Autowired
     MemberRepository memberRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
 
     //클래스로 테스트하고 싶으면 Nested annotation 쓰면 됨
     @Nested
@@ -125,7 +128,39 @@ class GatherBoardServiceImplTest {
             assertThat(boardDetailResponseDTO.getTitle()).isEqualTo(savedGatherBoard.getBoard().getTitle());
         }
 
+        @Test
+        @DisplayName("게시글 삭제 요청시 게시글을 삭제한다.")
+        @Rollback
+        void deleteBoard() {
+            Category category = categoryRepository.save(Category.builder().category("중식").build());
+            //given
+            GatherBoardCreateRequestDTO requestDTO = GatherBoardCreateRequestDTO.builder()
+                    .title("만리장성")
+                    .content("인원모집")
+                    .createdAt(LocalDateTime.now())
+                    .category(category)
+                    .bumpedAt(LocalDateTime.now())
+                    .gatherNumber(6)
+                    .dinerName("만리장성")
+                    .initNumber(1)
+                    .build();
 
+            Member member = Member.builder()
+                    .id("abcd")
+                    .pw("abcd")
+                    .name("hong")
+                    .email("aaa")
+                    .nickname("hong")
+                    .build();
+            memberRepository.save(member);
+            gatherBoardService.createBoard(requestDTO, MemberDTO.from(member));
+            assertThat(gatherBoardRepository.count()).isEqualTo(1);
+            //when
+            gatherBoardService.deleteBoard(1l, MemberDTO.from(member));
+            //then
+            assertThat(gatherBoardRepository.count()).isEqualTo(0);
+
+        }
     }
 
 

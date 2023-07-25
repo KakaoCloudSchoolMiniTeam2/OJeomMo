@@ -1,4 +1,4 @@
-package org.kcsmini2.ojeommo.comment.entity;
+package org.kcsmini2.ojeommo.comment.data.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,7 +17,7 @@ public class Comment {
     @ManyToOne
     private Member author;
 
-    @JoinColumn(name = "comment_id")
+    @JoinColumn(name = "board_id")
     @ManyToOne
     private Board board;
 

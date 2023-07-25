@@ -6,8 +6,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.kcsmini2.ojeommo.category.entity.Category;
+import org.kcsmini2.ojeommo.member.data.entity.Party;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -41,6 +43,9 @@ public class GatherBoard {
     @JoinColumn(name = "category_id")
     @ManyToOne
     private Category category;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<Party> partyList;
 
     @Builder
     public GatherBoard(Board board, String dinerName, Integer gatherNumber, Integer initNumber, Boolean isDelivery, LocalDateTime bumpedAt, Category category) {
