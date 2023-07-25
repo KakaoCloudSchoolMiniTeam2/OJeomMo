@@ -1,0 +1,243 @@
+@font-face {
+    font-family: 'KBO-Dia-Gothic_bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/KBO-Dia-Gothic_bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    margin: 0;
+    background-color: #fcf8e8;
+}
+
+a{
+    text-decoration: none;
+    color: #ecb390;
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fcf8e8;
+    padding: 8px 0px;
+    border-bottom: 5px solid #ecb390;
+    font-family:'KBO-Dia-Gothic_bold';
+}
+
+.navbar_logo{
+    font-size: 40px;
+    color: #ecb390;
+    left: 50%;
+    position: relative;
+    transform: translateX(-50%)
+}
+
+.navbar_logo i{
+    color:#ecb390;
+}
+
+.navbar_profileBtn {
+    display: none;
+    color: #ecb390;
+    position: absolute;
+    right: 20px;
+    font-size: 40px;
+}
+
+.navbar_menuBtn{
+    display: block;
+    color: #ecb390;
+    position: absolute;
+    left: 20px;
+    font-size: 40px;
+}
+
+/*내용물*/
+.container{
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.content-margin{
+    flex: 1;
+    background-color: #fcf8e8;
+}
+
+.content{
+    width: 630px;
+    height: 100%;
+    background-color: #fcf8e8;
+}
+
+.test{
+    width: 100%;
+    height: 100%;
+}
+
+/*sidebar 관련 css*/
+#sidebar-wrapper {
+    position: fixed;
+    z-index: 998;
+    top: 70px;
+    left: -500px;
+    width: 250px;
+    height: 100%;
+    transition: all 0.4s ease 0s;
+    transform: translateX(250px);
+    background: #ecb390;
+    font-family:'KBO-Dia-Gothic_bold';
+    font-size: 50px;
+}
+
+#sidebar-wrapper.active {
+    left: -250px;
+    transition: all 0.4s ease 0s;
+}
+
+.sidebar-nav {
+    /*position: absolute;*/
+    padding-left: 0px;
+    width: 250px;
+    list-style: none;
+}
+
+.sidebar-nav ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.sidebar-nav-title {
+    height: 10vh;
+    line-height: 10vh;
+    color: white;
+    font-size: x-large;
+    font-weight: 700;
+    padding-left: 30px;
+}
+
+.sidebar-nav li.sidebar-nav-item a {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    text-decoration: none;
+    color: #f3f3f3;
+    font-size: large;
+    height: 10vh;
+    line-height: 10vh;
+    padding-left: 30px;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: white;
+    background: wheat;
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+/*프로필 관련 css*/
+#profile-wrapper {
+    position: fixed;
+    z-index: 998;
+    top: 95px;
+    right: -150px;
+    width: 350px;
+    height: 500px;
+    transition: all 0.4s ease 0s;
+    transform: translateX(250px);
+    background-color: #fcf8e8;
+    margin-left: 30px;
+    font-family: 'KBO-Dia-Gothic_bold';
+    font-size: 15px;
+}
+
+#profile-wrapper.active{
+    position: relative;
+    left: -200px;
+    transition: all 0.4s ease 0s;
+}
+
+.profile-nav {
+    position: absolute;
+    width: 350px;
+    list-style: none;
+    padding-left:0px;
+}
+
+.profile-nav ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.profile-nav-title {
+    height: 10vh;
+    line-height: 10vh;
+    color: #ecb390;
+    font-size: x-large;
+    font-weight: 700;
+    padding-left: 30px;
+}
+
+.profile-nav li.profile-nav-item a {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    text-decoration: none;
+    color: #ecb390;
+    font-size: large;
+    height: 10vh;
+    line-height: 10vh;
+    padding-left: 30px;
+}
+
+.profile-nav li a:hover {
+    text-decoration: none;
+    color: white;
+    background: #ecb390;
+
+}
+
+.profile-nav li a:active,
+.profile-nav li a:focus {
+    text-decoration: none;
+}
+
+/*반응형 미디어 쿼리*/
+@media screen and (max-width: 1550px){
+    .navbar{
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 8px 0px;
+    }
+
+    .navbar_profileBtn{
+        display: block;
+    }
+
+    #profile-wrapper.active {
+        position: fixed;
+        left: auto;
+        right: 250px;
+        transition: all 0.4s ease 0s;
+    }
+}
+
+@media screen and (max-width: 630px) {
+    .content {
+        width:100vw;
+    }
+}
