@@ -18,6 +18,8 @@ import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -55,11 +57,27 @@ public class GatherBoardServiceImpl implements GatherBoardService {
 
     // 끌어올리기
     @Transactional
-    public void bumpedUp(Long boardId, MemberDTO memberDTO, GatherBoardBumpedRequestDTO requestDTO){
-        GatherBoard board = gatherBoardRepository.findById(boardId)
+    @Override
+    public void bumpBoard(GatherBoardBumpedRequestDTO requestDTO, Long boardId, MemberDTO memberDTO){
+        GatherBoard gatherBoard = gatherBoardRepository.findById(boardId)
                 .orElseThrow(/*() -> new ApplicationException(ErrorCode.INVALID_ARTICLE_ID)*/);
 
-        requestDTO.bumpedEntity(board);
+        checkBumped(gatherBoard);
+        checkPermission(gatherBoard, memberDTO);
+
+        requestDTO.bumpedEntity(gatherBoard);
+    }
+
+    private void checkBumped(GatherBoard gatherBoard) {
+        LocalDateTime beforeBumpedAt = gatherBoard.getBumpedAt();
+        LocalDateTime now = LocalDateTime.now();
+
+        Duration diff = Duration.between(beforeBumpedAt, now);
+        long diffMin = diff.toMinutes();
+
+        if(diffMin > 60l){
+            throw new RuntimeException("끌올 요청 후 1시간이 지나지 않았습니다.");
+        }
     }
 
     private boolean getGatherJoinStatus(MemberDTO memberDTO, GatherBoard board) { //해당 Member가 Gather에 참여했는지 boolean으로 반환
@@ -91,5 +109,11 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         }
     }
 
+    private void checkPermission(GatherBoard gatherBoard, MemberDTO memberDTO){
+        if (!Objects.equals(gatherBoard.getBoard().getAuthor().getId(), memberDTO.getId())) {
+            throw new RuntimeException("게시글 소유자가 아닙니다.");
+//            throw new ApplicationException(ErrorCode.INVALID_PERMISSION);//Todo : Error코드 추가 후 변경 요망
+        }
+    }
 
 }
