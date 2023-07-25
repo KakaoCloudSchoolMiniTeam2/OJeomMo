@@ -1,7 +1,6 @@
 package org.kcsmini2.ojeommo.board.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.kcsmini2.ojeommo.board.data.MemberDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.BoardCreateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.BoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.service.GatherBoardService;

@@ -1,7 +1,6 @@
 package org.kcsmini2.ojeommo.board.service;
 
 import lombok.RequiredArgsConstructor;
-import org.kcsmini2.ojeommo.board.data.MemberDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.bumped.GatherBoardBumpedRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.BoardCreateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.GatherBoardCreateRequestDTO;
@@ -11,7 +10,6 @@ import org.kcsmini2.ojeommo.board.data.entity.Board;
 import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
 import org.kcsmini2.ojeommo.board.repository.BoardRepository;
 import org.kcsmini2.ojeommo.board.repository.GatherBoardRepository;
-import org.kcsmini2.ojeommo.board.repository.MemberRepository;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
