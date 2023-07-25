@@ -7,6 +7,7 @@ import org.kcsmini2.ojeommo.member.repository.MemberRepository;
 import org.kcsmini2.ojeommo.member.service.SignService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,21 +18,39 @@ import org.springframework.web.bind.annotation.*;
  *
  * 최종 수정 일자: 2023/07/24
  */
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberRepository memberRepository;
     private final SignService signService;
+
     @PostMapping("/register")
-    public ResponseEntity<Boolean> signup(SignRequest request) throws Exception {
-        return new ResponseEntity<>(signService.register(request), HttpStatus.OK);
+    public String signup(@ModelAttribute SignRequest request) throws Exception {
+        signService.register(request);
+        return "login";
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity<SignResponse> signin(SignRequest request) throws Exception {
-        return new ResponseEntity<>(signService.login(request), HttpStatus.OK);
+    public String login(@ModelAttribute SignRequest request, Model model) throws Exception {
+        SignResponse response = signService.login(request);
+        if(response.getToken() != null) {
+            model.addAttribute("data", response);
+            return "main";
+        }
+        return "login";
     }
+
+//    @PostMapping("/register")
+//    public ResponseEntity<Boolean> signup(SignRequest request) throws Exception {
+//
+//        return new ResponseEntity<>(signService.register(request), HttpStatus.OK);
+//    }
+//
+//    @PostMapping(value = "/login")
+//    public ResponseEntity<SignResponse> signin(SignRequest request) throws Exception {
+//        return new ResponseEntity<>(signService.login(request), HttpStatus.OK);
+//    }
 
 //    @PostMapping("/login")
 //    public String logIn(SignRequest request,
