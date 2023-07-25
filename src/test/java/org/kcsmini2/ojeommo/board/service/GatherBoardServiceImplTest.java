@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.kcsmini2.ojeommo.board.data.MemberDTO;
+import org.kcsmini2.ojeommo.board.data.dto.request.bumped.GatherBoardBumpedRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.GatherBoardCreateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.BoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.data.entity.Board;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 //(classes = {GatherBoardServiceImpl.class}) -> 이거 쓰면은 주입에서 문제터지는데 내일 태민이 햄한테 물어보기
 @SpringBootTest
@@ -132,8 +134,8 @@ class GatherBoardServiceImplTest {
         @DisplayName("게시글 삭제 요청시 게시글을 삭제한다.")
         @Rollback
         void deleteBoard() {
-            Category category = categoryRepository.save(Category.builder().category("중식").build());
             //given
+            Category category = categoryRepository.save(Category.builder().category("중식").build());
             GatherBoardCreateRequestDTO requestDTO = GatherBoardCreateRequestDTO.builder()
                     .title("만리장성")
                     .content("인원모집")
@@ -161,16 +163,84 @@ class GatherBoardServiceImplTest {
             assertThat(gatherBoardRepository.count()).isEqualTo(0);
 
         }
-    }
 
+        @Test
+        @DisplayName("게시글 끌올 요청시 1시간이 지나지 않아 실패한다")
+        @Rollback
+        void failBumpBoard() throws InterruptedException {
+            //given
+            Category category = categoryRepository.save(Category.builder().category("중식").build());
+            GatherBoardCreateRequestDTO requestDTO = GatherBoardCreateRequestDTO.builder()
+                    .title("만리장성")
+                    .content("인원모집")
+                    .createdAt(LocalDateTime.now())
+                    .category(category)
+                    .bumpedAt(LocalDateTime.now())
+                    .gatherNumber(6)
+                    .dinerName("만리장성")
+                    .initNumber(1)
+                    .build();
 
-    @Test
-    @DisplayName("게시글 조회 기능")
-    void readBoard() {
+            Member member = Member.builder()
+                    .id("abcd")
+                    .pw("abcd")
+                    .name("hong")
+                    .email("aaa")
+                    .nickname("hong")
+                    .build();
+            memberRepository.save(member);
+            gatherBoardService.createBoard(requestDTO, MemberDTO.from(member));
 
-    }
+            int year = 2023, month = 7, dayOfMonth = 25, hour = 20, minute = 40, second = 44;
+            LocalDateTime of = LocalDateTime.of(year, month, dayOfMonth, hour, minute, second);
+            Thread.sleep(1000);
+            GatherBoardBumpedRequestDTO gatherBoardBumpedRequestDTO = new GatherBoardBumpedRequestDTO(LocalDateTime.now());
+            //when
+            Throwable throwable = catchThrowable(
+                    () -> gatherBoardService.bumpBoard(gatherBoardBumpedRequestDTO, 1l, MemberDTO.from(member)));
 
-    @Test
-    void bumpedUp() {
+            //then
+            assertThat(throwable)
+                    .hasMessage("끌올 요청 후 1시간이 지나지 않았습니다.");
+        }
+
+        @Test
+        @DisplayName("게시글 끌올 요청시 끌올 시간을 수정한다")
+        @Rollback
+        void successBumpBoard(){
+            //given
+            Category category = categoryRepository.save(Category.builder().category("중식").build());
+            GatherBoardCreateRequestDTO requestDTO = GatherBoardCreateRequestDTO.builder()
+                    .title("만리장성")
+                    .content("인원모집")
+                    .createdAt(LocalDateTime.now())
+                    .category(category)
+                    .bumpedAt(LocalDateTime.now())
+                    .gatherNumber(6)
+                    .dinerName("만리장성")
+                    .initNumber(1)
+                    .build();
+
+            Member member = Member.builder()
+                    .id("abcd")
+                    .pw("abcd")
+                    .name("hong")
+                    .email("aaa")
+                    .nickname("hong")
+                    .build();
+            memberRepository.save(member);
+            gatherBoardService.createBoard(requestDTO, MemberDTO.from(member));
+
+            LocalDateTime hoursLate = LocalDateTime.now().plusHours(1);
+            hoursLate.plusMinutes(1);
+            GatherBoardBumpedRequestDTO gatherBoardBumpedRequestDTO = new GatherBoardBumpedRequestDTO(hoursLate);
+            //when
+            gatherBoardService.bumpBoard(gatherBoardBumpedRequestDTO, 1l, MemberDTO.from(member));
+
+            //then
+            GatherBoard findBoard = gatherBoardRepository.findById(1l).get();
+            assertThat(findBoard.getBumpedAt())
+                    .isEqualTo(hoursLate);
+        }
     }
 }

@@ -2,15 +2,13 @@ package org.kcsmini2.ojeommo.board.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.kcsmini2.ojeommo.board.data.MemberDTO;
+import org.kcsmini2.ojeommo.board.data.dto.request.bumped.GatherBoardBumpedRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.BoardCreateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.BoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.service.GatherBoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -34,9 +32,21 @@ public class BoardController {
     }
 
     @GetMapping("/readGatherBoard/{id}")
-    public String ReadGatherBoardGET(Model model, @PathVariable("id")Long boardId, MemberDTO memberDTO) {
+    public String ReadGatherBoardGET(Model model, @PathVariable("id") Long boardId, MemberDTO memberDTO) {
         BoardDetailResponseDTO dto = gatherBoardService.readBoard(boardId, memberDTO);
         model.addAttribute("gatherDetail", dto);
         return "board/views";
+    }
+
+    @PostMapping("/deleteGatherBoard/{id}")
+    public String DeleteGatherBoardPost(@PathVariable("id") Long boardId, MemberDTO memberDTO) {
+        gatherBoardService.deleteBoard(boardId, memberDTO);
+        return "redirect:/main";
+    }
+
+    @PostMapping("/bumpGatherBoard/{id}")
+    public String BumpedGatherBoardPost(GatherBoardBumpedRequestDTO gatherBoardBumpedRequestDTO, @PathVariable("id") Long boardId, MemberDTO memberDTO) {
+        gatherBoardService.bumpBoard(gatherBoardBumpedRequestDTO, boardId, memberDTO);
+        return "redirect:/readGatherBoard/{id}";
     }
 }
