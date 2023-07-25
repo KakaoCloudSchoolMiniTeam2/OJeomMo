@@ -1,11 +1,11 @@
-package org.kcsmini2.ojeommo.member.dto;
+package org.kcsmini2.ojeommo.member.data.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.kcsmini2.ojeommo.member.entity.Authority;
-import org.kcsmini2.ojeommo.member.entity.Member;
+import org.kcsmini2.ojeommo.member.data.entity.Authority;
+import org.kcsmini2.ojeommo.member.data.entity.Member;
 
 import java.util.ArrayList;
 import java.util.List;

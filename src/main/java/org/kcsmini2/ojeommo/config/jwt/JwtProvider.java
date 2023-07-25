@@ -5,23 +5,17 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.kcsmini2.ojeommo.member.entity.Authority;
-import org.kcsmini2.ojeommo.member.entity.Member;
+import org.kcsmini2.ojeommo.member.data.entity.Authority;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.time.Duration;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 
 /**

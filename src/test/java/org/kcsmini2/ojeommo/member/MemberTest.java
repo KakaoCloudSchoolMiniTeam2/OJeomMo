@@ -4,12 +4,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.kcsmini2.ojeommo.config.jwt.JwtProperties;
 import org.kcsmini2.ojeommo.config.jwt.TokenProvider;
-import org.kcsmini2.ojeommo.member.entity.Member;
+import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.kcsmini2.ojeommo.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -10,13 +10,13 @@ spring:
       open-in-view: false
       database-platform: org.hibernate.dialect.MariaDBDialect
 #    hibernate:
-#      ddl-auto: create 이거 키면 DB의 테이블 다 날리고 새로생김
+#      ddl-auto: create #이거 키면 DB의 테이블 다 날리고 새로생김
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/ojeommo
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    username: kjy #${DB_USERNAME}
+    password: 1111 #${DB_PASSWORD}
 
     sql:
       init:
@@ -28,3 +28,9 @@ spring:
       check-template-location: true
       mode: HTML
       cache: false
+
+jwt:
+  secret:
+    key: x!A%D*G-KaPdSgVkYp3s5v8y/B?E(H+M
+
+#  비밀키 값 추후에 환경변수로 옮길 것.

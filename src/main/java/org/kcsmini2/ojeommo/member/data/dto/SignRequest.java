@@ -1,4 +1,4 @@
-package org.kcsmini2.ojeommo.member.dto;
+package org.kcsmini2.ojeommo.member.data.dto;
 
 import lombok.*;
 

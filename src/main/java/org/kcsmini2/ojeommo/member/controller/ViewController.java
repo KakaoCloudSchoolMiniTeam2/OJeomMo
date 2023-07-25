@@ -1,14 +1,7 @@
 package org.kcsmini2.ojeommo.member.controller;
 
-import org.kcsmini2.ojeommo.member.dto.SignRequest;
-import org.kcsmini2.ojeommo.member.dto.SignResponse;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class ViewController {

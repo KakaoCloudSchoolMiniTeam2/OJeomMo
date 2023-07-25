@@ -1,6 +1,6 @@
 package org.kcsmini2.ojeommo.config.jwt;
 
-import org.kcsmini2.ojeommo.member.entity.Member;
+import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

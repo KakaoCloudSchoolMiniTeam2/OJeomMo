@@ -2,12 +2,11 @@ package org.kcsmini2.ojeommo.member.service;
 
 import lombok.RequiredArgsConstructor;
 import org.kcsmini2.ojeommo.config.jwt.JwtProvider;
-import org.kcsmini2.ojeommo.member.dto.SignRequest;
-import org.kcsmini2.ojeommo.member.dto.SignResponse;
-import org.kcsmini2.ojeommo.member.entity.Authority;
-import org.kcsmini2.ojeommo.member.entity.Member;
+import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
+import org.kcsmini2.ojeommo.member.data.dto.SignResponse;
+import org.kcsmini2.ojeommo.member.data.entity.Authority;
+import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.kcsmini2.ojeommo.member.repository.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
-import java.util.Optional;
 
 /**
  * 작성자: 김준연

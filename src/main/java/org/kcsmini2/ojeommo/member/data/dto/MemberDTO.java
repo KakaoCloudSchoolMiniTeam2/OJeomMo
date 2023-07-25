@@ -1,9 +1,6 @@
-package org.kcsmini2.ojeommo.member.dto;
+package org.kcsmini2.ojeommo.member.data.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
 import lombok.*;
-import org.kcsmini2.ojeommo.member.entity.Member;
 
 /**
  * 작성자: 김준연
