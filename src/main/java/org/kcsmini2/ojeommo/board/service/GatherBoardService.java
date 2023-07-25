@@ -15,5 +15,7 @@ public interface GatherBoardService {
 
     public BoardDetailResponseDTO readBoard(Long boardId, MemberDTO memberDTO);
 
+    public void deleteBoard(Long boardId, MemberDTO memberDTO);
+
 
 }

@@ -13,6 +13,8 @@ import org.kcsmini2.ojeommo.board.repository.BoardRepository;
 import org.kcsmini2.ojeommo.board.repository.GatherBoardRepository;
 import org.kcsmini2.ojeommo.board.repository.MemberRepository;
 import org.kcsmini2.ojeommo.member.data.PartyRepository;
+import org.kcsmini2.ojeommo.comment.CommentRepository;
+import org.kcsmini2.ojeommo.comment.data.entity.Comment;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.kcsmini2.ojeommo.member.data.entity.Party;
 import org.springframework.stereotype.Service;
@@ -20,8 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+import java.util.List;
+import java.util.Objects;
+
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class GatherBoardServiceImpl implements GatherBoardService {
 
@@ -31,7 +35,9 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     private final PartyRepository partyRepository;
 
     // 게시글 생성
+
     @Override
+    @Transactional
     public void createBoard(BoardCreateRequestDTO requestDTO, MemberDTO memberDTO){
         Member author = memberRepository.findById(memberDTO.getId()).orElseThrow();
         Board board = requestDTO.toEntity(author);
@@ -52,6 +58,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     }
 
     // 끌어올리기
+    @Transactional
     public void bumpedUp(Long boardId, MemberDTO memberDTO, GatherBoardBumpedRequestDTO requestDTO){
         GatherBoard board = gatherBoardRepository.findById(boardId)
                 .orElseThrow(/*() -> new ApplicationException(ErrorCode.INVALID_ARTICLE_ID)*/);
@@ -91,5 +98,21 @@ public class GatherBoardServiceImpl implements GatherBoardService {
 
         return true;
     }
+
+    @Override
+    @Transactional
+    public void deleteBoard(Long boardId, MemberDTO memberDTO) {
+        GatherBoard gatherBoard = gatherBoardRepository.findById(boardId).orElseThrow();
+        Board board = gatherBoard.getBoard();
+        checkPermission(board, memberDTO);
+        gatherBoardRepository.delete(gatherBoard);
+    }
+    private void checkPermission(Board board, MemberDTO memberDTO){
+        if (!Objects.equals(board.getAuthor().getId(), memberDTO.getId())) {
+            throw new RuntimeException("게시글 소유자가 아닙니다.");
+//            throw new ApplicationException(ErrorCode.INVALID_PERMISSION);//Todo : Error코드 추가 후 변경 요망
+        }
+    }
+
 
 }
