@@ -45,7 +45,7 @@
     flex-direction: column;
     }
 
-    h2 {
+    h2, button1 {
     color: tomato;
     font-size: 2em;
     }
@@ -131,6 +131,9 @@
 <body>
 <div th:fragment="loginForm" class="wrap">
     <div class="login">
+        <a th:href="@{/main}">
+            <button class="button1">Go to Main</button>
+        </a>
         <h2>My page</h2>
 
         <div class="container1">
