@@ -1,10 +1,12 @@
 package org.kcsmini2.ojeommo.member.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.kcsmini2.ojeommo.config.jwt.MemberDetail;
 import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
 import org.kcsmini2.ojeommo.member.data.dto.SignResponse;
 import org.kcsmini2.ojeommo.member.repository.MemberRepository;
 import org.kcsmini2.ojeommo.member.service.SignService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,12 +34,17 @@ public class MemberController {
     @PostMapping(value = "/login")
     public String login(@ModelAttribute SignRequest request, Model model) throws Exception {
         SignResponse response = signService.login(request);
+        System.out.println("provided token is " + response.getToken());
         if(response.getToken() != null) {
             model.addAttribute("data", response);
             return "main";
         }
         return "login";
     }
+
+
+
+
 
 //    @PostMapping("/register")
 //    public ResponseEntity<Boolean> signup(SignRequest request) throws Exception {
