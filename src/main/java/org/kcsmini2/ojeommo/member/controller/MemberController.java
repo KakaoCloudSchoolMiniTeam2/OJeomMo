@@ -35,38 +35,16 @@ public class MemberController {
     public String login(@ModelAttribute SignRequest request, Model model) throws Exception {
         SignResponse response = signService.login(request);
         System.out.println("provided token is " + response.getToken());
-        if(response.getToken() != null) {
+        if (response.getToken() != null) {
             model.addAttribute("data", response);
             return "main";
         }
         return "login";
     }
 
-
-
-
-
-//    @PostMapping("/register")
-//    public ResponseEntity<Boolean> signup(SignRequest request) throws Exception {
+//    @PostMapping("/update")
+//    public String update() {
 //
-//        return new ResponseEntity<>(signService.register(request), HttpStatus.OK);
-//    }
-//
-//    @PostMapping(value = "/login")
-//    public ResponseEntity<SignResponse> signin(SignRequest request) throws Exception {
-//        return new ResponseEntity<>(signService.login(request), HttpStatus.OK);
-//    }
-
-//    @PostMapping("/login")
-//    public String logIn(SignRequest request,
-//                        Model model ) {
-//        try {
-//            SignResponse signResponse = signService.login(request);
-//        }catch (Exception e) {
-//
-//        }
-//
-//        return "";
 //    }
 
 

@@ -73,26 +73,4 @@ public class SignService {
 
     }
 
-//    public SignResponse createMember(final SignRequest signRequest) {
-//
-//        //아이디 중복체크 등 유효성 검증 코드 추가 예정
-//
-//        Member member = Member.builder()
-//                .id(signRequest.getId())
-//                .pw(signRequest.getPw())
-//                .nickname(signRequest.getNickname())
-//                .email(signRequest.getEmail())
-//                .build();
-//        Member response = memberRepository.save(member);
-//        SignResponse signResponse = new SignResponse(response);
-//        return signResponse;
-//    }
-//
-
-//
-//    public SignRequest findMemberInfoById(String id) {
-//        Optional<Member> member = memberRepository.findById(id);
-//        if(member.isPresent()) return member.get().toDTO();
-//        return null;
-//    }
 }
