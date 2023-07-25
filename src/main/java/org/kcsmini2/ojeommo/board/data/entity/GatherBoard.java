@@ -1,4 +1,4 @@
-package org.kcsmini2.ojeommo.board.entity;
+package org.kcsmini2.ojeommo.board.data.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -51,5 +51,9 @@ public class GatherBoard {
         this.isDelivery = isDelivery;
         this.bumpedAt = bumpedAt;
         this.category = category;
+    }
+
+    public void bumped(LocalDateTime bumpedAt) {
+        this.bumpedAt = bumpedAt;
     }
 }

@@ -2,8 +2,8 @@ package org.kcsmini2.ojeommo.comment.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.kcsmini2.ojeommo.board.entity.Board;
-import org.kcsmini2.ojeommo.member.entity.Member;
+import org.kcsmini2.ojeommo.board.data.entity.Board;
+import org.kcsmini2.ojeommo.member.data.entity.Member;
 
 @Entity
 @Getter

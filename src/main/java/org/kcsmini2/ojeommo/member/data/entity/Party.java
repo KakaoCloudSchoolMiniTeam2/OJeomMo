@@ -1,8 +1,9 @@
-package org.kcsmini2.ojeommo.member.entity;
+package org.kcsmini2.ojeommo.member.data.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.kcsmini2.ojeommo.board.entity.Board;
+import org.kcsmini2.ojeommo.board.data.entity.Board;
+import org.kcsmini2.ojeommo.member.data.entity.Member;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +15,7 @@ public class Party {
 
     @Id
     @Column(name = "member_id")
-    private Long memberId;
+    private String memberId;
 
     @OneToOne
     @MapsId

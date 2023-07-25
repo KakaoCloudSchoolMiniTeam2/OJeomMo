@@ -1,4 +1,4 @@
-package org.kcsmini2.ojeommo.member.entity;
+package org.kcsmini2.ojeommo.member.data.entity;
 
 
 import jakarta.persistence.*;
@@ -10,8 +10,7 @@ import lombok.*;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
 
     @Column
     private String pw;
@@ -26,7 +25,8 @@ public class Member {
     private String email;
 
     @Builder
-    public Member(String pw, String nickname, String name, String email) {
+    public Member(String id, String pw, String nickname, String name, String email) {
+        this.id = id;
         this.pw = pw;
         this.nickname = nickname;
         this.name = name;
