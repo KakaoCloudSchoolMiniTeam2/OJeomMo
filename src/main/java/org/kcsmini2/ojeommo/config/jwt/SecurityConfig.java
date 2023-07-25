@@ -52,10 +52,12 @@ public class SecurityConfig {
 //                )
                 .sessionManagement((sessionManagement)-> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests()
-                .requestMatchers("/register", "/login").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/user/**").hasRole("USER")
-                .anyRequest().denyAll()
+                .requestMatchers("/register", "/login", "/main").permitAll()
+//                .requestMatchers("/admin/**").hasRole("ADMIN")
+//                .requestMatchers("/service/**").hasRole("USER")
+//                .anyRequest().denyAll()
+                .anyRequest().authenticated()
+
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exceptionHandling) -> exceptionHandling.accessDeniedHandler(new AccessDeniedHandler() {
