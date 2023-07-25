@@ -1,7 +1,7 @@
 package org.kcsmini2.ojeommo.config.jwt;
 
 import lombok.RequiredArgsConstructor;
-import org.kcsmini2.ojeommo.member.data.entity.Member;
+import org.kcsmini2.ojeommo.member.entity.Member;
 import org.kcsmini2.ojeommo.member.repository.MemberRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
