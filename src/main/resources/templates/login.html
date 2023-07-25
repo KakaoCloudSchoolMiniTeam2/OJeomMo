@@ -1,24 +1,150 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>로그인</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./login.css">
 </head>
-<script>
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Noto Sans KR", sans-serif;
+    }
 
-</script>
+    a {
+    text-decoration: none;
+    color: black;
+    }
 
+    li {
+    list-style: none;
+    }
+
+    .wrap {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.1);
+    }
+
+    .login {
+    width: 30%;
+    height: 600px;
+    background: white;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    }
+
+    h2 {
+    color: tomato;
+    font-size: 2em;
+    }
+    .login_sns {
+    padding: 20px;
+    display: flex;
+    }
+
+    .login_sns li {
+    padding: 0px 15px;
+    }
+
+    .login_sns a {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 50px;
+    background: white;
+    font-size: 20px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .login_id {
+    margin-top: 20px;
+    width: 80%;
+    }
+
+    .login_id input {
+    width: 100%;
+    height: 50px;
+    border-radius: 30px;
+    margin-top: 10px;
+    padding: 0px 20px;
+    border: 1px solid lightgray;
+    outline: none;
+    }
+
+    .login_pw {
+    margin-top: 20px;
+    width: 80%;
+    }
+
+    .login_pw input {
+    width: 100%;
+    height: 50px;
+    border-radius: 30px;
+    margin-top: 10px;
+    padding: 0px 20px;
+    border: 1px solid lightgray;
+    outline: none;
+    }
+
+    .login_etc {
+    padding: 10px;
+    width: 80%;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    }
+
+    .submit {
+    margin-top: 50px;
+    width: 80%;
+    }
+    .submit input {
+    width: 100%;
+    height: 50px;
+    border: 0;
+    outline: none;
+    border-radius: 40px;
+    background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+    color: white;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    }
+</style>
 <body>
-
-<div th:fragment="loginForm" class="container mt-5">
-    <form action="/login" method="post">
-        <label for="idInput">Id</label>
-        <input type="text" id="idInput" name="id" required>
-        <label for="pwInput">Pw</label>
-        <input type="text" id="pwInput" name="pw" required>
-        <button type="submit">로그인</button>
-    </form>
+<div th:fragment="loginForm" class="wrap">
+    <div class="login">
+        <h2>Log-in</h2>
+        <form action="/login" method="post">
+        <div class="login_id">
+            <h4>ID</h4>
+            <input type="text" name="id" placeholder="Id">
+        </div>
+        <div class="login_pw">
+            <h4>Password</h4>
+            <input type="password" name="pw" placeholder="Password">
+        </div>
+        <div class="submit">
+            <input type="submit" value="로그인">
+        </div>
+        </form>
+    </div>
 </div>
-
 </body>
+</html>
