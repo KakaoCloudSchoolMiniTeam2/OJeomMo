@@ -11,7 +11,7 @@
 
 <body>
 
-<div class="container mt-5">
+<div th:fragment="loginForm" class="container mt-5">
     <form action="/login" method="post">
         <label for="idInput">Id</label>
         <input type="text" id="idInput" name="id" required>
@@ -20,6 +20,5 @@
         <button type="submit">로그인</button>
     </form>
 </div>
-
 
 </body>
