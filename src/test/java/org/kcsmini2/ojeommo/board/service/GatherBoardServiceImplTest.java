@@ -4,10 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.kcsmini2.ojeommo.board.data.MemberDTO;
-import org.kcsmini2.ojeommo.board.data.dto.request.create.BoardCreateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.GatherBoardCreateRequestDTO;
-import org.kcsmini2.ojeommo.board.data.dto.response.create.BoardCreateResponseDTO;
-import org.kcsmini2.ojeommo.board.data.dto.response.create.GatherBoardCreateResponseDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.BoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.data.entity.Board;
 import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
@@ -18,19 +15,13 @@ import org.kcsmini2.ojeommo.category.entity.Category;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.stereotype.Component;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
 //(classes = {GatherBoardServiceImpl.class}) -> 이거 쓰면은 주입에서 문제터지는데 내일 태민이 햄한테 물어보기
 @SpringBootTest
@@ -47,15 +38,59 @@ class GatherBoardServiceImplTest {
     @Autowired
     MemberRepository memberRepository;
 
+    //클래스로 테스트하고 싶으면 Nested annotation 쓰면 됨
     @Nested
     @DisplayName("게시글 관리 테스트")
     @Transactional
-    //클래스로 테스트하고 싶으면 Nested annotation 쓰면 됨
-    class ReadBoard{
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+    class ManageBoard {
+        @Test
+        @DisplayName("게시글 생성 요청시 정상 정보 입력하면 게시글이 생성된다.")
+        void createBoard() {
+            //given
+            GatherBoardCreateRequestDTO requestDTO = GatherBoardCreateRequestDTO.builder()
+                    .title("만리장성")
+                    .content("인원모집")
+                    .createdAt(LocalDateTime.now())
+                    .category(new Category("중식"))
+                    .bumpedAt(LocalDateTime.now())
+                    .gatherNumber(6)
+                    .dinerName("만리장성")
+                    .initNumber(1)
+                    .build();
+
+            Member member = Member.builder()
+                    .id("abcd")
+                    .pw("abcd")
+                    .name("hong")
+                    .email("aaa")
+                    .nickname("hong")
+                    .build();
+            memberRepository.save(member);
+
+            //when
+            gatherBoardService.createBoard(requestDTO, MemberDTO.from(member));
+
+            //then
+
+            Board board = boardRepository.findById(1l).get();
+            GatherBoard gatherBoard = gatherBoardRepository.findById(1l).get();
+            assertThat(board.getTitle()).isEqualTo(requestDTO.getTitle());
+            assertThat(board.getContent()).isEqualTo(requestDTO.getContent());
+            assertThat(board.getCreatedAt()).isEqualTo(requestDTO.getCreatedAt());
+            assertThat(board.getAuthor().getId()).isEqualTo(member.getId());
+            assertThat(gatherBoard.getGatherNumber()).isEqualTo(requestDTO.getGatherNumber());
+            assertThat(gatherBoard.getDinerName()).isEqualTo(requestDTO.getDinerName());
+            assertThat(gatherBoard.getBumpedAt()).isEqualTo(requestDTO.getBumpedAt());
+            assertThat(gatherBoard.getIsDelivery()).isEqualTo(requestDTO.getIsDelivery());
+            assertThat(gatherBoard.getInitNumber()).isEqualTo(requestDTO.getInitNumber());
+            assertThat(gatherBoard.getCategory()).isEqualTo(requestDTO.getCategory());
+        }
+
         @Test
         @DisplayName("게시글 클릭시 정상 요청이라면 게시글 정보를 반환한다.")
-//        @Rollback(value = false)
-        void readBoard(){
+        @Rollback
+        void readBoard() {
             //given
             Member member = Member.builder()
                     .nickname("abcd")
@@ -84,41 +119,14 @@ class GatherBoardServiceImplTest {
                     .build();
             GatherBoard savedGatherBoard = gatherBoardRepository.save(gatherBoard);
             //when
-            BoardDetailResponseDTO boardDetailResponseDTO = gatherBoardService.readBoard(1l, MemberDTO.from(member));
+            BoardDetailResponseDTO boardDetailResponseDTO = gatherBoardService.readBoard(savedGatherBoard.getId(), MemberDTO.from(member));
             //then
             assertThat(boardDetailResponseDTO.getId()).isEqualTo(savedGatherBoard.getId());
             assertThat(boardDetailResponseDTO.getTitle()).isEqualTo(savedGatherBoard.getBoard().getTitle());
         }
 
-        @Test
-        @DisplayName("게시글 생성 요청시 정상 정보 입력하면 게시글이 생성된다.")
-        void createBoard() {
-            //given
-            GatherBoardCreateRequestDTO gatherBoardCreateRequestDTO = GatherBoardCreateRequestDTO.builder()
-                    .category(new Category("중식"))
-                    .bumpedAt(LocalDateTime.now())
-                    .gatherNumber(6)
-                    .dinerName("만리장성")
-                    .initNumber(1)
-                    .build();
 
-            Member member = Member.builder()
-                    .id("abcd")
-                    .pw("abcd")
-                    .name("hong")
-                    .email("aaa")
-                    .nickname("hong")
-                    .build();
-            memberRepository.save(member);
-
-            //when
-            Member findMember = memberRepository.findById("abcd").orElseThrow();
-            Board newBoard = gatherBoardCreateRequestDTO.toEntity(findMember);
-            GatherBoardCreateResponseDTO gatherBoardCreateResponseDTO;
-            //then
-        }
     }
-
 
 
     @Test
