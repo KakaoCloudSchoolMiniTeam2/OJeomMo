@@ -12,9 +12,13 @@ import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
 import org.kcsmini2.ojeommo.board.repository.BoardRepository;
 import org.kcsmini2.ojeommo.board.repository.GatherBoardRepository;
 import org.kcsmini2.ojeommo.board.repository.MemberRepository;
+import org.kcsmini2.ojeommo.member.data.PartyRepository;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
+import org.kcsmini2.ojeommo.member.data.entity.Party;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Service
 @Transactional
@@ -24,6 +28,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     private final BoardRepository boardRepository;
     private final GatherBoardRepository gatherBoardRepository;
     private final MemberRepository memberRepository;
+    private final PartyRepository partyRepository;
 
     // 게시글 생성
     @Override
@@ -66,6 +71,25 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         return false; //로그인하지 않은 익명 사용자의 경우 항상 false를 반환
     }
 
+    @Transactional
+    public boolean joinParty(Long boardId, MemberDTO memberDTO){
+        //멤버엔티티를 불러옴
+        Member partyMember = memberRepository.getReferenceById(memberDTO.getId());
 
+        //보드엔티티를 불러옴
+        Board board = boardRepository.getReferenceById(boardId);
+
+        //파티엔티티를 만들어줌
+        Party party = Party.builder()
+                .member(partyMember)
+                .board(board)
+                .joinedAt(LocalDateTime.now())
+                .build();
+
+        //파티엔티티를 저장함
+        partyRepository.save(party);
+
+        return true;
+    }
 
 }
