@@ -19,6 +19,8 @@ import org.kcsmini2.ojeommo.comment.CommentRepository;
 import org.kcsmini2.ojeommo.comment.data.entity.Comment;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.kcsmini2.ojeommo.member.data.entity.Party;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -162,5 +164,18 @@ public class GatherBoardServiceImpl implements GatherBoardService {
 //            throw new ApplicationException(ErrorCode.INVALID_PERMISSION);//Todo : Error코드 추가 후 변경 요망
         }
     }
+
+    @Override
+    public Page<BoardDetailResponseDTO> readBoardPage(Pageable pageable, MemberDTO memberDTO) {
+        //현재 페이지에 포함된 게시글들을 가져온다
+        Page<GatherBoard> gatherBoardPage = gatherBoardRepository.findAllBy(pageable);
+        //엔티티를 Dto로 변환하고 반환한다
+        return gatherBoardPage
+                .map(gatherBoard -> {
+            boolean isJoined = getGatherJoinStatus(memberDTO, gatherBoard);
+            return GatherBoardDetailResponseDTO.from(gatherBoard, isJoined);
+        });
+    }
+
 
 }
