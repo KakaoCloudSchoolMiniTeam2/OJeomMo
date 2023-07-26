@@ -153,17 +153,9 @@
                 <input type="text" name="nickname" placeholder="NickName">
             </div>
             <h4 style="margin-top: 10px">카테고리 선택</h4>
-            <label>
-                <input type="checkbox" name="categoryId" value="1"/>
-                <span>한식</span>
-            </label>
-            <label>
-                <input type="checkbox" name="categoryId" value="2"/>
-                <span>중식</span>
-            </label>
-            <label>
-                <input type="checkbox" name="categoryId" value="3"/>
-                <span>양식</span>
+            <label th:each="category : ${categories}" th:key="${category.id}">
+                <input type="checkbox" th:name="'categoryId'" th:value="${category.id}"/>
+                <span th:text="${category.category}"></span>
             </label>
             <div class="submit">
                 <input type="submit" value="회원가입">
