@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.kcsmini2.ojeommo.board.data.dto.request.update.BoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.comment.data.entity.Comment;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
 
@@ -43,9 +44,8 @@ public class Board {
         this.createdAt = createdAt;
     }
 
-    public void update(String title, String content, LocalDateTime createdAt ){
-        this.title = title;
-        this.content = content;
-        this.createdAt = createdAt;
+    public void update(BoardUpdateRequestDTO boardUpdateRequestDTO){
+        this.title = boardUpdateRequestDTO.getTitle();
+        this.content = boardUpdateRequestDTO.getContent();
     }
 }

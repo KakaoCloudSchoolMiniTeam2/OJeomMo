@@ -19,9 +19,6 @@ public class BoardUpdateRequestDTO {
     private String content;
     private LocalDateTime createdAt;
 
-    public void updateEntity(Board board){
-        board.update(title, content, createdAt);
-    }
 }
 
 

@@ -34,8 +34,4 @@ public class GatherBoardUpdateRequestDTO extends BoardUpdateRequestDTO {
         this.category = category;
 
     }
-
-    public void updateEntity(GatherBoard gatherBoard){
-        gatherBoard.update(dinerName, gatherNumber, initNumber, isDelivery, bumpedAt, category);
-    }
 }

@@ -37,6 +37,9 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     private final PartyRepository partyRepository;
     private final CommentRepository commentRepository;
 
+
+    private static final long BUMP_LIMIT_TIME = 60l;
+
     // 게시글 생성
 
     @Override
@@ -80,7 +83,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         Duration diff = Duration.between(beforeBumpedAt, now);
         long diffMin = diff.toMinutes();
 
-        if(diffMin < 60l){
+        if(diffMin < BUMP_LIMIT_TIME){
             throw new RuntimeException("끌올 요청 후 1시간이 지나지 않았습니다.");
         }
     }
@@ -133,12 +136,9 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     public void updateBoard(Long boardId, BoardUpdateRequestDTO requestDTO, MemberDTO memberDTO) {
         GatherBoard gatherBoard = gatherBoardRepository.findById(boardId).orElseThrow();
 
-        Board board = gatherBoard.getBoard();
-
-
         GatherBoardUpdateRequestDTO gatherBoardUpdateRequestDTO = (GatherBoardUpdateRequestDTO)requestDTO;
-        gatherBoardUpdateRequestDTO.updateEntity(board);
-        gatherBoardUpdateRequestDTO.updateEntity(gatherBoard);
+
+        gatherBoard.update(gatherBoardUpdateRequestDTO);
     }
 	
 	@Override

@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.category.entity.Category;
 import org.kcsmini2.ojeommo.member.data.entity.Party;
 
@@ -63,12 +64,13 @@ public class GatherBoard {
         this.bumpedAt = bumpedAt;
     }
 
-    public void update(String dinerName, Integer gatherNumber, Integer initNumber, Boolean isDelivery, LocalDateTime bumpedAt, Category category) {
-        this.dinerName = dinerName;
-        this.gatherNumber = gatherNumber;
-        this.initNumber = initNumber;
-        this.isDelivery = isDelivery;
-        this.bumpedAt = bumpedAt;
-        this.category = category;
+    public void update(GatherBoardUpdateRequestDTO requestDTO) {
+        this.board.update(requestDTO);
+        this.dinerName = requestDTO.getDinerName();
+        this.gatherNumber = requestDTO.getGatherNumber();
+        this.initNumber = requestDTO.getInitNumber();
+        this.isDelivery = requestDTO.getIsDelivery();
+        this.bumpedAt = requestDTO.getBumpedAt();
+        this.category = requestDTO.getCategory();
     }
 }
