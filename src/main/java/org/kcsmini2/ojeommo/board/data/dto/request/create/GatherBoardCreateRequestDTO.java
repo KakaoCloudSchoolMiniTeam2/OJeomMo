@@ -21,7 +21,8 @@ public class GatherBoardCreateRequestDTO extends BoardCreateRequestDTO{
 
 
     @Builder
-    public GatherBoardCreateRequestDTO(String title, String content, LocalDateTime createdAt, String dinerName, Integer gatherNumber, Integer initNumber, Boolean isDelivery, LocalDateTime bumpedAt, Category category) {
+    public GatherBoardCreateRequestDTO(String title, String content, LocalDateTime createdAt, String dinerName,
+                                       Integer gatherNumber, Integer initNumber, Boolean isDelivery, LocalDateTime bumpedAt, Category category) {
         super(title, content, createdAt);
         this.dinerName = dinerName;
         this.gatherNumber = gatherNumber;

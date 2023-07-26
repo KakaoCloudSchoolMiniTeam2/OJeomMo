@@ -1,4 +1,4 @@
-package org.kcsmini2.ojeommo.comment.entity;
+package org.kcsmini2.ojeommo.comment.data.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,14 +10,14 @@ import org.kcsmini2.ojeommo.member.data.entity.Member;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JoinColumn(name = "author_id")
     @ManyToOne
     private Member author;
 
-    @JoinColumn(name = "comment_id")
+    @JoinColumn(name = "board_id")
     @ManyToOne
     private Board board;
 
