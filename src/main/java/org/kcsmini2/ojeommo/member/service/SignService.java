@@ -88,4 +88,16 @@ public class SignService {
         else return false;
     }
 
+    public boolean delete(String id) {
+        System.out.println("delete service");
+        try {
+            memberRepository.deleteById(id);
+            System.out.println("deleted");
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
 }

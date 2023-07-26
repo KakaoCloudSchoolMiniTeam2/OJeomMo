@@ -52,6 +52,14 @@ public class MemberController {
         if(signService.update(request)) return "main";
         else return "error";
     }
+
+    @PostMapping("/delete")
+    public String delete(@AuthenticationPrincipal MemberDetail memberDetail) {
+        System.out.println("delete controller");
+        if(signService.delete(memberDetail.getMember().getId())) return "memberDeleted";
+        return "error";
+    }
+
     private void expireCookie(HttpServletResponse response, String cookieName) {
         Cookie cookie = new Cookie(cookieName, null);
         cookie.setMaxAge(0);
