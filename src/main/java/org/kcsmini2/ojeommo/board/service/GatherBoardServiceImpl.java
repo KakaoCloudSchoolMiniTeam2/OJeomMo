@@ -64,20 +64,20 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         GatherBoard gatherBoard = gatherBoardRepository.findById(boardId)
                 .orElseThrow(/*() -> new ApplicationException(ErrorCode.INVALID_ARTICLE_ID)*/);
 
-        checkBumped(gatherBoard);
+        checkBumped(gatherBoard, requestDTO);
         checkPermission(gatherBoard, memberDTO);
 
         requestDTO.bumpedEntity(gatherBoard);
     }
 
-    private void checkBumped(GatherBoard gatherBoard) {
+    private void checkBumped(GatherBoard gatherBoard, GatherBoardBumpedRequestDTO requestDTO) {
         LocalDateTime beforeBumpedAt = gatherBoard.getBumpedAt();
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = requestDTO.getBumpedAt();
 
         Duration diff = Duration.between(beforeBumpedAt, now);
         long diffMin = diff.toMinutes();
 
-        if(diffMin > 60l){
+        if(diffMin < 60l){
             throw new RuntimeException("끌올 요청 후 1시간이 지나지 않았습니다.");
         }
     }

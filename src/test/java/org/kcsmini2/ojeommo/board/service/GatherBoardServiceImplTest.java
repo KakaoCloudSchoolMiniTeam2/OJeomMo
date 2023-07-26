@@ -191,8 +191,6 @@ class GatherBoardServiceImplTest {
             memberRepository.save(member);
             gatherBoardService.createBoard(requestDTO, MemberDTO.from(member));
 
-            int year = 2023, month = 7, dayOfMonth = 25, hour = 20, minute = 40, second = 44;
-            LocalDateTime of = LocalDateTime.of(year, month, dayOfMonth, hour, minute, second);
             Thread.sleep(1000);
             GatherBoardBumpedRequestDTO gatherBoardBumpedRequestDTO = new GatherBoardBumpedRequestDTO(LocalDateTime.now());
             //when
