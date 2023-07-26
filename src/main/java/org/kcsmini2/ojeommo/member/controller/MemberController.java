@@ -1,5 +1,8 @@
 package org.kcsmini2.ojeommo.member.controller;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kcsmini2.ojeommo.config.jwt.MemberDetail;
 import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
@@ -42,10 +45,18 @@ public class MemberController {
         return "login";
     }
 
-//    @PostMapping("/update")
-//    public String update() {
-//
-//    }
+    @PostMapping("/logout")
+    public String logout(HttpServletResponse response) {
+        expireCookie(response, "Authorization");
+        return "redirect:/";
+    }
+    private void expireCookie(HttpServletResponse response, String cookieName) {
+        Cookie cookie = new Cookie(cookieName, null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+    }
+
+
 
 
 }

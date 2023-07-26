@@ -21,6 +21,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 @Configuration
@@ -74,11 +75,11 @@ public class SecurityConfig {
                     @Override
                     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
                         // 인증문제가 발생했을 때 이 부분을 호출한다.
-                        response.sendRedirect("/login");
-//                        response.setStatus(401);
-//                        response.setCharacterEncoding("utf-8");
-//                        response.setContentType("text/html; charset=UTF-8");
-//                        response.getWriter().write("인증되지 않은 사용자입니다.");
+                        response.setCharacterEncoding("utf-8");
+                        response.setContentType("text/html; charset=UTF-8");
+                        PrintWriter out = response.getWriter();
+                        out.println("<script>alert('" + "로그인이 필요합니다." + "'); history.go(-1);</script> ");
+                        out.flush();
                     }
                 }));
         return http.build();
