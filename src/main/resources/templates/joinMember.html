@@ -130,9 +130,6 @@
 <body>
 <div th:fragment="loginForm" class="wrap">
     <div class="login">
-        <a th:href="@{/main}">
-            <button class="button1">Go to Main</button>
-        </a>
         <h2>Log-in</h2>
         <form action="/register" method="post">
             <div class="login_id">
@@ -159,9 +156,6 @@
                 <input type="submit" value="회원가입">
             </div>
         </form>
-        <a th:href="@{/login}">
-            <button class="button1">로그인하러가기</button>
-        </a>
     </div>
 </div>
 </body>

@@ -131,8 +131,8 @@
 <body>
 <div th:fragment="loginForm" class="wrap">
     <div class="login">
-        <a th:href="@{/main}">
-            <button class="button1">Go to Main</button>
+        <a th:href="@{/logout}">
+            <button th:onclick="deleteCookie()" class="button1">Logout</button>
         </a>
         <h2>My page</h2>
 
@@ -152,4 +152,14 @@
     </div>
 </div>
 </body>
+<script th:inline="javascript">
+    // 서버에서 전달받은 JWT 값을 Thymeleaf를 통해 JavaScript로 추출하여 저장
+    /*<![CDATA[*/
+    function deleteCookie() {
+        alert("로그아웃 성공!");
+        document.cookie =  "Authorization" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+
+    /*]]>*/
+</script>
 </html>
