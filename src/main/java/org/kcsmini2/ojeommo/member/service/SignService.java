@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.Optional;
 
 /**
  * 작성자: 김준연
@@ -71,6 +72,20 @@ public class SignService {
                 .token(jwtProvider.createToken(member.getId(), member.getRoles()))
                 .build();
 
+    }
+
+    public boolean update(SignRequest request) {
+
+        if (request.getPw() != null ){
+            request.setPw(passwordEncoder.encode(request.getPw()));
+        }
+
+        Optional<Member> member = memberRepository.findById(request.getId());
+
+        if(member.isPresent()) {
+            return member.get().updateMember(request);
+        }
+        else return false;
     }
 
 }

@@ -3,7 +3,9 @@ package org.kcsmini2.ojeommo.member.data.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.kcsmini2.ojeommo.category.entity.FavoriteCategory;
+import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
+import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
+import org.kcsmini2.ojeommo.member.data.dto.SignResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,31 @@ public class Member {
     public void setRoles(List<Authority> role) {
         this.roles = role;
         role.forEach(o -> o.setMember(this));
+    }
+
+    public MemberDTO toDTO() {
+        MemberDTO memberDTO = MemberDTO.builder()
+                .name(this.name)
+                .email(this.email)
+                .nickname(this.nickname)
+                .pw(this.pw)
+                .build();
+        return memberDTO;
+    }
+
+    public boolean updateMember(SignRequest request) {
+        try {
+            if(request.getPw() != null) this.pw = request.getPw();
+            this.nickname = request.getNickname();
+            this.name = request.getName();
+            this.email = request.getEmail();
+
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+
     }
 
 }

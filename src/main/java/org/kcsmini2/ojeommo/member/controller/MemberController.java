@@ -45,18 +45,18 @@ public class MemberController {
         return "login";
     }
 
-    @PostMapping("/logout")
-    public String logout(HttpServletResponse response) {
-        expireCookie(response, "Authorization");
-        return "redirect:/";
+    @PostMapping("/update")
+    public String update(@AuthenticationPrincipal MemberDetail memberDetail, @ModelAttribute SignRequest request) {
+        String id = memberDetail.getMember().getId();
+        request.setId(id);
+        if(signService.update(request)) return "main";
+        else return "error";
     }
     private void expireCookie(HttpServletResponse response, String cookieName) {
         Cookie cookie = new Cookie(cookieName, null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
     }
-
-
 
 
 }
