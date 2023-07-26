@@ -20,6 +20,7 @@ public interface GatherBoardService {
 
     public BoardDetailResponseDTO readBoard(Long boardId, MemberDTO memberDTO);
 
+<<<<<<< HEAD
     public void deleteBoard(Long boardId, MemberDTO memberDTO);
     public void updateBoard(Long boardId, BoardUpdateRequestDTO requestDTO, MemberDTO memberDTO);
     public boolean joinParty(Long boardId, MemberDTO memberDTO);
@@ -28,6 +29,8 @@ public interface GatherBoardService {
 
 
 
+
+    public boolean joinParty(Long boardId, MemberDTO memberDTO);
 
     public Page<BoardDetailResponseDTO> readBoardPage(Pageable pageable, MemberDTO memberDTO);
 
