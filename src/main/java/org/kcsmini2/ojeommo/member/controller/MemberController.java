@@ -1,13 +1,9 @@
 package org.kcsmini2.ojeommo.member.controller;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kcsmini2.ojeommo.config.jwt.MemberDetail;
 import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
 import org.kcsmini2.ojeommo.member.data.dto.SignResponse;
-import org.kcsmini2.ojeommo.member.repository.MemberRepository;
 import org.kcsmini2.ojeommo.member.service.SignService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -25,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private final MemberRepository memberRepository;
     private final SignService signService;
 
     @PostMapping("/register")
@@ -49,7 +44,7 @@ public class MemberController {
     public String update(@AuthenticationPrincipal MemberDetail memberDetail, @ModelAttribute SignRequest request) {
         String id = memberDetail.getMember().getId();
         request.setId(id);
-        if(signService.update(request)) return "main";
+        if (signService.update(request)) return "main";
         else return "error";
     }
 
@@ -65,6 +60,5 @@ public class MemberController {
         cookie.setMaxAge(0);
         response.addCookie(cookie);
     }
-
 
 }

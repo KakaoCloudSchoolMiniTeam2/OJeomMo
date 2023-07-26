@@ -1,12 +1,14 @@
 package org.kcsmini2.ojeommo.member.service;
 
 import lombok.RequiredArgsConstructor;
+import org.kcsmini2.ojeommo.category.entity.FavoriteCategory;
 import org.kcsmini2.ojeommo.config.jwt.JwtProvider;
 import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
 import org.kcsmini2.ojeommo.member.data.dto.SignResponse;
 import org.kcsmini2.ojeommo.member.data.entity.Authority;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.kcsmini2.ojeommo.member.repository.MemberRepository;
+import org.kcsmini2.ojeommo.member.repository.FavoriteCategoryRepository;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,6 +33,7 @@ import java.util.Optional;
 public class SignService {
 
     private final MemberRepository memberRepository;
+    private final FavoriteCategoryRepository favoriteCategoryRepository;
     private final JwtProvider jwtProvider;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -47,11 +50,17 @@ public class SignService {
             member.setRoles(Collections.singletonList(Authority.builder().name("ROLE_USER").build()));
 
             memberRepository.save(member);
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new Exception("잘못된 요청입니다.");
 
         }
+        FavoriteCategory favoriteCategory = FavoriteCategory.builder()
+                .categoryId(request.getCategoryId())
+                .memberId(request.getId())
+                .build();
+        favoriteCategoryRepository.save(favoriteCategory);
         return true;
     }
 
