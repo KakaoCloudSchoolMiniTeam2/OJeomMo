@@ -12,20 +12,16 @@ import java.time.LocalDateTime;
 public class BoardDetailResponseDTO {
     private Long id;
     private String title;
-//    private PostStatus status;//있어야 되지 않을까?
-//    private int views;
-//    private int likes;
-//    private boolean liked;
     private String content;
     private LocalDateTime createdAt;
-//    private long updatedAt;
-//    private DetailPageAccountResponseDto author;
+    private String authorNickname;
 
     protected BoardDetailResponseDTO(Board board){
         this.id = board.getId();
         this.title = board.getTitle();
         this.content = board.getContent();
         this.createdAt = board.getCreatedAt();
+        this.authorNickname = board.getAuthor().getNickname();
     }
 
     public static BoardDetailResponseDTO from(Board board){
