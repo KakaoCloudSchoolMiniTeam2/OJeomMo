@@ -8,51 +8,17 @@
     <div class="content">
         <div class="board-wrapper">
             <ul class="board">
-                <article class="postit">
+                <article class="postit" th:each="article : ${articles}">
                     <header class="postit__header">
-                        <i class="fa-solid fa-utensils"></i>
-                        <h1> 만리장성</h1>
+                        <i th:if="${article.getIsDelivery()}" class="fa-solid fa-motorcycle"></i>
+                        <i th:unless="${article.getIsDelivery()}" class="fa-solid fa-utensils"></i>
+                        <h1 th:text="${article.getDinerName()}"/>
                     </header>
                     <ul class="postit__message">
-                        <li>중식</li>
-                        <li>태민킴</li>
-                        <li class="more">탕수육 나눠먹을 사람 구함</li>
+                        <li th:text="${article.getCategory()}"/>
+                        <li th:text="${article.getAuthorNickname()}"/>
+                        <li th:text="${article.getContent()}"/>
                         <li class="party"><i class="fa-solid fa-user-group"></i><span> 1 / 4</span></li>
-                    </ul>
-                </article>
-
-                <article class="postit">
-                    <header class="postit__header">
-                        <i class="fa-solid fa-motorcycle"></i>
-                        <h1> 굿가이즈</h1>
-                    </header>
-                    <ul class="postit__message">
-                        <li>한식</li>
-                        <li>종민킴</li>
-                        <li class="more">김치볶음밥 맛도리!! 같이 먹을 사람?</li>
-                        <li class="party"><i class="fa-solid fa-user-group"></i><span> 3 / 4</span></li>
-                    </ul>
-                </article>
-
-                <article class="postit">
-                    <header class="postit__header">
-                        <h1> 만리장성</h1>
-                    </header>
-                    <ul class="postit__message">
-                        <li>중식</li>
-                        <li>태민킴</li>
-                        <li>1명 / 4명</li>
-                    </ul>
-                </article>
-
-                <article class="postit">
-                    <header class="postit__header">
-                        <h1> 만리장성</h1>
-                    </header>
-                    <ul class="postit__message">
-                        <li>중식</li>
-                        <li>태민킴</li>
-                        <li>1명 / 4명</li>
                     </ul>
                 </article>
             </ul>

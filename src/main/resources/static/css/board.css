@@ -12,6 +12,8 @@
 .board{
     display: flex;
     flex-wrap: wrap;
+    height: 640px;
+    width: 600px;
     justify-content: space-evenly;
     padding: 30px 0px;
     background-color: #ffd699;
@@ -92,4 +94,16 @@
 .more{
     font-size: 20px;
     margin-top: 15px;
+}
+
+@media screen and (max-width: 630px) {
+    .content {
+        display: block;
+    }
+    .board{
+        position: relative;
+        top: 29px;
+        width: auto;
+        height: auto;
+    }
 }
