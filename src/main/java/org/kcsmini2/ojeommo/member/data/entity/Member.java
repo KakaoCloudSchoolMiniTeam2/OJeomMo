@@ -3,6 +3,7 @@ package org.kcsmini2.ojeommo.member.data.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.kcsmini2.ojeommo.category.entity.FavoriteCategory;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
 import org.kcsmini2.ojeommo.member.data.dto.SignResponse;
