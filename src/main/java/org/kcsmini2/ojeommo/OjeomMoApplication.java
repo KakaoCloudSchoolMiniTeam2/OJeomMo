@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class OjummoApplication {
+public class OjeomMoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OjummoApplication.class, args);
+		SpringApplication.run(OjeomMoApplication.class, args);
 	}
 
 }
