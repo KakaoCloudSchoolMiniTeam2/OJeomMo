@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(indexes = {
+        @Index(name = "idx__bumped_at", columnList = "bumped_at")
+})
 public class GatherBoard {
 
     @Id
@@ -35,7 +38,7 @@ public class GatherBoard {
     @Column
     private Boolean isDelivery;
 
-    @Column
+    @Column(name = "bumped_at")
     private LocalDateTime bumpedAt;
 
     @JoinColumn(name = "category_id")
