@@ -42,4 +42,10 @@ public class Board {
         this.content = content;
         this.createdAt = createdAt;
     }
+
+    public void update(String title, String content, LocalDateTime createdAt ){
+        this.title = title;
+        this.content = content;
+        this.createdAt = createdAt;
+    }
 }

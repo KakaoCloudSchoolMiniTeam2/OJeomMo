@@ -5,6 +5,8 @@ import org.kcsmini2.ojeommo.board.data.MemberDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.bumped.GatherBoardBumpedRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.BoardCreateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.GatherBoardCreateRequestDTO;
+import org.kcsmini2.ojeommo.board.data.dto.request.update.BoardUpdateRequestDTO;
+import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.BoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.GatherBoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.data.entity.Board;
@@ -115,7 +117,30 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         return true;
     }
 
+    // 끌어올리기
+    public void bumpedUp(Long boardId, MemberDTO memberDTO, GatherBoardBumpedRequestDTO requestDTO){
+        GatherBoard board = gatherBoardRepository.findById(boardId)
+                .orElseThrow(/*() -> new ApplicationException(ErrorCode.INVALID_ARTICLE_ID)*/);
+
+        requestDTO.bumpedEntity(board);
+    }
+
+
+
     @Override
+    @Transactional
+    public void updateBoard(Long boardId, BoardUpdateRequestDTO requestDTO, MemberDTO memberDTO) {
+        GatherBoard gatherBoard = gatherBoardRepository.findById(boardId).orElseThrow();
+
+        Board board = gatherBoard.getBoard();
+
+
+        GatherBoardUpdateRequestDTO gatherBoardUpdateRequestDTO = (GatherBoardUpdateRequestDTO)requestDTO;
+        gatherBoardUpdateRequestDTO.updateEntity(board);
+        gatherBoardUpdateRequestDTO.updateEntity(gatherBoard);
+    }
+	
+	@Override
     @Transactional
     public void deleteBoard(Long boardId, MemberDTO memberDTO) {
         GatherBoard gatherBoard = gatherBoardRepository.findById(boardId).orElseThrow();
