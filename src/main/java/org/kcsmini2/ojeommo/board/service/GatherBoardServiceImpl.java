@@ -103,7 +103,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         Member partyMember = memberRepository.getReferenceById(memberDTO.getId());
 
         //보드엔티티를 불러옴
-        Board board = boardRepository.getReferenceById(boardId);
+        GatherBoard board = gatherBoardRepository.getReferenceById(boardId);
 
         //파티엔티티를 만들어줌
         Party party = Party.builder()
