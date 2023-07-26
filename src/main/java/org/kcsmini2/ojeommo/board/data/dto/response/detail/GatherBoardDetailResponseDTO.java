@@ -1,10 +1,12 @@
 package org.kcsmini2.ojeommo.board.data.dto.response.detail;
 
+import lombok.Getter;
 import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
 import org.kcsmini2.ojeommo.category.entity.Category;
 
 import java.time.LocalDateTime;
 
+@Getter
 public class GatherBoardDetailResponseDTO extends BoardDetailResponseDTO{
 
     private String dinerName;
@@ -12,7 +14,7 @@ public class GatherBoardDetailResponseDTO extends BoardDetailResponseDTO{
     private Integer initNumber;
     private Boolean isDelivery;
     private LocalDateTime bumpedAt;
-    private Category category;
+    private String category;
     private boolean isJoined;
 
     private GatherBoardDetailResponseDTO(GatherBoard board, boolean isJoined){
@@ -22,7 +24,7 @@ public class GatherBoardDetailResponseDTO extends BoardDetailResponseDTO{
         this.initNumber = board.getInitNumber();
         this.isDelivery = board.getIsDelivery();
         this.bumpedAt = board.getBumpedAt();
-        this.category = board.getCategory();
+        this.category = board.getCategory().getCategory();
         this.isJoined = isJoined;
     }
 
