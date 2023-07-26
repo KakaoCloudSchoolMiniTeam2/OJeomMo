@@ -24,7 +24,12 @@ public class MemberController {
     private final SignService signService;
 
     @PostMapping("/register")
-    public String signup(@ModelAttribute SignRequest request) throws Exception {
+    public String signup(@ModelAttribute SignRequest request,
+                         @RequestParam(name = "categoryId", required = false) String[] categoryIds) throws Exception {
+        if(categoryIds == null) categoryIds = new String[0];
+
+        request.setCategoryIds(categoryIds);
+
         signService.register(request);
         return "login";
     }
@@ -53,12 +58,6 @@ public class MemberController {
         System.out.println("delete controller");
         if(signService.delete(memberDetail.getMember().getId())) return "memberDeleted";
         return "error";
-    }
-
-    private void expireCookie(HttpServletResponse response, String cookieName) {
-        Cookie cookie = new Cookie(cookieName, null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
     }
 
 }

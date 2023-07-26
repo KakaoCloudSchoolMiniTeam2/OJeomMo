@@ -56,11 +56,22 @@ public class SignService {
             throw new Exception("잘못된 요청입니다.");
 
         }
-        FavoriteCategory favoriteCategory = FavoriteCategory.builder()
-                .categoryId(request.getCategoryId())
-                .memberId(request.getId())
-                .build();
-        favoriteCategoryRepository.save(favoriteCategory);
+        try {
+            for(String str : request.getCategoryIds()) {
+                Long id = Long.parseLong(str);
+                FavoriteCategory favoriteCategory = FavoriteCategory.builder()
+                        .categoryId(id)
+                        .memberId(request.getId())
+                        .build();
+                favoriteCategoryRepository.save(favoriteCategory);
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new Exception("catgoryIds가 비어있음.");
+        }
+
+
         return true;
     }
 
