@@ -32,7 +32,7 @@ public class Member {
     @Builder.Default
     private List<Authority> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy ="member" , fetch = FetchType.EAGER, cascade= CascadeType.REMOVE)
+    @OneToMany(mappedBy ="member" , fetch = FetchType.EAGER, cascade= CascadeType.ALL)
     private List<FavoriteCategory> favoriteCategories = new ArrayList<>();
 
     public void setRoles(List<Authority> role) {

@@ -2,6 +2,8 @@ package org.kcsmini2.ojeommo.category.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.kcsmini2.ojeommo.board.entity.Board;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
 
