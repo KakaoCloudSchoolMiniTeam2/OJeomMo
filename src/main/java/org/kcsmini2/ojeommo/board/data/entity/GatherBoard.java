@@ -62,4 +62,13 @@ public class GatherBoard {
     public void bumped(LocalDateTime bumpedAt) {
         this.bumpedAt = bumpedAt;
     }
+
+    public void update(String dinerName, Integer gatherNumber, Integer initNumber, Boolean isDelivery, LocalDateTime bumpedAt, Category category) {
+        this.dinerName = dinerName;
+        this.gatherNumber = gatherNumber;
+        this.initNumber = initNumber;
+        this.isDelivery = isDelivery;
+        this.bumpedAt = bumpedAt;
+        this.category = category;
+    }
 }
