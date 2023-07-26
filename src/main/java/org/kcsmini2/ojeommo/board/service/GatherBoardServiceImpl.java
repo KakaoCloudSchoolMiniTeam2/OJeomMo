@@ -35,6 +35,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     private final GatherBoardRepository gatherBoardRepository;
     private final MemberRepository memberRepository;
     private final PartyRepository partyRepository;
+    private final CommentRepository commentRepository;
 
     // 게시글 생성
 
