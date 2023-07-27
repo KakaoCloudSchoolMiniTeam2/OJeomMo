@@ -55,35 +55,36 @@ const body = document.querySelector('body');
 const modal = document.querySelector('.modal');
 const btnOpenPopup = document.querySelectorAll('.postit');
 
-btnOpenPopup.forEach((postit) => {
-    postit.addEventListener('click', () => {
+function getModal(postit) {
 
-        const modalContent = document.querySelector('.modal_body')
+    const modalContent = document.querySelector('.modal_body')
 
-        //여기부터 Ajax 추가하는 코드
-        ////////////////////////////
-        const htmlFilePath = '/modalBoardDetail';
+    //여기부터 Ajax 추가하는 코드
+    ////////////////////////////
+    const boardId = postit.id;
+    const htmlFilePath = '/board/readGatherBoard/' + boardId;
 
-        fetch(htmlFilePath)
-            .then(response => response.text())
-            .then(html => {
-                modalContent.innerHTML = html;
-            })
-            .catch(error => {
-                console.error('Error fetching HTML:', error);
-            });
+    fetch(htmlFilePath)
+        .then(response => response.text())
+        .then(html => {
+            modalContent.innerHTML = html;
+        })
+        .catch(error => {
+            console.error('Error fetching HTML:', error);
+        });
 
+    modal.classList.add('show');
 
-        ////////////////////////////
+    if (modal.classList.contains('show')) {
+        body.style.overflow = 'hidden';
+    }
+}
 
-
-        modal.classList.add('show');
-
-        if (modal.classList.contains('show')) {
-            body.style.overflow = 'hidden';
-        }
-    });
+btnOpenPopup.forEach(postit => {
+    console.log(postit);
+    postit.onclick = () => getModal(postit);
 });
+
 modal.addEventListener('click', (event) => {
     if (event.target === modal) {
         modal.classList.toggle('show');
