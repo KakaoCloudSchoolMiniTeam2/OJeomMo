@@ -9,8 +9,8 @@ spring:
         default_batch_fetch_size: 100
       open-in-view: false
       database-platform: org.hibernate.dialect.MariaDBDialect
-    hibernate:
-      ddl-auto: create #이거 키면 DB의 테이블 다 날리고 새로생김
+#    hibernate:
+#      ddl-auto: create #이거 키면 DB의 테이블 다 날리고 새로생김
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
@@ -23,11 +23,12 @@ spring:
         mode: always
 
     thymeleaf:
-      prefix: classpath:templates/
+      prefix=classpath: templates/
       suffix: .html
       check-template-location: true
-      mode: HTML
       cache: false
+      mvc:
+        static-path-pattern: "/static/**"
 
 jwt:
   secret:

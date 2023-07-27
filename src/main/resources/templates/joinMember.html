@@ -1,167 +1,74 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./login.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>회원가입</title>
+
+  <!-- Font Icon -->
+  <link rel="stylesheet" th:href="@{/fonts/material-icon/css/material-design-iconic-font.min.css}">
+
+  <!-- Main css -->
+  <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<style>
-    * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Noto Sans KR", sans-serif;
-    }
-
-    a {
-    text-decoration: none;
-    color: black;
-    }
-
-    li {
-    list-style: none;
-    }
-
-    .wrap {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.1);
-    }
-
-    .login {
-    width: 30%;
-    height: 600px;
-    background: white;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    }
-
-    h2 {
-    color: tomato;
-    font-size: 2em;
-    }
-    .login_sns {
-    padding: 20px;
-    display: flex;
-    }
-
-    .login_sns li {
-    padding: 0px 15px;
-    }
-
-    .login_sns a {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    border-radius: 50px;
-    background: white;
-    font-size: 20px;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .login_id {
-    margin-top: 20px;
-    width: 80%;
-    }
-
-    .login_id input {
-    width: 100%;
-    height: 50px;
-    border-radius: 30px;
-    margin-top: 10px;
-    padding: 0px 20px;
-    border: 1px solid lightgray;
-    outline: none;
-    }
-
-    .login_pw {
-    margin-top: 20px;
-    width: 80%;
-    }
-
-    .login_pw input {
-    width: 100%;
-    height: 50px;
-    border-radius: 30px;
-    margin-top: 10px;
-    padding: 0px 20px;
-    border: 1px solid lightgray;
-    outline: none;
-    }
-
-    .login_etc {
-    padding: 10px;
-    width: 80%;
-    font-size: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: bold;
-    }
-
-    .submit {
-    margin-top: 50px;
-    width: 80%;
-    }
-    .submit input {
-    width: 100%;
-    height: 50px;
-    border: 0;
-    outline: none;
-    border-radius: 40px;
-    background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
-    color: white;
-    font-size: 1.2em;
-    letter-spacing: 2px;
-    }
-</style>
 <body>
-<div th:fragment="loginForm" class="wrap">
-    <div class="login">
-        <h2>Log-in</h2>
-        <form action="/register" method="post">
-            <div class="login_id">
-                <h4>ID</h4>
-                <input type="text" name="id" placeholder="Id">
+
+<div class="main">
+
+  <!-- Sign up form -->
+  <section class="signup">
+    <div class="container">
+      <div class="signup-content">
+        <div class="signup-form">
+          <h2 class="form-title">회원가입</h2>
+          <form action="/register" method="post" class="register-form" id="register-form">
+            <div class="form-group">
+              <label for="id"><i class="zmdi zmdi-account material-icons-name"></i></label>
+              <input type="text" name="id" id="id" placeholder="Id"/>
             </div>
-            <div class="login_pw">
-                <h4>Password</h4>
-                <input type="password" name="pw" placeholder="Password">
+            <div class="form-group">
+              <label for="pw"><i class="zmdi zmdi-lock"></i></label>
+              <input type="password" name="pw" id="pw" placeholder="Password"/>
             </div>
-            <div class="login_pw">
-                <h4>Email</h4>
-                <input type="Email" name="email" placeholder="Email">
+            <div class="form-group">
+              <label for="email"><i class="zmdi zmdi-email"></i></label>
+              <input type="email" name="email" id="email" placeholder="Your Email"/>
             </div>
-            <div class="login_pw">
-                <h4>Name</h4>
-                <input type="text" name="name" placeholder="Name">
+            <div class="form-group">
+              <label for="name"><i class="zmdi zmdi-lock-outline"></i></label>
+              <input type="text" name="name" id="name" placeholder="Name"/>
             </div>
-            <div class="login_pw">
-                <h4>NickName</h4>
-                <input type="text" name="nickname" placeholder="NickName">
+            <div class="form-group">
+              <label for="Nickname"><i class="zmdi zmdi-lock-outline"></i></label>
+              <input type="text" name="Nickname" id="Nickname" placeholder="Nickname"/>
             </div>
             <h4 style="margin-top: 10px">카테고리 선택</h4>
             <label th:each="category : ${categories}" th:key="${category.id}">
-                <input type="checkbox" th:name="'categoryId'" th:value="${category.id}"/>
-                <span th:text="${category.category}"></span>
+              <input type="checkbox" th:name="'categoryId'" th:value="${category.id}"/>
+              <span th:text="${category.category}"></span>
             </label>
-            <div class="submit">
-                <input type="submit" value="회원가입">
+            <div class="form-group">
+              <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+              <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
             </div>
-        </form>
+            <div class="form-group form-button">
+              <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+            </div>
+          </form>
+        </div>
+        <div class="signup-image">
+          <figure><img src="../static/images/signup-image.jpg" alt="sing up image"></figure>
+          <a href="/login" class="signup-image-link">I am already member</a>
+        </div>
+      </div>
     </div>
+  </section>
+
 </div>
+
+<!-- JS -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
