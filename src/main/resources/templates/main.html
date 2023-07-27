@@ -22,6 +22,22 @@
                     </ul>
                 </article>
             </ul>
+
+            <div class="join-wrapper">
+                <button class="joinBtn">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </button>
+            </div>
+
+            <div class="pagination">
+                <span th:each="pageNumber : ${pageNumbers}">
+                    <a th:class="'page-item page-char ' + (${#strings.isEmpty(param.page) and pageNumber == 0} or ${#strings.equals(param.page, #strings.toString(pageNumber))} ? 'active' : '')"
+                       th:href="@{?page=__${pageNumber}__}">ㅇ</a>
+                </span>
+                <div class="page-char">ㅈ</div>
+                <div class="page-char">ㅁ</div>
+                <div class="page-char">?</div>
+            </div>
         </div>
     </div>
     <div class="content-margin">
@@ -39,7 +55,7 @@
 <script th:inline="javascript">
     // 서버에서 전달받은 JWT 값을 Thymeleaf를 통해 JavaScript로 추출하여 저장
     /*<![CDATA[*/
-    var data = /*[[${data}]]*/;
+    var data = [[${data}]];
 
     if (data != null) {
         var jwt = data.token;

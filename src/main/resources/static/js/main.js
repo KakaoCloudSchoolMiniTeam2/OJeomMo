@@ -50,7 +50,6 @@ activateSideInWideScreen();
 // 윈도우 리사이즈 시 실행
 window.addEventListener('resize', activateSideInWideScreen);
 
-
 // modal 창띄우기
 const body = document.querySelector('body');
 const modal = document.querySelector('.modal');
@@ -94,3 +93,11 @@ modal.addEventListener('click', (event) => {
         }
     }
 });
+
+// 인증 토큰 삭제
+function deleteCookie() {
+    alert("요청 처리됨");
+    document.cookie =  "Authorization" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
+document.querySelector(".logoutBtn").onclick = deleteCookie;

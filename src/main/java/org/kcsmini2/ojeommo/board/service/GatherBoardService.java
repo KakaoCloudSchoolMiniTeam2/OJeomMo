@@ -1,6 +1,5 @@
 package org.kcsmini2.ojeommo.board.service;
 
-import org.kcsmini2.ojeommo.board.data.MemberDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.bumped.GatherBoardBumpedRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.BoardCreateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.GatherBoardCreateRequestDTO;
@@ -9,10 +8,10 @@ import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateReque
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.BoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.GatherBoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
+import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public interface GatherBoardService {

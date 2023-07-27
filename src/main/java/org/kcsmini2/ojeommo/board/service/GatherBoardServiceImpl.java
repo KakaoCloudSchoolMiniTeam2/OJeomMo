@@ -1,7 +1,6 @@
 package org.kcsmini2.ojeommo.board.service;
 
 import lombok.RequiredArgsConstructor;
-import org.kcsmini2.ojeommo.board.data.MemberDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.bumped.GatherBoardBumpedRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.BoardCreateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.GatherBoardCreateRequestDTO;
@@ -13,12 +12,12 @@ import org.kcsmini2.ojeommo.board.data.entity.Board;
 import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
 import org.kcsmini2.ojeommo.board.repository.BoardRepository;
 import org.kcsmini2.ojeommo.board.repository.GatherBoardRepository;
-import org.kcsmini2.ojeommo.board.repository.MemberRepository;
-import org.kcsmini2.ojeommo.member.data.PartyRepository;
 import org.kcsmini2.ojeommo.comment.CommentRepository;
-import org.kcsmini2.ojeommo.comment.data.entity.Comment;
+import org.kcsmini2.ojeommo.member.data.PartyRepository;
+import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.kcsmini2.ojeommo.member.data.entity.Party;
+import org.kcsmini2.ojeommo.member.repository.MemberRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -164,9 +162,9 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         //엔티티를 Dto로 변환하고 반환한다
         return gatherBoardPage
                 .map(gatherBoard -> {
-            boolean isJoined = getGatherJoinStatus(memberDTO, gatherBoard);
-            return GatherBoardDetailResponseDTO.from(gatherBoard, isJoined);
-        });
+                    boolean isJoined = getGatherJoinStatus(memberDTO, gatherBoard);
+                    return GatherBoardDetailResponseDTO.from(gatherBoard, isJoined);
+                });
     }
 
 

@@ -15,6 +15,11 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+
+	developmentOnly
+	runtimeClasspath{
+		extendsFrom(developmentOnly)
+	}
 }
 
 repositories {
@@ -31,6 +36,7 @@ dependencies {
 	testImplementation 'org.projectlombok:lombok:1.18.26'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools:3.0.2'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
