@@ -1,10 +1,11 @@
 package org.kcsmini2.ojeommo.board.data.dto.response.detail;
 
+import lombok.Getter;
 import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
 import org.kcsmini2.ojeommo.category.entity.Category;
 
 import java.time.LocalDateTime;
-
+@Getter
 public class GatherBoardDetailResponseDTO extends BoardDetailResponseDTO{
 
     private String dinerName;

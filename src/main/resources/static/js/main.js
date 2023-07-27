@@ -49,3 +49,48 @@ activateSideInWideScreen();
 
 // 윈도우 리사이즈 시 실행
 window.addEventListener('resize', activateSideInWideScreen);
+
+
+// modal 창띄우기
+const body = document.querySelector('body');
+const modal = document.querySelector('.modal');
+const btnOpenPopup = document.querySelectorAll('.postit');
+
+btnOpenPopup.forEach((postit) => {
+    postit.addEventListener('click', () => {
+
+        const modalContent = document.querySelector('.modal_body')
+
+        //여기부터 Ajax 추가하는 코드
+        ////////////////////////////
+        const htmlFilePath = '/modalBoardDetail';
+
+        fetch(htmlFilePath)
+            .then(response => response.text())
+            .then(html => {
+                modalContent.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error fetching HTML:', error);
+            });
+
+
+        ////////////////////////////
+
+
+        modal.classList.add('show');
+
+        if (modal.classList.contains('show')) {
+            body.style.overflow = 'hidden';
+        }
+    });
+});
+modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        modal.classList.toggle('show');
+
+        if (!modal.classList.contains('show')) {
+            body.style.overflow = 'auto';
+        }
+    }
+});

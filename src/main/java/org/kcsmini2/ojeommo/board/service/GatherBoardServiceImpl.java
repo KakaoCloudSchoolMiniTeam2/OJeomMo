@@ -55,7 +55,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
 
     // 게시글 조회
     @Override
-    public BoardDetailResponseDTO readBoard(Long boardId, MemberDTO memberDTO){
+    public GatherBoardDetailResponseDTO readBoard(Long boardId, MemberDTO memberDTO){
         GatherBoard board = gatherBoardRepository.findById(boardId).orElseThrow(/*() -> new ApplicationException(ErrorCode.INVALID_ARTICLE_ID)*/);//ErrorCode 관련 같은데 나중에 추가해야할듯
 
         boolean isJoined = getGatherJoinStatus(memberDTO, board);
