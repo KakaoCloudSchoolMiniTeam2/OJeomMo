@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,7 @@
 
   <!-- Main css -->
   <link type="text/css" th:href="@{/css/style.css}" rel="stylesheet">
+
 </head>
 <body>
 
@@ -43,13 +44,16 @@
               <label for="Nickname"><i class="zmdi zmdi-lock-outline"></i></label>
               <input type="text" name="Nickname" id="Nickname" placeholder="Nickname"/>
             </div>
-            <div class="form-group">
-              <h4 style="margin-top: 10px">카테고리 선택</h4>
-              <label th:each="category : ${categories}" th:key="${category.id}"><i class="zmdi zmdi-lock-outline"></i></label>
-                <input type="checkbox" th:name="'categoryId'" th:value="${category.id}"/>
-                <span th:text="${category.category}"></span>
-              </label>
+            <div>
+              <h4>카테고리 선택</h4>
+              <div class="form-group">
+                <label th:each="category : ${categories}" th:key="${category.id}">
+                  <input type="checkbox" th:name="'categoryId'" th:value="${category.id}"/>
+                  <span th:text="${category.category}"></span>
+                </label>
+              </div>
             </div>
+            <div style="margin-top: 20px"></div>
             <div class="form-group">
               <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
               <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
@@ -70,7 +74,7 @@
 </div>
 
 <!-- JS -->
-<script src="/vendor/jquery/jquery.min.js"></script>
-<script src="/js/main.js"></script>
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
 </body>
 </html>
