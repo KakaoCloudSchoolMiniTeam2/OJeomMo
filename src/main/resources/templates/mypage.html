@@ -132,11 +132,15 @@
 <body>
 <div th:fragment="loginForm" class="wrap">
     <div class="login">
-        <a th:href="@{/logout}">
-            <button th:onclick="deleteCookie()" class="button1">Logout</button>
-        </a>
+        <div class="submit">
+            <a th:href="@{/update}">
+                <button>회원정보수정</button>
+            </a>
+        </div>
         <form id="deleteForm" th:action="@{/delete}" method="post">
-            <button type="submit">Delete</button>
+            <div class="submit">
+                <button type="submit">회원탈퇴</button>
+            </div>
         </form>
         <h2>My page</h2>
 
