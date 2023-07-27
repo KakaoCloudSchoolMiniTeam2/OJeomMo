@@ -9,10 +9,9 @@
     <script src="/js/main.js" defer></script>
 </head>
 <body class="createPostit">
-<form action="ttt" method="post">
+<form th:action="@{/board/updateGatherBoard}" method="post">
     <header class="createPostit__header">
         <div class="title">
-
             <label for="title">가게 이름:</label>
             <input type="text" id="title" name="title" placeholder="가게 이름을 입력하세요">
         </div>
@@ -35,7 +34,7 @@
             <div class="deliveryInput">
                 <span>배달 여부 : </span>
                 <label>
-                    <input type="radio" name="isDelivery" checked="true" value="false">
+                    <input type="radio" id="isDelivery" name="isDelivery" checked="true" value="false">
                     <i class="fa-solid fa-utensils"></i>
                 </label>
                 <span class="deliverySeparator">/</span>
@@ -44,13 +43,12 @@
                     <i class="fa-solid fa-motorcycle"></i>
                 </label>
             </div>
-            <p class="category">음식 종류 : <input list="foodCategory" id="category" placeholder="음식 종류를 선택하세요."></p>
+            <p class="category">음식 종류 : <input list="foodCategory" id="category" name="category" placeholder="음식 종류를 선택하세요."></p>
             <datalist id="foodCategory">
-                <option value="사과">
-                <option value="바나나">
-                <option value="오렌지">
-                <option value="딸기">
-                <option value="포도">
+                <option value="한식">
+                <option value="중식">
+                <option value="일식">
+                <option value="양식">
             </datalist>
             <input type="text" id="content" name="content" placeholder="추가적인 내용을 입력해주세요.">
         </div>

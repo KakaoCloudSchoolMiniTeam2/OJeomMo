@@ -15,20 +15,11 @@ spring:
   devtools:
     restart:
       enabled: false
-
-
-  devtools:
     livereload:
       enabled: true
 
   freemarker:
     cache: false
-
-  thymeleaf:
-    cache: false
-    prefix : "file:src/main/resources/templates/"
-
-
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
