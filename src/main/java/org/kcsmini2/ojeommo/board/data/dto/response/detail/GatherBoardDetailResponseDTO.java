@@ -5,7 +5,6 @@ import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
 import org.kcsmini2.ojeommo.category.entity.Category;
 
 import java.time.LocalDateTime;
-
 @Getter
 public class GatherBoardDetailResponseDTO extends BoardDetailResponseDTO{
 

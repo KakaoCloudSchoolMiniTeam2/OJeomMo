@@ -8,6 +8,7 @@ import org.kcsmini2.ojeommo.board.data.dto.response.detail.BoardDetailResponseDT
 import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.kcsmini2.ojeommo.board.data.dto.response.detail.GatherBoardDetailResponseDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +19,7 @@ public interface GatherBoardService {
 
     public void createBoard(BoardCreateRequestDTO requestDTO, MemberDTO memberDTO);
 
-    public BoardDetailResponseDTO readBoard(Long boardId, MemberDTO memberDTO);
+    public GatherBoardDetailResponseDTO readBoard(Long boardId, MemberDTO memberDTO);
 
 <<<<<<< HEAD
     public void deleteBoard(Long boardId, MemberDTO memberDTO);

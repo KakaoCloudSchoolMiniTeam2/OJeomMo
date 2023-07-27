@@ -9,11 +9,26 @@ spring:
       open-in-view: false
       database-platform: org.hibernate.dialect.MariaDBDialect
 
+  devtools:
+    livereload:
+      enabled: true
+
+  freemarker:
+    cache: false
+
+  thymeleaf:
+    cache: false
+    prefix : "file:src/main/resources/templates/"
+
+
+
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/ojeommo
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    #    username: ${DB_USERNAME}
+    #    password: ${DB_PASSWORD}
+    username: root
+    password: root
 
     sql:
       init:
