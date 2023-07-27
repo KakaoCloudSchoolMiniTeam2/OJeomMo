@@ -46,18 +46,18 @@ public class GatherBoardServiceImpl implements GatherBoardService {
 
     @Override
     @Transactional
-    public void createBoard(BoardCreateRequestDTO requestDTO, MemberDTO memberDTO){
+    public void createBoard(GatherBoardCreateRequestDTO requestDTO, MemberDTO memberDTO) {
         Member author = memberRepository.findById(memberDTO.getId()).orElseThrow();
         Board board = requestDTO.toEntity(author);
 
-        GatherBoardCreateRequestDTO gatherBoardCreateRequestDTO = (GatherBoardCreateRequestDTO)requestDTO;
+        GatherBoardCreateRequestDTO gatherBoardCreateRequestDTO = requestDTO;
         GatherBoard gatherBoard = gatherBoardCreateRequestDTO.toEntity(board);
         gatherBoardRepository.save(gatherBoard);
     }
 
     // 게시글 조회
     @Override
-    public GatherBoardDetailResponseDTO readBoard(Long boardId, MemberDTO memberDTO){
+    public GatherBoardDetailResponseDTO readBoard(Long boardId, MemberDTO memberDTO) {
         GatherBoard board = gatherBoardRepository.findById(boardId).orElseThrow(/*() -> new ApplicationException(ErrorCode.INVALID_ARTICLE_ID)*/);//ErrorCode 관련 같은데 나중에 추가해야할듯
 
         boolean isJoined = getGatherJoinStatus(memberDTO, board);
@@ -68,7 +68,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     // 끌어올리기
     @Transactional
     @Override
-    public void bumpBoard(GatherBoardBumpedRequestDTO requestDTO, Long boardId, MemberDTO memberDTO){
+    public void bumpBoard(GatherBoardBumpedRequestDTO requestDTO, Long boardId, MemberDTO memberDTO) {
         GatherBoard gatherBoard = gatherBoardRepository.findById(boardId)
                 .orElseThrow(/*() -> new ApplicationException(ErrorCode.INVALID_ARTICLE_ID)*/);
 
@@ -85,7 +85,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         Duration diff = Duration.between(beforeBumpedAt, now);
         long diffMin = diff.toMinutes();
 
-        if(diffMin < BUMP_LIMIT_TIME){
+        if (diffMin < BUMP_LIMIT_TIME) {
             throw new RuntimeException("끌올 요청 후 1시간이 지나지 않았습니다.");
         }
     }
@@ -103,7 +103,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     }
 
     @Transactional
-    public boolean joinParty(Long boardId, MemberDTO memberDTO){
+    public boolean joinParty(Long boardId, MemberDTO memberDTO) {
         //멤버엔티티를 불러옴
         Member partyMember = memberRepository.getReferenceById(memberDTO.getId());
 
@@ -123,42 +123,34 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         return true;
     }
 
-    // 끌어올리기
-    public void bumpedUp(Long boardId, MemberDTO memberDTO, GatherBoardBumpedRequestDTO requestDTO){
-        GatherBoard board = gatherBoardRepository.findById(boardId)
-                .orElseThrow(/*() -> new ApplicationException(ErrorCode.INVALID_ARTICLE_ID)*/);
-
-        requestDTO.bumpedEntity(board);
-    }
-
-
-
     @Override
     @Transactional
-    public void updateBoard(Long boardId, BoardUpdateRequestDTO requestDTO, MemberDTO memberDTO) {
+    public void updateBoard(Long boardId, GatherBoardUpdateRequestDTO requestDTO, MemberDTO memberDTO) {
         GatherBoard gatherBoard = gatherBoardRepository.findById(boardId).orElseThrow();
 
-        GatherBoardUpdateRequestDTO gatherBoardUpdateRequestDTO = (GatherBoardUpdateRequestDTO)requestDTO;
+        GatherBoardUpdateRequestDTO gatherBoardUpdateRequestDTO = (GatherBoardUpdateRequestDTO) requestDTO;
 
         gatherBoard.update(gatherBoardUpdateRequestDTO);
     }
-	
-	@Override
+
+    @Override
     @Transactional
     public void deleteBoard(Long boardId, MemberDTO memberDTO) {
         GatherBoard gatherBoard = gatherBoardRepository.findById(boardId).orElseThrow();
         Board board = gatherBoard.getBoard();
         checkPermission(board, memberDTO);
         gatherBoardRepository.delete(gatherBoard);
+        boardRepository.delete(board);
     }
-    private void checkPermission(Board board, MemberDTO memberDTO){
+
+    private void checkPermission(Board board, MemberDTO memberDTO) {
         if (!Objects.equals(board.getAuthor().getId(), memberDTO.getId())) {
             throw new RuntimeException("게시글 소유자가 아닙니다.");
 //            throw new ApplicationException(ErrorCode.INVALID_PERMISSION);//Todo : Error코드 추가 후 변경 요망
         }
     }
 
-    private void checkPermission(GatherBoard gatherBoard, MemberDTO memberDTO){
+    private void checkPermission(GatherBoard gatherBoard, MemberDTO memberDTO) {
         if (!Objects.equals(gatherBoard.getBoard().getAuthor().getId(), memberDTO.getId())) {
             throw new RuntimeException("게시글 소유자가 아닙니다.");
 //            throw new ApplicationException(ErrorCode.INVALID_PERMISSION);//Todo : Error코드 추가 후 변경 요망

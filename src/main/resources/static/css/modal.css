@@ -21,11 +21,9 @@
     left: 50%;
 
     width: 600px;
-    height: 630px;
+    min-height: 700px;
 
-    padding: 40px;
-
-    text-align: center;
+    /*padding: 40px;*/
 
     /*background-color: rgb(255, 255, 255);*/
     border-radius: 10px;

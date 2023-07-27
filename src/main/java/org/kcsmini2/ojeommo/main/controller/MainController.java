@@ -35,4 +35,10 @@ public class MainController {
 
         return "main";
     }
+
+    @GetMapping("detail")
+    public String detail(){return "fragment/gather_detail";}
+
+    @GetMapping("create")
+    public String createhtml(){return "fragment/gather_create";}
 }

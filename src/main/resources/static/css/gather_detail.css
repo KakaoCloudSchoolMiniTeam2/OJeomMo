@@ -123,6 +123,8 @@
     height: 30px;
     margin-right: 5px;
     color:#000000;
+    text-align: center;
+    top:15%;
     background-color: transparent; /* 배경색을 투명으로 설정하여 아이콘 버튼을 보이게 함 */
     border: none; /* 버튼 스타일 초기화 */
     position: relative; /* 부모 요소에 상대적인 위치를 설정 */

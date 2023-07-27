@@ -5,9 +5,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.kcsmini2.ojeommo.board.data.dto.request.update.BoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.comment.data.entity.Comment;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,6 +33,7 @@ public class Board {
     private String content;
 
     @Column
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST, orphanRemoval = true)

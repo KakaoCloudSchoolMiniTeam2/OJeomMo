@@ -9,17 +9,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 public class BoardCreateRequestDTO {
-    private String title;
-    private String content;
-    private LocalDateTime createdAt;
+    protected String title;
+    protected String content;
 
     public Board toEntity(Member author){
         Board board = Board.builder()
                 .author(author)
                 .title(title)
                 .content(content)
-                .createdAt(createdAt)
                 .build();
 
         return board;

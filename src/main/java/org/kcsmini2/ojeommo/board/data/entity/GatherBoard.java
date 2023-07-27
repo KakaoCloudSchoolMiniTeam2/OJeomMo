@@ -5,10 +5,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.category.entity.Category;
 import org.kcsmini2.ojeommo.member.data.entity.Party;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -43,6 +46,7 @@ public class GatherBoard {
     private Boolean isDelivery;
 
     @Column(name = "bumped_at")
+    @CreationTimestamp
     private LocalDateTime bumpedAt;
 
     @JoinColumn(name = "category_id")

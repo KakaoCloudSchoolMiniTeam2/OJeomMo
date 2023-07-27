@@ -206,15 +206,12 @@ input[type="text"] {
 }
 
 .submitButton{
-    /*display: inline-flex;*/
-    /*align-items: center;*/
-    /*padding: 8px 16px;*/
+    justify-content: center;
+    text-align: center;
     font-size: 35px;
-    /*border: none;*/
     background-color: skyblue;
     cursor: pointer;
-    border-radius: 20px; /* 테두리를 둥글게 만듦 */
-    width: max-content;
+    /*width: max-content;*/
     padding: 10px;
     border-radius: 50%;
     border: 2px solid skyblue;
