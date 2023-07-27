@@ -185,6 +185,10 @@ h2 {
   font-family: Poppins;
   font-size: 36px; }
 
+h4 {
+  width: 100px;
+}
+
 .main {
   align-content: center
   background: #f8f8f8;
