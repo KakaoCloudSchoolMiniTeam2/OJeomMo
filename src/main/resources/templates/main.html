@@ -43,7 +43,14 @@
     <div class="content-margin">
         <div th:replace="~{/fragment/profile :: profileFragment}"></div>
     </div>
+
+
 </div>
+
+<div class="modal" id="modal">
+    <div class="modal_body detailPostit"></div>
+</div>
+
 </body>
 <script th:inline="javascript">
     // 서버에서 전달받은 JWT 값을 Thymeleaf를 통해 JavaScript로 추출하여 저장

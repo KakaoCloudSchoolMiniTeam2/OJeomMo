@@ -1,0 +1,219 @@
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+.createContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.createBoard{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 30px 0px;
+    background-color: #ffd699;
+    border: 15px solid #505f4e;
+}
+
+.createPostit {
+    background: #ffe681;
+    color: #544900;
+    /*margin: 20px 0px;*/
+    border-radius: 3px;
+    font-family: 'omyu_pretty';
+    font-size: 22px;
+    /*position: relative;*/
+}
+
+.createPostit:after {
+    border-width: 0;
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 0;
+    height: 0;
+    content: "";
+    border-style: solid;
+    border-color: transparent transparent wheat #ffe121;
+}
+
+.createPostit header {
+    padding: 20px 20px;
+    background: #f3d060;
+    color: #544900;
+    border-radius: 3px 3px 0 0;
+    position: relative;
+    text-align: center;
+    font-size: 35px;
+    display: flex;
+}
+.createPostit__header .title{
+    flex: 1;
+    text-align: center;
+}
+
+.createPostit h1 {
+    display: inline;
+    font-family: 'omyu_pretty';
+    font-size: 50px;
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
+}
+.createPostit ul {
+    list-style: none;
+}
+.createPostit li + li {
+    margin-top: 15px;
+}
+.createPostit__body {
+    padding: 20px;
+    margin: 0;
+    font-size: 25px;
+    display: flex;
+    flex-direction: column;
+    /*box-shadow: inset 0 6px 20px -10px #c4aa00;*/
+}
+
+.createParty{
+    line-height: 50px;
+    width: 160px;
+    height: 50px;
+    font-size: 20px;
+    flex:1;
+    padding: 10px;
+}
+
+.createIconSection{
+    float: right;
+    display: flex;
+    padding: 10px;
+}
+
+.createiconpartition {
+    display: flex;
+    align-items: center; /* 세로 방향으로 아이콘들을 가운데 정렬 */
+}
+
+.createIconButton {
+    border: transparent;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    color:#000000;
+    background-color: transparent; /* 배경색을 투명으로 설정하여 아이콘 버튼을 보이게 함 */
+    border: none; /* 버튼 스타일 초기화 */
+    position: relative; /* 부모 요소에 상대적인 위치를 설정 */
+}
+
+.createIconButton:hover {
+    cursor: pointer;
+}
+
+.createContentSection{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin: 10px;
+    font-size: 25px;
+}
+
+
+.createContentSection .category{
+    flex: 1;
+}
+
+.createContentSection .author{
+    flex: 1;
+    text-align: right;
+    margin-right: 20px;
+    font-size: 20px;
+    padding:0;
+}
+
+.createMore{
+    font-size: 25px;
+}
+
+.createSection-separator {
+    border: none; /* 기본 구분선 스타일 초기화 */
+    border-top: 2px solid #505f4e; /* 원하는 구분선 스타일 설정 */
+    margin: 0px 30px; /* 원하는 간격 설정 */
+}
+
+input[type="text"] {
+    font-family: 'omyu_pretty';
+    font-size: 35px;
+    color: #333;
+    border: transparent;
+    background: transparent;
+    /* 추가적인 스타일을 여기에 작성할 수 있습니다. */
+}
+
+.createParty input[type="text"] {
+    font-family: 'omyu_pretty';
+    font-size: 20px;
+    color: #333;
+    border: transparent;
+    background: transparent;
+    width: 20px;
+    /* 추가적인 스타일을 여기에 작성할 수 있습니다. */
+}
+
+.category input[list] {
+    font-family: 'omyu_pretty';
+    font-size: 25px;
+    border: transparent;
+    background: transparent;
+}
+
+/* 라디오 버튼 숨기기 */
+.deliveryInput input[type="radio"] {
+    display: none;
+}
+
+/* 라디오 버튼의 라벨 스타일 지정 */
+.deliveryInput label {
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* 라디오 버튼 라벨의 아이콘 스타일 지정 */
+.deliveryInput label i {
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 50%;
+    border: 2px solid cornflowerblue;
+}
+
+.deliveryInput .deliveryseparator{
+    font-size: 30px;
+}
+
+/* 선택된 라디오 버튼 라벨의 아이콘 스타일 지정 */
+.deliveryInput input[type="radio"]:checked + i {
+    border-color: indianred;
+    background-color: indianred;
+    color: #fff;
+}
+
+.submitDiv{
+    text-align: center;
+}
+
+.submitButton{
+    justify-content: center;
+    text-align: center;
+    font-size: 35px;
+    background-color: skyblue;
+    cursor: pointer;
+    /*width: max-content;*/
+    padding: 10px;
+    border-radius: 50%;
+    border: 2px solid skyblue;
+    align-items: center; /* 세로 방향으로 아이콘들을 가운데 정렬 */
+}

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.kcsmini2.ojeommo.board.data.dto.request.bumped.GatherBoardBumpedRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.BoardCreateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.BoardDetailResponseDTO;
+import org.kcsmini2.ojeommo.board.data.dto.response.detail.GatherBoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.service.GatherBoardService;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.springframework.stereotype.Controller;
@@ -36,9 +37,9 @@ public class BoardController {
 
     @GetMapping("/readGatherBoard/{id}")
     public String ReadGatherBoardGET(Model model, @PathVariable("id") Long boardId, MemberDTO memberDTO) {
-        BoardDetailResponseDTO dto = gatherBoardService.readBoard(boardId, memberDTO);
+        GatherBoardDetailResponseDTO dto = gatherBoardService.readBoard(boardId, memberDTO);
         model.addAttribute("gatherDetail", dto);
-        return "board/views";
+        return "/fragment/gather_detail";
     }
 
     @PostMapping("/deleteGatherBoard/{id}")
