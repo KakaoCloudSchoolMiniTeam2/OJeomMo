@@ -10,25 +10,29 @@ spring:
       open-in-view: false
       database-platform: org.hibernate.dialect.MariaDBDialect
 #    hibernate:
-#      ddl-auto: create #이거 키면 DB의 테이블 다 날리고 새로생김
+#      ddl-auto: create
+
+  devtools:
+    restart:
+      enabled: false
+
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/ojeommo
-    username: kjy #${DB_USERNAME}
-    password: 1111 #${DB_PASSWORD}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
     sql:
       init:
         mode: always
 
-    thymeleaf:
-      prefix=classpath: templates/
-      suffix: .html
-      check-template-location: true
-      cache: false
-      mvc:
-        static-path-pattern: "/static/**"
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    check-template-location: true
+    mode: HTML
+    cache: false
 
 jwt:
   secret:

@@ -1,9 +1,9 @@
 <body>
 <nav th:fragment="navbarFragment" class="navbar">
-    <div class="navbar_logo">
+    <a class="navbar_logo" th:href="@{/}">
         <i class="fa-solid fa-bowl-food"></i>
-        <a href="">ㅇㅈㅁ?</a>
-    </div>
+        <p>ㅇㅈㅁ?</p>
+    </a>
 
     <a href="javascript:;" class="navbar_profileBtn">
         <i class="fa-regular fa-circle-user"></i>
@@ -17,9 +17,9 @@
         <ul class="sidebar-nav">
             <li class="sidebar-nav-title">MENU
                 <li class="sidebar-nav-item">
-                    <a>모집 게시판</a>
-                    <a>리뷰 게시판</a>
-                    <a>메뉴 추천 룰렛</a>
+                    <a th:href="@{total}">모집 게시판</a>
+                    <a th:href="@{review}">리뷰 게시판</a>
+                    <a th:href="@{roulette}">메뉴 추천 룰렛</a>
                 </li>
             </li>
         </ul>

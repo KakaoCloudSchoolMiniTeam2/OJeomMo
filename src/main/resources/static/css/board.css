@@ -4,25 +4,33 @@
     font-weight: normal;
     font-style: normal;
 }
+
 .content{
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
+
+.board-wrapper {
+    display: block;
+    min-height: 771px;
+    width: 600px;
+    background-color: #fbe6af;
+    border: 5px solid white;
+}
+
 .board{
     display: flex;
+    min-height: 640px;
     flex-wrap: wrap;
-    height: 640px;
-    width: 600px;
     justify-content: space-evenly;
-    padding: 30px 0px;
-    background-color: #ffd699;
-    border: 15px solid #505f4e;
+    padding: 30px 0px 0px;
+    margin-bottom: 0px;
 }
 
 .postit {
-    background: #ffe681;
-    color: #544900;
+    background: #FFFFFFCC;
+    color: #2b2b2b;
     width: 240px;
     height: 280px;
     margin: 20px 0px;
@@ -31,7 +39,7 @@
     font-size: 22px;
     position: relative;
     transition: transform 0.2s ease-in;
-    box-shadow: 0 0 60px -30px #c9c6ba;
+    box-shadow: 0 0 60px -30px #FFFFFF33;
 }
 
 .postit:after {
@@ -43,20 +51,21 @@
     height: 0;
     content: "";
     border-style: solid;
-    border-color: transparent transparent wheat #ffe121;
+    border-color: transparent transparent #fbe6af #FFFFFFCC;
     transition: border-width 0.2s ease-in;
-    box-shadow: -4px -4px 8px -3px #c4aa00;
+    box-shadow: -4px -4px 8px -3px #FFFFFF33;
 }
 /*.postit:hover {*/
 /*    transform: rotate(0);*/
 /*}*/
+
 .postit:hover:after {
     border-width: 0 0 21px 21px;
 }
 .postit header {
     padding: 10px 20px;
-    background: #f3d060;
-    color: #544900;
+    background: #fef6e5;
+    color: #2b2b2b;
     border-radius: 3px 3px 0 0;
     position: relative;
 
@@ -96,11 +105,79 @@
     margin-top: 15px;
 }
 
+
+/*글쓰기 버튼*/
+
+.join-wrapper {
+    position: sticky;
+    bottom: 10px;
+    padding-bottom: 30px;
+    display: block;
+    height: 40px;
+    width: 100%;
+}
+
+.joinBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 25px;
+    width: 50px;
+    height: 50px;
+    border: 2px solid #ea5b68;
+    background-color: #fbe6af;
+    margin-left: auto;
+    margin-right: 40px;
+}
+
+.joinBtn:hover {
+    cursor: pointer;
+}
+
+/*페이징 관련 css*/
+.pagination {
+    width: 100%;
+    display: inline-block;
+    position: sticky;
+    bottom: 0px;
+    text-align: center;
+    margin-bottom: 30px;
+    cursor: default;
+}
+
+.page-items {
+    display: inline-block;
+}
+
+.page-char {
+    font-family: 'KBO-Dia-Gothic_bold';
+    font-size: 30px;
+    color: #ecb390;
+    display: inline;
+}
+
+.page-char {
+    cursor: default;
+}
+
+.page-item{
+    flex-direction: column;
+}
+
+.page-item:hover{
+    cursor: pointer;
+}
+
+.page-item.active{
+    color: #ea5b68;
+}
+
 @media screen and (max-width: 630px) {
     .content {
         display: block;
     }
-    .board{
+    .board-wrapper{
         position: relative;
         top: 29px;
         width: auto;
