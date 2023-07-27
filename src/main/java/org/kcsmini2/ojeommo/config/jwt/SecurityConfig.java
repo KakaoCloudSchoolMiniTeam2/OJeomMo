@@ -12,12 +12,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -31,6 +33,19 @@ import java.util.List;
 public class SecurityConfig {
 
     private final JwtProvider jwtProvider;
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer(){
+        return web -> {
+            web.ignoring()
+                    .requestMatchers(
+                            "/images/**",
+                            "/js/**",
+                            "/css/**",
+                            "/vendor/**"
+                            );
+        };
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -55,7 +70,7 @@ public class SecurityConfig {
 //                )
                 .sessionManagement((sessionManagement)-> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests()
-                .requestMatchers("/register", "/login", "/main", "/css/**", "/js/**", "/img/**").permitAll()
+                .requestMatchers("/register", "/login", "/main").permitAll()
 //                .requestMatchers("/admin/**").hasRole("ADMIN")
 //                .requestMatchers("/service/**").hasRole("USER")
 //                .anyRequest().denyAll()

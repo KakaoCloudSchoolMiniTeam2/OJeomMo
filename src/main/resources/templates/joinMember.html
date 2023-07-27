@@ -7,10 +7,10 @@
   <title>회원가입</title>
 
   <!-- Font Icon -->
-  <link rel="stylesheet" th:href="@{/fonts/material-icon/css/material-design-iconic-font.min.css}">
+  <link type="text/css" th:href="@{/fonts/material-icon/css/material-design-iconic-font.min.css}" rel="stylesheet">
 
   <!-- Main css -->
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link type="text/css" th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
 
@@ -43,11 +43,13 @@
               <label for="Nickname"><i class="zmdi zmdi-lock-outline"></i></label>
               <input type="text" name="Nickname" id="Nickname" placeholder="Nickname"/>
             </div>
-            <h4 style="margin-top: 10px">카테고리 선택</h4>
-            <label th:each="category : ${categories}" th:key="${category.id}">
-              <input type="checkbox" th:name="'categoryId'" th:value="${category.id}"/>
-              <span th:text="${category.category}"></span>
-            </label>
+            <div class="form-group">
+              <h4 style="margin-top: 10px">카테고리 선택</h4>
+              <label th:each="category : ${categories}" th:key="${category.id}"><i class="zmdi zmdi-lock-outline"></i></label>
+                <input type="checkbox" th:name="'categoryId'" th:value="${category.id}"/>
+                <span th:text="${category.category}"></span>
+              </label>
+            </div>
             <div class="form-group">
               <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
               <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
@@ -58,7 +60,7 @@
           </form>
         </div>
         <div class="signup-image">
-          <figure><img src="../static/images/signup-image.jpg" alt="sing up image"></figure>
+          <figure><img th:src="@{/images/signup-image.jpg}" alt="sing up image"></figure>
           <a href="/login" class="signup-image-link">I am already member</a>
         </div>
       </div>
@@ -68,7 +70,7 @@
 </div>
 
 <!-- JS -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="js/main.js"></script>
+<script src="/vendor/jquery/jquery.min.js"></script>
+<script src="/js/main.js"></script>
 </body>
 </html>
