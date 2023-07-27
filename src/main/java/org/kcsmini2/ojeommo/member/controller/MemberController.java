@@ -27,10 +27,12 @@ public class MemberController {
     public String signup(@ModelAttribute SignRequest request,
                          @RequestParam(name = "categoryId", required = false) String[] categoryIds) throws Exception {
         if(categoryIds == null) categoryIds = new String[0];
-
+        System.out.println("regi test : " + request.getName());
+        System.out.println("regi test category : " + categoryIds[0]);
         request.setCategoryIds(categoryIds);
 
         signService.register(request);
+
         return "login";
     }
 
@@ -40,7 +42,7 @@ public class MemberController {
         System.out.println("provided token is " + response.getToken());
         if (response.getToken() != null) {
             model.addAttribute("data", response);
-            return "main";
+            return "memberLogin";
         }
         return "login";
     }
@@ -49,7 +51,7 @@ public class MemberController {
     public String update(@AuthenticationPrincipal MemberDTO memberDTO, @ModelAttribute SignRequest request) {
         String id = memberDTO.getId();
         request.setId(id);
-        if (signService.update(request)) return "main";
+        if (signService.update(request)) return "redirect:/main";
         else return "error";
     }
 

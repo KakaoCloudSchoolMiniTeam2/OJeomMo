@@ -5,7 +5,7 @@ import lombok.*;
 import org.kcsmini2.ojeommo.board.data.entity.Board;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
 
-@Entity
+@Entity (name= "comment3")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment {

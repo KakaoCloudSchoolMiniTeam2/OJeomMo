@@ -3,7 +3,7 @@ package org.kcsmini2.ojeommo.member.controller;
 import lombok.RequiredArgsConstructor;
 import org.kcsmini2.ojeommo.category.entity.Category;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
-import org.kcsmini2.ojeommo.member.repository.CategoryRepository;
+import org.kcsmini2.ojeommo.category.repository.CategoryRepository;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,9 +31,6 @@ public class ViewController {
     public String loginView() {
         return "login";
     }
-
-    @GetMapping("/main")
-    public String mainView() { return "main"; }
 
     @GetMapping("/mypage")
     public String myPageView(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
