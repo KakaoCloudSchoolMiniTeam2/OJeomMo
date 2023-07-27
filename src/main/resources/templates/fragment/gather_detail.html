@@ -13,7 +13,8 @@
 <header class="detailPostit__header">
     <div class="title">
         <i class="fa-solid fa-utensils"></i>
-        <h1> 만리장성</h1>
+        <span>&nbsp</span>
+        <h1 th:text="${gatherDetail.getDinerName()}"> 제목</h1>
     </div>
     <button class="detailCloseIconButton">
         <i class="fa-regular fa-circle-xmark"></i>
@@ -21,7 +22,12 @@
 </header>
 <section class="detailPostit__body">
     <div class="detailHeader">
-        <span class="detailParty"><i class="fa-solid fa-user-group"></i><span> 1 / 4</span></span>
+        <span class="detailParty"><i class="fa-solid fa-user-group"> </i>
+            <span>&nbsp</span>
+            <span th:text="${gatherDetail.getInitNumber()}">1</span>
+            <span>/</span>
+            <span th:text="${gatherDetail.getGatherNumber()}">4</span>
+        </span>
         <div class="detailIconSection">
             <div class="detailIconPartition">
                 <button class="detailIconButton">
@@ -39,9 +45,15 @@
         </div>
     </div>
     <div class="detailContentSection">
-        <span class="author">글쓴이 : 태민킴</span>
-        <p class="category">음식 종류 : 중식</p>
-        <p class="detailMore">탕수육 나눠먹을 사람 구함</p>
+        <div class="authorDiv">
+            <p><span class="author">글쓴이 : </span><span class="author"
+                                                       th:text=" ${gatherDetail.getAuthorNickname()}"> 태민킴</span></p>
+            <p><span class="author">글쓴날 : </span><span class="author"
+                                                       th:text=" ${#temporals.format(gatherDetail.createdAt, 'yyyy-MM-dd')}"> 태민킴</span>
+            </p>
+        </div>
+        <p class="category"><span> 종류 : </span><span th:text="${gatherDetail.getCategory()}">중식</span></p>
+        <p class="detailMore" th:text="${gatherDetail.getContent()}">탕수육 나눠먹을 사람 구함</p>
     </div>
 </section>
 <hr class="detailSection-separator">

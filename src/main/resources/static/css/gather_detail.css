@@ -135,23 +135,28 @@
 .detailContentSection{
     display: flex;
     flex-direction: column;
-    padding: 50px;
-    margin: 10px;
-    margin-right: 30px;
+    padding: 0 50px 50px 50px;
+    margin: 0px 30px 5px 30px;
     font-size: 25px;
+}
+
+.detailContentSection .authorDiv{
+    display: flex;
+    align-self: end;
+}
+
+.detailContentSection .authorDiv p{
+    display: flex;
+    flex-direction: row;
+    text-align: right;
+    margin-right: 20px;
+    font-size: 20px;
+    padding:0;
 }
 
 
 .detailContentSection .category{
     flex: 1;
-}
-
-.detailContentSection .author{
-    flex: 1;
-    text-align: right;
-    margin-right: 20px;
-    font-size: 20px;
-    padding:0;
 }
 
 .detailMore{
