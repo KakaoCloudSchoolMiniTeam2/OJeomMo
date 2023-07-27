@@ -1,7 +1,7 @@
 package org.kcsmini2.ojeommo.member.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.kcsmini2.ojeommo.config.jwt.MemberDetail;
+import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
 import org.kcsmini2.ojeommo.member.data.dto.SignResponse;
 import org.kcsmini2.ojeommo.member.service.SignService;
@@ -46,17 +46,17 @@ public class MemberController {
     }
 
     @PostMapping("/update")
-    public String update(@AuthenticationPrincipal MemberDetail memberDetail, @ModelAttribute SignRequest request) {
-        String id = memberDetail.getMember().getId();
+    public String update(@AuthenticationPrincipal MemberDTO memberDTO, @ModelAttribute SignRequest request) {
+        String id = memberDTO.getId();
         request.setId(id);
         if (signService.update(request)) return "main";
         else return "error";
     }
 
     @PostMapping("/delete")
-    public String delete(@AuthenticationPrincipal MemberDetail memberDetail) {
-        System.out.println("delete controller");
-        if(signService.delete(memberDetail.getMember().getId())) return "memberDeleted";
+    public String delete(@AuthenticationPrincipal MemberDTO memberDTO) {
+
+        if(signService.delete(memberDTO.getId())) return "memberDeleted";
         return "error";
     }
 

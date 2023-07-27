@@ -75,11 +75,11 @@ public class SecurityConfig {
                     @Override
                     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
                         // 인증문제가 발생했을 때 이 부분을 호출한다.
-//                        response.setCharacterEncoding("utf-8");
-//                        response.setContentType("text/html; charset=UTF-8");
-//                        PrintWriter out = response.getWriter();
-//                        out.println("<script>alert('" + "로그인이 필요합니다." + "'); history.go(-1);</script> ");
-//                        out.flush();
+                        response.setCharacterEncoding("utf-8");
+                        response.setContentType("text/html; charset=UTF-8");
+                        PrintWriter out = response.getWriter();
+                        out.println("<script>alert('" + "잘못된 요청입니다." + "'); history.go(-1);</script> ");
+                        out.flush();
                     }
                 }));
         return http.build();

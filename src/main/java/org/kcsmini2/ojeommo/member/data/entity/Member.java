@@ -41,10 +41,12 @@ public class Member {
 
     public MemberDTO toDTO() {
         MemberDTO memberDTO = MemberDTO.builder()
+                .id(this.id)
                 .name(this.name)
                 .email(this.email)
                 .nickname(this.nickname)
                 .pw(this.pw)
+                .roles(this.roles)
                 .build();
         return memberDTO;
     }

@@ -6,11 +6,11 @@ import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.kcsmini2.ojeommo.member.data.entity.Authority;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -40,7 +40,7 @@ public class JwtProvider {
     // 만료시간 : 1Hour
     private final long exp = 1000L * 60 * 60;
 
-    private final JpaUserDetailsService userDetailsService;
+    private final TokenService userDetailsService;
 
     @PostConstruct
     protected void init() {
@@ -63,9 +63,9 @@ public class JwtProvider {
     // 권한정보 획득
     // Spring Security 인증과정에서 권한확인을 위한 기능
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getAccount(token));
+        MemberDTO memberDTO= userDetailsService.loadUserByUsername(this.getAccount(token));
 
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(memberDTO, "", memberDTO.getAuthorities());
     }
 
     // 토큰에 담겨있는 유저 account 획득

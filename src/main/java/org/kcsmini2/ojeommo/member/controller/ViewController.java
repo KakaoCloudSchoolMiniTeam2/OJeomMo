@@ -2,7 +2,6 @@ package org.kcsmini2.ojeommo.member.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.kcsmini2.ojeommo.category.entity.Category;
-import org.kcsmini2.ojeommo.config.jwt.MemberDetail;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.kcsmini2.ojeommo.member.repository.CategoryRepository;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,15 +36,15 @@ public class ViewController {
     public String mainView() { return "main"; }
 
     @GetMapping("/mypage")
-    public String myPageView(@AuthenticationPrincipal MemberDetail memberDetail, Model model) {
-        model.addAttribute("data", memberDetail.getMember());
+    public String myPageView(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
+        model.addAttribute("data", memberDTO);
         return "mypage";
     }
 
     @GetMapping("/update")
-    public String updateView(@AuthenticationPrincipal MemberDetail memberDetail, Model model) {
+    public String updateView(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
 
-        model.addAttribute("data", memberDetail.getMember());
+        model.addAttribute("data", memberDTO);
         return "update";
     }
 
