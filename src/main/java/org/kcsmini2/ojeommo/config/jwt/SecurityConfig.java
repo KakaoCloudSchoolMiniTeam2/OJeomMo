@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -33,6 +34,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http
                 .httpBasic((httpBasic)->httpBasic.disable())
                 .csrf((csrf)->csrf.disable())
@@ -53,7 +55,7 @@ public class SecurityConfig {
 //                )
                 .sessionManagement((sessionManagement)-> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests()
-                .requestMatchers("/register", "/login", "/main").permitAll()
+                .requestMatchers("/register", "/login", "/main", "/css/**", "/js/**", "/img/**").permitAll()
 //                .requestMatchers("/admin/**").hasRole("ADMIN")
 //                .requestMatchers("/service/**").hasRole("USER")
 //                .anyRequest().denyAll()
@@ -84,4 +86,6 @@ public class SecurityConfig {
                 }));
         return http.build();
     }
+
+
 }
