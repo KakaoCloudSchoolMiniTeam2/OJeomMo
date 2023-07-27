@@ -6,6 +6,7 @@ import lombok.*;
 import org.kcsmini2.ojeommo.category.entity.FavoriteCategory;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Builder @AllArgsConstructor @NoArgsConstructor
-public class Member {
+public class Member{
 
     @Id
     private String id;
