@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:fragment="headerFragment">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/gather_detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <script src="/js/main.js" defer></script>
+</head>
+<body class="detailPostit">
+
+<header class="detailPostit__header">
+    <div class="title">
+        <i class="fa-solid fa-utensils"></i>
+        <h1> 만리장성</h1>
+    </div>
+    <button class="detailCloseIconButton">
+        <i class="fa-regular fa-circle-xmark"></i>
+    </button>
+</header>
+<section class="detailPostit__body">
+    <div class="detailHeader">
+        <span class="detailParty"><i class="fa-solid fa-user-group"></i><span> 1 / 4</span></span>
+        <div class="detailIconSection">
+            <div class="detailIconPartition">
+                <button class="detailIconButton">
+                    <i class="fa-regular fa-circle-up"></i>
+                </button>
+                <span>|</span>
+                <button class="detailIconButton">
+                    <i class="fa-solid fa-pencil"></i>
+                </button>
+                <span>|</span>
+                <button class="detailIconButton">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="detailContentSection">
+        <span class="author">글쓴이 : 태민킴</span>
+        <p class="category">음식 종류 : 중식</p>
+        <p class="detailMore">탕수육 나눠먹을 사람 구함</p>
+    </div>
+</section>
+<hr class="detailSection-separator">
+<section class="detailPostit__comment">
+
+</section>
+</body>
+</html>
