@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class PartyPk implements Serializable {
 
-    private Long memberId;
+    private String memberId;
 
     private Long boardId;
 }
