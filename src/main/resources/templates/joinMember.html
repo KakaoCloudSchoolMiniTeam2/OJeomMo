@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>회원가입</title>
+
+  <!-- Font Icon -->
+  <link type="text/css" th:href="@{/fonts/material-icon/css/material-design-iconic-font.min.css}" rel="stylesheet">
+
+  <!-- Main css -->
+  <link type="text/css" th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="main">
+  <!-- Sign up form -->
+    <div class="container">
+      <div style="margin-left: 80px" class="signup-content">
+        <div class="signup-form">
+          <h2 class="form-title">회원가입</h2>
+          <form action="/register" method="post" class="register-form" id="register-form">
+            <div class="form-group">
+              <label for="id"><i class="zmdi zmdi-account material-icons-name"></i></label>
+              <input type="text" name="id" id="id" placeholder="Id"/>
+            </div>
+            <div class="form-group">
+              <label for="pw"><i class="zmdi zmdi-lock"></i></label>
+              <input type="password" name="pw" id="pw" placeholder="Password"/>
+            </div>
+            <div class="form-group">
+              <label for="email"><i class="zmdi zmdi-email"></i></label>
+              <input type="email" name="email" id="email" placeholder="Your Email"/>
+            </div>
+            <div class="form-group">
+              <label for="name"><i class="zmdi zmdi-lock-outline"></i></label>
+              <input type="text" name="name" id="name" placeholder="Name"/>
+            </div>
+            <div class="form-group">
+              <label for="Nickname"><i class="zmdi zmdi-lock-outline"></i></label>
+              <input type="text" name="Nickname" id="Nickname" placeholder="Nickname"/>
+            </div>
+            <div>
+              <h4>카테고리 선택</h4>
+              <div class="form-group">
+                <label th:each="category : ${categories}" th:key="${category.id}">
+                  <input type="checkbox" th:name="'categoryId'" th:value="${category.id}"/>
+                  <span th:text="${category.category}"></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+              <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+            </div>
+            <div class="form-group form-button">
+              <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+<!-- JS -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
