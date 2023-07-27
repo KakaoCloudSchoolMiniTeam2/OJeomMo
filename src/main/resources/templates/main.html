@@ -8,18 +8,19 @@
     <div class="content">
         <div class="board-wrapper">
             <ul class="board">
-                <li class="article">
-
-                </li>
-                <li class="article">
-
-                </li>
-                <li class="article">
-
-                </li>
-                <li class="article">
-
-                </li>
+                <article class="postit" th:each="article : ${articles}">
+                    <header class="postit__header">
+                        <i th:if="${article.getIsDelivery()}" class="fa-solid fa-motorcycle"></i>
+                        <i th:unless="${article.getIsDelivery()}" class="fa-solid fa-utensils"></i>
+                        <h1 th:text="${article.getDinerName()}"/>
+                    </header>
+                    <ul class="postit__message">
+                        <li th:text="${article.getCategory()}"/>
+                        <li th:text="${article.getAuthorNickname()}"/>
+                        <li th:text="${article.getContent()}"/>
+                        <li class="party"><i class="fa-solid fa-user-group"></i><span> 1 / 4</span></li>
+                    </ul>
+                </article>
             </ul>
         </div>
     </div>

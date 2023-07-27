@@ -1,0 +1,109 @@
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.board{
+    display: flex;
+    flex-wrap: wrap;
+    height: 640px;
+    width: 600px;
+    justify-content: space-evenly;
+    padding: 30px 0px;
+    background-color: #ffd699;
+    border: 15px solid #505f4e;
+}
+
+.postit {
+    background: #ffe681;
+    color: #544900;
+    width: 240px;
+    height: 280px;
+    margin: 20px 0px;
+    border-radius: 3px;
+    font-family: 'omyu_pretty';
+    font-size: 22px;
+    position: relative;
+    transition: transform 0.2s ease-in;
+    box-shadow: 0 0 60px -30px #c9c6ba;
+}
+
+.postit:after {
+    border-width: 0;
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 0;
+    height: 0;
+    content: "";
+    border-style: solid;
+    border-color: transparent transparent wheat #ffe121;
+    transition: border-width 0.2s ease-in;
+    box-shadow: -4px -4px 8px -3px #c4aa00;
+}
+/*.postit:hover {*/
+/*    transform: rotate(0);*/
+/*}*/
+.postit:hover:after {
+    border-width: 0 0 21px 21px;
+}
+.postit header {
+    padding: 10px 20px;
+    background: #f3d060;
+    color: #544900;
+    border-radius: 3px 3px 0 0;
+    position: relative;
+
+}
+.postit h1 {
+    display: inline;
+    font-family: 'omyu_pretty';
+    font-size: 27px;
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
+}
+.postit ul {
+    list-style: none;
+}
+.postit li + li {
+    margin-top: 15px;
+}
+.postit__message {
+    padding: 20px;
+    margin: 0;
+    font-size: 25px;
+    /*box-shadow: inset 0 6px 20px -10px #c4aa00;*/
+}
+
+.party{
+    line-height: 50px;
+    width: 160px;
+    height: 50px;
+    position: absolute;
+    bottom: 20px;
+    font-size: 20px;
+}
+
+.more{
+    font-size: 20px;
+    margin-top: 15px;
+}
+
+@media screen and (max-width: 630px) {
+    .content {
+        display: block;
+    }
+    .board{
+        position: relative;
+        top: 29px;
+        width: auto;
+        height: auto;
+    }
+}
