@@ -14,13 +14,13 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
     padding: 30px 0px;
-    background-color: #ffd699;
-    border: 15px solid #505f4e;
+    background-color: #fef6e5;
+    border: 5px solid white;
 }
 
 .detailPostit {
-    background: #ffe681;
-    color: #544900;
+    background: #FFFFFF;
+    color: #2b2b2b;
     /*margin: 20px 0px;*/
     border-radius: 3px;
     font-family: 'omyu_pretty';
@@ -37,7 +37,7 @@
     height: 0;
     content: "";
     border-style: solid;
-    border-color: transparent transparent wheat #ffe121;
+    border-color: transparent transparent #fbe6af #FFFFFFCC;
 }
 
 .detailCloseIconButton{
@@ -55,8 +55,8 @@
 
 .detailPostit header {
     padding: 20px 20px;
-    background: #f3d060;
-    color: #544900;
+    background: #fef6e5;
+    color: #2b2b2b;
     border-radius: 3px 3px 0 0;
     position: relative;
     text-align: center;
@@ -135,6 +135,10 @@
     cursor: pointer;
 }
 
+.category {
+    font-size: 20px;
+}
+
 .detailContentSection{
     display: flex;
     flex-direction: column;
@@ -170,4 +174,14 @@
     border: none; /* 기본 구분선 스타일 초기화 */
     border-top: 2px solid #505f4e; /* 원하는 구분선 스타일 설정 */
     margin: 0px 30px; /* 원하는 간격 설정 */
+}
+
+.joinBtn {
+    font-size: 20px;
+    color: #544900;
+    font-family: 'omyu_pretty';
+
+    border: 3px solid white;
+    background-color: transparent;
+    margin: 10px 20px 30px 30px;
 }

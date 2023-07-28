@@ -20,8 +20,7 @@ public class ViewController {
 
     @GetMapping("/register")
     public String register(Model model) {
-        List<Category> categories = new ArrayList<>();
-        categories = categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
 
         return "joinMember";

@@ -27,8 +27,6 @@ public class MemberController {
     public String signup(@ModelAttribute SignRequest request,
                          @RequestParam(name = "categoryId", required = false) String[] categoryIds) throws Exception {
         if(categoryIds == null) categoryIds = new String[0];
-        System.out.println("regi test : " + request.getName());
-        System.out.println("regi test category : " + categoryIds[0]);
         request.setCategoryIds(categoryIds);
 
         signService.register(request);

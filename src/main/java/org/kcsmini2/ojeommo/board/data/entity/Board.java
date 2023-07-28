@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.kcsmini2.ojeommo.board.data.dto.request.update.BoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.comment.data.entity.Comment;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
@@ -24,6 +26,7 @@ public class Board {
 
     @ManyToOne
     @JoinColumn(name = "author_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Member author;
 
     @Column

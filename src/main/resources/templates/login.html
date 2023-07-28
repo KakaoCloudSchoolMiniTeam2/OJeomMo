@@ -1,43 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="./login.css">
-</head>
+<head th:replace="~{/fragment/header :: headerFragment}"></head>
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Noto Sans KR", sans-serif;
-  }
 
-  a {
+    @font-face {
+        font-family: 'KBO-Dia-Gothic_bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/KBO-Dia-Gothic_bold.woff') format('woff');
+        font-weight: 700;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'omyu_pretty';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+<!--  * {-->
+<!--    margin: 0;-->
+<!--    padding: 0;-->
+<!--    box-sizing: border-box;-->
+<!--    font-family: 'KBO-Dia-Gothic_bold';-->
+<!--  }-->
+
+    body{
+        font-family: 'omyu_pretty';
+    }
+
+  .login-a {
     text-decoration: none;
     color: black;
   }
 
-  li {
-    list-style: none;
-  }
-
   .wrap {
-    width: 100%;
-    height: 100vh;
-    display: flex;
+    width: 630px;
+    min-height: 771px;
+    display: block;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.1);
+    background: #fef6e5;
   }
 
   .login {
-    width: 30%;
-    height: 600px;
-    background: white;
+    width: 100%;
+    height: 100%;
+    background: #FFFFFFCC;
     border-radius: 20px;
     display: flex;
     justify-content: center;
@@ -45,7 +53,7 @@
     flex-direction: column;
   }
 
-  h2 {
+  .h2-login {
     color: black;
     font-size: 2em;
   }
@@ -80,22 +88,24 @@
     outline: none;
   }
 
-  .submit {
+  .submit-login {
+
     margin-top: 50px;
-    width: 80%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
   }
 
-  .submit input, .submit a {
+  .submit-login input{
+      font-family: 'omyu_pretty';
     flex: 1;
     height: 50px;
+      width: 100%;
     border: 0;
     outline: none;
     border-radius: 5px; /* 사각형 모양으로 변경 */
-    font-size: 1.2em;
+    font-size: 1em;
     letter-spacing: 2px;
     text-align: center;
     display: inline-flex;
@@ -103,36 +113,43 @@
     justify-content: center;
     text-decoration: none;
     color: white;
+      background: #ecb390;
+     /* Add a little spacing between the buttons */
   }
 
-  .submit input {
-    background: #444;
-    margin-right: 10px; /* Add a little spacing between the buttons */
-  }
 
-  .submit a {
-    background: #444;
-  }
+
+
 </style>
 <body>
-<div th:fragment="loginForm" class="wrap">
-  <div class="login">
-    <h2>Log-in</h2>
-    <form action="/login" method="post">
-      <div class="login_id">
-        <h4>ID</h4>
-        <input type="text" name="id" placeholder="Id">
-      </div>
-      <div class="login_pw">
-        <h4>Password</h4>
-        <input type="password" name="pw" placeholder="Password">
-      </div>
-      <div class="submit">
-        <input type="submit" value="로그인">
-        <a href="/register">회원가입</a>
-      </div>
-    </form>
-  </div>
+<nav th:replace="~{/fragment/navbar :: navbarFragment}"></nav>
+<div class="container">
+    <div class="content-margin"></div>
+    <div class="content">
+<!--        <div class="board-wrapper">-->
+            <div th:fragment="loginForm" class="wrap">
+                <div class="login">
+                    <h2 class="h2-login">Log-in</h2>
+                    <form action="/login" method="post">
+                        <div class="login_id">
+                            <h4>ID</h4>
+                            <input type="text" name="id" placeholder="Id">
+                        </div>
+                        <div class="login_pw">
+                            <h4>Password</h4>
+                            <input type="password" name="pw" placeholder="Password">
+                        </div>
+                        <div class="submit-login">
+                            <input type="submit" value="로그인">
+                        </div>
+                    </form>
+                </div>
+            </div>
+<!--        </div>-->
+    </div>
+    <div class="content-margin">
+        <div th:replace="~{/fragment/profile :: profileFragment}"></div>
+    </div>
 </div>
 </body>
 </html>

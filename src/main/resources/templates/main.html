@@ -8,8 +8,11 @@
     <div class="content">
         <div class="board-wrapper">
             <ul class="board">
-                <article class="postit" th:each="article : ${articles}">
+            <th:block th:each="article : ${articles}">
+            	<article class="postit" th:id="${article.getId()}">
+                <!--<article class="postit" th:each="article : ${articles}">-->
                     <header class="postit__header">
+                    <button class="postit_btn" th:data-board-id="${article.getId()}"></button>
                         <i th:if="${article.getIsDelivery()}" class="fa-solid fa-motorcycle"></i>
                         <i th:unless="${article.getIsDelivery()}" class="fa-solid fa-utensils"></i>
                         <h1 th:text="${article.getDinerName()}"/>
@@ -18,15 +21,21 @@
                         <li th:text="${article.getCategory()}"/>
                         <li th:text="${article.getAuthorNickname()}"/>
                         <li th:text="${article.getContent()}"/>
-                        <li class="party"><i class="fa-solid fa-user-group"></i><span> 1 / 4</span></li>
+                        <li class="party"><i class="fa-solid fa-user-group"> </i>
+                            <span>&nbsp</span>
+                            <span th:text="${article.getInitNumber()}">1</span>
+                            <span>/</span>
+                            <span th:text="${article.getGatherNumber()}">4</span>
+                        </li>
                     </ul>
                 </article>
+            </th:block>
             </ul>
 
             <div class="join-wrapper">
-                <button class="joinBtn">
+                <a class="createBtn" th:href="@{/create}">
                     <i class="fa-regular fa-pen-to-square"></i>
-                </button>
+                </a>
             </div>
 
             <div class="pagination">

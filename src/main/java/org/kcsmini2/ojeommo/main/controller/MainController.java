@@ -17,19 +17,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 
-@Controller
+@Controller()
 @RequiredArgsConstructor
 public class MainController {
 
     private final GatherBoardService gatherBoardService;
     private final PaginationService paginationService;
 
-    @GetMapping()
-    public String redirectToMain() {
-        return "redirect:/main";
-    }
-
-    @GetMapping("/main")
+    @GetMapping("main")
     public String getIndex(@AuthenticationPrincipal MemberDTO memberDTO,
                            @PageableDefault(size = 4, sort = "bumpedAt", direction = Sort.Direction.DESC) Pageable pageable,
                            ModelMap map) {
@@ -43,7 +38,7 @@ public class MainController {
 
         map.addAttribute("articles", responseDtoPage);
         map.addAttribute("pageNumbers", pageNumbers);
-        System.out.println(pageNumbers);
+//        System.out.println(pageNumbers);
         return "main";
     }
 
@@ -53,17 +48,17 @@ public class MainController {
     @GetMapping("create")
     public String createhtml(){return "fragment/gather_create";}
 
-    @GetMapping("/total")
+    @GetMapping("total")
     public String Total() {
         return "total";
     }
 
-    @GetMapping("/review")
+    @GetMapping("review")
     public String Review() {
         return "review";
     }
 
-    @GetMapping("/roulette")
+    @GetMapping("roulette")
     public String Roulette() {
         return "roulette";
     }

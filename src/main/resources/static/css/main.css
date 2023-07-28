@@ -16,6 +16,7 @@
     --background-color: #fcf8e8;
     --accent-color: #ecb390;
 }
+
 body{
     display: flex;
     flex-direction: column;

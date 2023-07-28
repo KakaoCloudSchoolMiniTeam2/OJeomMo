@@ -16,10 +16,10 @@ public class Category {
     private Long id;
 
     @Column
-    private String category;
+    private String categoryName;
 
     @Builder
-    public Category(String category) {
-        this.category = category;
+    public Category(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
