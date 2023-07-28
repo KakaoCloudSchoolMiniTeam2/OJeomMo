@@ -21,14 +21,19 @@
                         <li th:text="${article.getCategory()}"/>
                         <li th:text="${article.getAuthorNickname()}"/>
                         <li th:text="${article.getContent()}"/>
-                        <li class="party"><i class="fa-solid fa-user-group"></i><span> 1 / 4</span></li>
+                        <li class="party"><i class="fa-solid fa-user-group"> </i>
+                            <span>&nbsp</span>
+                            <span th:text="${article.getInitNumber()}">1</span>
+                            <span>/</span>
+                            <span th:text="${article.getGatherNumber()}">4</span>
+                        </li>
                     </ul>
                 </article>
             </th:block>
             </ul>
 
             <div class="join-wrapper">
-                <a class="createBtn" href="board/createGatherBoard">
+                <a class="createBtn" th:href="@{/create}">
                     <i class="fa-regular fa-pen-to-square"></i>
                 </a>
             </div>

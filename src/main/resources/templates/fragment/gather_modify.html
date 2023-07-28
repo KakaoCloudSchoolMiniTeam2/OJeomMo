@@ -9,11 +9,12 @@
     <script src="/js/main.js" defer></script>
 </head>
 <body class="createPostit">
-<form th:action="@{/board/updateGatherBoard}" method="post">
+<form th:action="@{/board/updateGatherBoardPage}" method="post">
     <header class="createPostit__header">
+        <input type="hidden" name="boardId" th:value="${gatherDetail.getId()}"/>
         <div class="title">
             <label for="title">가게 이름:</label>
-            <input type="text" id="title" name="title" placeholder="가게 이름을 입력하세요">
+            <input type="text" id="title" name="title" th:value="${gatherDetail.getTitle()}" placeholder="가게 이름을 입력하세요">
         </div>
         <button class="createIconButton">
             <i class="fa-regular fa-circle-xmark"></i>
@@ -24,9 +25,9 @@
             <span class="createParty">
                 <i class="fa-solid fa-user-group"></i>
                 <span>
-                    <input type="text" id="initNumber" name="initNumber" placeholder="0" pattern="[0-9]+" required>
+                    <input type="text" id="initNumber" name="initNumber" th:value="${gatherDetail.getInitNumber()}" placeholder="0" pattern="[0-9]+" required>
                     /
-                    <input type="text" id="gatherNumber" name="gatherNumber" placeholder="0" pattern="[0-9]+" required>
+                    <input type="text" id="gatherNumber" name="gatherNumber" th:value="${gatherDetail.getGatherNumber()}" placeholder="0" pattern="[0-9]+" required>
                 </span>
             </span>
         </div>
@@ -43,14 +44,14 @@
                     <i class="fa-solid fa-motorcycle"></i>
                 </label>
             </div>
-            <p class="category">음식 종류 : <input list="foodCategory" id="category" name="category" placeholder="음식 종류를 선택하세요."></p>
+            <p class="category">음식 종류 : <input list="foodCategory" th:value="${gatherDetail.getCategory()}" id="category" name="categoryName" placeholder="음식 종류를 선택하세요."></p>
             <datalist id="foodCategory">
                 <option value="한식">
                 <option value="중식">
                 <option value="일식">
                 <option value="양식">
             </datalist>
-            <input type="text" id="content" name="content" placeholder="추가적인 내용을 입력해주세요.">
+            <input type="text" id="content" th:value="${gatherDetail.getContent()}" name="content" placeholder="추가적인 내용을 입력해주세요.">
         </div>
     </section>
     <div class="submitDiv"><button type="submit" class="submitButton"><i class="fa-regular fa-paper-plane"></i></button></div>

@@ -14,13 +14,13 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
     padding: 30px 0px;
-    background-color: #ffd699;
-    border: 15px solid #505f4e;
+    background-color: #fbe6af;
+    border: 5px solid white;
 }
 
 .createPostit {
-    background: #ffe681;
-    color: #544900;
+    background: #FFFFFFCC;
+    color: #2b2b2b;
     /*margin: 20px 0px;*/
     border-radius: 3px;
     font-family: 'omyu_pretty';
@@ -37,13 +37,13 @@
     height: 0;
     content: "";
     border-style: solid;
-    border-color: transparent transparent wheat #ffe121;
+    border-color: transparent transparent #fbe6af #FFFFFFCC;
 }
 
 .createPostit header {
     padding: 20px 20px;
-    background: #f3d060;
-    color: #544900;
+    background: #fef6e5;
+    color: #2b2b2b;
     border-radius: 3px 3px 0 0;
     position: relative;
     text-align: center;
@@ -187,7 +187,7 @@ input[type="text"] {
     font-size: 20px;
     padding: 10px;
     border-radius: 50%;
-    border: 2px solid cornflowerblue;
+    border: 2px solid #92b4ec;
 }
 
 .deliveryInput .deliveryseparator{
@@ -209,11 +209,11 @@ input[type="text"] {
     justify-content: center;
     text-align: center;
     font-size: 35px;
-    background-color: skyblue;
+    background-color: #92b4ec;
     cursor: pointer;
     /*width: max-content;*/
     padding: 10px;
     border-radius: 50%;
-    border: 2px solid skyblue;
+    border: 2px solid #92b4ec;
     align-items: center; /* 세로 방향으로 아이콘들을 가운데 정렬 */
 }
