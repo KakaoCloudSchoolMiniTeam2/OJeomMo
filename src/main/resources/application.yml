@@ -1,7 +1,7 @@
 spring:
   jpa:
     defer-datasource-initialization: false
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
@@ -9,17 +9,19 @@ spring:
         default_batch_fetch_size: 100
       open-in-view: false
       database-platform: org.hibernate.dialect.MariaDBDialect
+#    테이블 생성
 #    hibernate:
 #      ddl-auto: create
 
-  devtools:
-    restart:
-      enabled: false
-    livereload:
-      enabled: true
-
-  freemarker:
-    cache: false
+#  css livereload
+#  devtools:
+#    restart:
+#      enabled: false
+#    livereload:
+#      enabled: true
+#
+#  freemarker:
+#    cache: false
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
@@ -40,6 +42,6 @@ spring:
 
 jwt:
   secret:
-    key: x!A%D*G-KaPdSgVkYp3s5v8y/B?E(H+M
+    key: ${JWT_KEY}
 
 #  비밀키 값 추후에 환경변수로 옮길 것.
