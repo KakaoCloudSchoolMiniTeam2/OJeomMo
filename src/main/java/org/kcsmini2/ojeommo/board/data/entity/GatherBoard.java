@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.category.entity.Category;
@@ -31,6 +33,7 @@ public class GatherBoard {
     @OneToOne
     @MapsId
     @JoinColumn(name = "board_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Board board;
 
     @Column
@@ -51,6 +54,7 @@ public class GatherBoard {
 
     @JoinColumn(name = "category_id")
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Category category;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST, orphanRemoval = true)
@@ -73,7 +77,7 @@ public class GatherBoard {
 
     public void update(GatherBoardUpdateRequestDTO requestDTO) {
         this.board.update(requestDTO);
-        this.dinerName = requestDTO.getDinerName();
+        this.dinerName = requestDTO.getTitle();
         this.gatherNumber = requestDTO.getGatherNumber();
         this.initNumber = requestDTO.getInitNumber();
         this.isDelivery = requestDTO.getIsDelivery();

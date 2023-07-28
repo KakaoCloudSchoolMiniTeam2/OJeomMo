@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.kcsmini2.ojeommo.board.data.entity.Board;
 import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
 import org.kcsmini2.ojeommo.category.entity.Category;
@@ -14,11 +15,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 public class BoardUpdateRequestDTO {
     private String title;
     private String content;
     private LocalDateTime createdAt;
-
+    private Long boardId;
 }
 
 

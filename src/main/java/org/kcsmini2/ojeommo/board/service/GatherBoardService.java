@@ -21,9 +21,9 @@ public interface GatherBoardService {
 
     public void deleteBoard(Long boardId, MemberDTO memberDTO);
 
-    public void updateBoard(Long boardId, GatherBoardUpdateRequestDTO requestDTO, MemberDTO memberDTO);
+    public void updateBoard(GatherBoardUpdateRequestDTO requestDTO, MemberDTO memberDTO);
 
-    public void bumpBoard(GatherBoardBumpedRequestDTO gatherBoardBumpedRequestDTO, Long boardId, MemberDTO memberDTO);
+    public void bumpBoard(Long boardId, MemberDTO memberDTO);
 
     public boolean joinParty(Long boardId, MemberDTO memberDTO);
 

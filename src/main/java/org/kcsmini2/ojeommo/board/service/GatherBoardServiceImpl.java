@@ -1,10 +1,7 @@
 package org.kcsmini2.ojeommo.board.service;
 
 import lombok.RequiredArgsConstructor;
-import org.kcsmini2.ojeommo.board.data.dto.request.bumped.GatherBoardBumpedRequestDTO;
-import org.kcsmini2.ojeommo.board.data.dto.request.create.BoardCreateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.GatherBoardCreateRequestDTO;
-import org.kcsmini2.ojeommo.board.data.dto.request.update.BoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.BoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.GatherBoardDetailResponseDTO;
@@ -12,6 +9,8 @@ import org.kcsmini2.ojeommo.board.data.entity.Board;
 import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
 import org.kcsmini2.ojeommo.board.repository.BoardRepository;
 import org.kcsmini2.ojeommo.board.repository.GatherBoardRepository;
+import org.kcsmini2.ojeommo.category.entity.Category;
+import org.kcsmini2.ojeommo.category.repository.CategoryRepository;
 import org.kcsmini2.ojeommo.comment.CommentRepository;
 import org.kcsmini2.ojeommo.member.data.PartyRepository;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
@@ -20,10 +19,12 @@ import org.kcsmini2.ojeommo.member.data.entity.Party;
 import org.kcsmini2.ojeommo.member.repository.MemberRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -35,6 +36,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     private final GatherBoardRepository gatherBoardRepository;
     private final MemberRepository memberRepository;
     private final PartyRepository partyRepository;
+    private final CategoryRepository categoryRepository;
     private final CommentRepository commentRepository;
 
 
@@ -48,6 +50,10 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         Member author = memberRepository.findById(memberDTO.getId()).orElseThrow();
         Board board = requestDTO.toEntity(author);
 
+        Category foundCategory = categoryRepository.findCategoryByCategoryName(requestDTO.getCategoryName());
+        System.out.println(foundCategory);
+        requestDTO.setCategory(foundCategory);
+
         GatherBoardCreateRequestDTO gatherBoardCreateRequestDTO = requestDTO;
         GatherBoard gatherBoard = gatherBoardCreateRequestDTO.toEntity(board);
         gatherBoardRepository.save(gatherBoard);
@@ -59,28 +65,29 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         GatherBoard board = gatherBoardRepository.findById(boardId).orElseThrow(/*() -> new ApplicationException(ErrorCode.INVALID_ARTICLE_ID)*/);//ErrorCode 관련 같은데 나중에 추가해야할듯
 
         boolean isJoined = getGatherJoinStatus(memberDTO, board);
+        Integer partyNumber = partyRepository.countByBoardId(boardId);
 
-        return GatherBoardDetailResponseDTO.from(board, isJoined);
+        return GatherBoardDetailResponseDTO.from(board, isJoined, partyNumber);
     }
 
     // 끌어올리기
     @Transactional
     @Override
-    public void bumpBoard(GatherBoardBumpedRequestDTO requestDTO, Long boardId, MemberDTO memberDTO) {
+    public void bumpBoard(Long boardId, MemberDTO memberDTO) {
+        LocalDateTime timeNow = LocalDateTime.now();
         GatherBoard gatherBoard = gatherBoardRepository.findById(boardId)
                 .orElseThrow(/*() -> new ApplicationException(ErrorCode.INVALID_ARTICLE_ID)*/);
 
-        checkBumped(gatherBoard, requestDTO);
+        checkBumped(gatherBoard, timeNow);
         checkPermission(gatherBoard, memberDTO);
 
-        requestDTO.bumpedEntity(gatherBoard);
+        gatherBoard.bumped(timeNow);
     }
 
-    private void checkBumped(GatherBoard gatherBoard, GatherBoardBumpedRequestDTO requestDTO) {
+    private void checkBumped(GatherBoard gatherBoard, LocalDateTime timeNow) {
         LocalDateTime beforeBumpedAt = gatherBoard.getBumpedAt();
-        LocalDateTime now = requestDTO.getBumpedAt();
 
-        Duration diff = Duration.between(beforeBumpedAt, now);
+        Duration diff = Duration.between(beforeBumpedAt, timeNow);
         long diffMin = diff.toMinutes();
 
         if (diffMin < BUMP_LIMIT_TIME) {
@@ -88,15 +95,11 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         }
     }
 
-    private boolean getGatherJoinStatus(MemberDTO memberDTO, GatherBoard board) { //해당 Member가 Gather에 참여했는지 boolean으로 반환
-//      추후 구현
-//        if (memberDTO != null) {
-//            JoinKey joinKey = JoinKey.builder()
-//                    .member(boardRepository.getReferenceById(memberDTO.getId()))
-//                    .board(board)
-//                    .build();
-//            return joinRepository.findByVoteKey(joinKey).isPresent();
-//        }
+    private boolean getGatherJoinStatus(MemberDTO memberDTO, GatherBoard board) {
+        if (memberDTO != null) {
+            Party foundParty = partyRepository.findByMemberIdAndBoardId(memberDTO.getId(), board.getId());
+            return foundParty != null && Objects.equals(foundParty.getMemberId(), memberDTO.getId());
+        }
         return false; //로그인하지 않은 익명 사용자의 경우 항상 false를 반환
     }
 
@@ -106,7 +109,8 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         Member partyMember = memberRepository.getReferenceById(memberDTO.getId());
 
         //보드엔티티를 불러옴
-        GatherBoard board = gatherBoardRepository.getReferenceById(boardId);
+        GatherBoard board = gatherBoardRepository.findById(boardId)
+                .orElseThrow(() -> new RuntimeException("게시글이 존재하지 않습니다."));
 
         //파티엔티티를 만들어줌
         Party party = Party.builder()
@@ -123,12 +127,13 @@ public class GatherBoardServiceImpl implements GatherBoardService {
 
     @Override
     @Transactional
-    public void updateBoard(Long boardId, GatherBoardUpdateRequestDTO requestDTO, MemberDTO memberDTO) {
-        GatherBoard gatherBoard = gatherBoardRepository.findById(boardId).orElseThrow();
+    public void updateBoard(GatherBoardUpdateRequestDTO requestDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
+        GatherBoard gatherBoard = gatherBoardRepository.findById(requestDTO.getBoardId()).orElseThrow();
+        requestDTO.setCategory(categoryRepository.findCategoryByCategoryName(requestDTO.getCategoryName()));
 
-        GatherBoardUpdateRequestDTO gatherBoardUpdateRequestDTO = (GatherBoardUpdateRequestDTO) requestDTO;
+        checkPermission(gatherBoard, memberDTO);
 
-        gatherBoard.update(gatherBoardUpdateRequestDTO);
+        gatherBoard.update(requestDTO);
     }
 
     @Override
@@ -163,7 +168,8 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         return gatherBoardPage
                 .map(gatherBoard -> {
                     boolean isJoined = getGatherJoinStatus(memberDTO, gatherBoard);
-                    return GatherBoardDetailResponseDTO.from(gatherBoard, isJoined);
+                    Integer partyNumber = partyRepository.countByBoardId(gatherBoard.getId());
+                    return GatherBoardDetailResponseDTO.from(gatherBoard, isJoined, partyNumber);
                 });
     }
 
