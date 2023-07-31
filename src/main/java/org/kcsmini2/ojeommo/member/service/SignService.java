@@ -24,7 +24,7 @@ import java.util.Optional;
  *
  * 설명: member CRUD + a 서비스
  *
- * 최종 수정 일자: 2023/07/24
+ * 최종 수정 일자: 2023/07/31
  */
 @Service
 @Transactional
@@ -96,16 +96,13 @@ public class SignService {
 
     public boolean update(SignRequest request) {
 
-        if (request.getPw() != null ){
+        if (request.getPw() != null && !request.getPw().equals("")){
             request.setPw(passwordEncoder.encode(request.getPw()));
-        }
 
+        }
         Optional<Member> member = memberRepository.findById(request.getId());
 
-        if(member.isPresent()) {
-            return member.get().updateMember(request);
-        }
-        else return false;
+        return member.map(value -> value.updateMember(request)).orElse(false);
     }
 
     public boolean delete(String id) {
