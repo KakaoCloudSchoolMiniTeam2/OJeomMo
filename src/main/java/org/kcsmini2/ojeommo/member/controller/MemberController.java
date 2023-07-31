@@ -1,5 +1,6 @@
 package org.kcsmini2.ojeommo.member.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
@@ -10,12 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.PrintWriter;
+
 /**
  * 작성자: 김준연
  *
  * 설명: member 컨트롤러 작성
  *
- * 최종 수정 일자: 2023/07/24
+ * 최종 수정 일자: 2023/07/31
  */
 @Controller
 @RequiredArgsConstructor
@@ -25,13 +28,20 @@ public class MemberController {
 
     @PostMapping("/register")
     public String signup(@ModelAttribute SignRequest request,
-                         @RequestParam(name = "categoryId", required = false) String[] categoryIds) throws Exception {
+                         @RequestParam(name = "categoryId", required = false) String[] categoryIds,
+                         HttpServletResponse response) throws Exception {
         if(categoryIds == null) categoryIds = new String[0];
         request.setCategoryIds(categoryIds);
 
-        signService.register(request);
+        if(signService.register(request)) return "login";
 
-        return "login";
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<script>alert('" + "중복된 아이디입니다." + "'); history.go(-1); </script> ");
+        out.flush();
+
+        return "register";
     }
 
     @PostMapping(value = "/login")

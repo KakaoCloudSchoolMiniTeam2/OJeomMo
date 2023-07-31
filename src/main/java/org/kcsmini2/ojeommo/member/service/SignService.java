@@ -39,6 +39,8 @@ public class SignService {
 
     public boolean register(SignRequest request) throws Exception {
         try {
+            if(memberRepository.findById(request.getId()).isPresent()) return false;
+
             Member member = Member.builder()
                     .id(request.getId())
                     .pw(passwordEncoder.encode(request.getPw()))
