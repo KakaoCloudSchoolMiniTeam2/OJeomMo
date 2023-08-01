@@ -3,6 +3,8 @@ package org.kcsmini2.ojeommo.member.service;
 import lombok.RequiredArgsConstructor;
 import org.kcsmini2.ojeommo.category.entity.FavoriteCategory;
 import org.kcsmini2.ojeommo.config.jwt.JwtProvider;
+import org.kcsmini2.ojeommo.exception.ApplicationException;
+import org.kcsmini2.ojeommo.exception.ErrorCode;
 import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
 import org.kcsmini2.ojeommo.member.data.dto.SignResponse;
 import org.kcsmini2.ojeommo.member.data.entity.Authority;
@@ -39,7 +41,8 @@ public class SignService {
 
     public boolean register(SignRequest request) throws Exception {
         try {
-            if(memberRepository.findById(request.getId()).isPresent()) return false;
+            if(memberRepository.existsById(request.getId())) throw new ApplicationException(ErrorCode.DUPLICATED_ID);
+            else if(memberRepository.findByEmail(request.getEmail()).isPresent()) throw new ApplicationException(ErrorCode.DUPLICATED_EMAIL);
 
             Member member = Member.builder()
                     .id(request.getId())

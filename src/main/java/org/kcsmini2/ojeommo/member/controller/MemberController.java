@@ -1,7 +1,10 @@
 package org.kcsmini2.ojeommo.member.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.kcsmini2.ojeommo.exception.ApplicationException;
+import org.kcsmini2.ojeommo.exception.ErrorCode;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
 import org.kcsmini2.ojeommo.member.data.dto.SignResponse;
@@ -9,6 +12,7 @@ import org.kcsmini2.ojeommo.member.service.SignService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.PrintWriter;
@@ -27,19 +31,19 @@ public class MemberController {
     private final SignService signService;
 
     @PostMapping("/register")
-    public String signup(@ModelAttribute SignRequest request,
+    public String signup(@Valid @ModelAttribute SignRequest request,
                          @RequestParam(name = "categoryId", required = false) String[] categoryIds,
-                         HttpServletResponse response) throws Exception {
+                         BindingResult bindingResult) throws Exception {
+
+        if(bindingResult.hasErrors()) {
+            throw new ApplicationException(ErrorCode.NULL_FIELD);
+        }
+
         if(categoryIds == null) categoryIds = new String[0];
         request.setCategoryIds(categoryIds);
 
         if(signService.register(request)) return "login";
 
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        out.println("<script>alert('" + "중복된 아이디입니다." + "'); history.go(-1); </script> ");
-        out.flush();
 
         return "register";
     }

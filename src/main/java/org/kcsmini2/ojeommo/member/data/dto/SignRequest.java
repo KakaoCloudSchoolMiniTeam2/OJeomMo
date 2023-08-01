@@ -1,5 +1,6 @@
 package org.kcsmini2.ojeommo.member.data.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 /**
@@ -12,10 +13,15 @@ import lombok.*;
 @Getter
 @Setter
 public class SignRequest {
+    @NotBlank
     private String id;
+    @NotBlank
     private String pw;
+    @NotBlank
     private String nickname;
+    @NotBlank
     private String name;
+    @NotBlank
     private String email;
     private String[] categoryIds;
 }

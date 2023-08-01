@@ -2,6 +2,7 @@ package org.kcsmini2.ojeommo.member.data.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.kcsmini2.ojeommo.category.entity.FavoriteCategory;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
@@ -33,6 +34,7 @@ public class Member{
     private String name;
 
     @Column(unique = true)
+    @Email
     private String email;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
