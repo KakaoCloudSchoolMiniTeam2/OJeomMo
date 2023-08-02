@@ -23,9 +23,9 @@ import java.util.Optional;
 
 /**
  * 작성자: 김준연
- *
+ * <p>
  * 설명: member CRUD + a 서비스
- *
+ * <p>
  * 최종 수정 일자: 2023/07/31
  */
 @Service
@@ -40,40 +40,31 @@ public class SignService {
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public boolean register(SignRequest request) throws Exception {
-        try {
-            if(memberRepository.existsById(request.getId())) throw new ApplicationException(ErrorCode.DUPLICATED_ID);
-            else if(memberRepository.findByEmail(request.getEmail()).isPresent()) throw new ApplicationException(ErrorCode.DUPLICATED_EMAIL);
 
-            Member member = Member.builder()
-                    .id(request.getId())
-                    .pw(passwordEncoder.encode(request.getPw()))
-                    .name(request.getName())
-                    .nickname(request.getNickname())
-                    .email(request.getEmail())
+        if (memberRepository.existsById(request.getId())) throw new ApplicationException(ErrorCode.DUPLICATED_ID);
+        else if (memberRepository.findByEmail(request.getEmail()).isPresent())
+            throw new ApplicationException(ErrorCode.DUPLICATED_EMAIL);
+
+        Member member = Member.builder()
+                .id(request.getId())
+                .pw(passwordEncoder.encode(request.getPw()))
+                .name(request.getName())
+                .nickname(request.getNickname())
+                .email(request.getEmail())
+                .build();
+
+        member.setRoles(Collections.singletonList(Authority.builder().name("ROLE_USER").build()));
+
+        memberRepository.save(member);
+
+
+        for (String str : request.getCategoryIds()) {
+            Long id = Long.parseLong(str);
+            FavoriteCategory favoriteCategory = FavoriteCategory.builder()
+                    .categoryId(id)
+                    .memberId(request.getId())
                     .build();
-
-            member.setRoles(Collections.singletonList(Authority.builder().name("ROLE_USER").build()));
-
-            memberRepository.save(member);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new Exception("잘못된 요청입니다.");
-
-        }
-        try {
-            for(String str : request.getCategoryIds()) {
-                Long id = Long.parseLong(str);
-                FavoriteCategory favoriteCategory = FavoriteCategory.builder()
-                        .categoryId(id)
-                        .memberId(request.getId())
-                        .build();
-                favoriteCategoryRepository.save(favoriteCategory);
-            }
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new Exception("catgoryIds가 비어있음.");
+            favoriteCategoryRepository.save(favoriteCategory);
         }
 
 
@@ -82,10 +73,10 @@ public class SignService {
 
     public SignResponse login(SignRequest request) throws Exception {
         Member member = memberRepository.findById(request.getId()).orElseThrow(() ->
-                new BadCredentialsException("잘못된 계정정보입니다."));
+                new ApplicationException(ErrorCode.NONEXISTENT_ID));
 
         if (!passwordEncoder.matches(request.getPw(), member.getPw())) {
-            throw new BadCredentialsException("잘못된 계정정보입니다.");
+            throw new ApplicationException(ErrorCode.UNCORRECTED_PW);
         }
 
         return SignResponse.builder()
@@ -101,9 +92,12 @@ public class SignService {
 
     public boolean update(SignRequest request) {
 
-        if (request.getPw() != null && !request.getPw().equals("")){
-            request.setPw(passwordEncoder.encode(request.getPw()));
+        if(memberRepository.findByEmailWithOutSelf(request.getId(), request.getEmail()).isPresent()) {
+            throw new ApplicationException(ErrorCode.DUPLICATED_EMAIL);
+        }
 
+        if (request.getPw() != null && !request.getPw().equals("")) {
+            request.setPw(passwordEncoder.encode(request.getPw()));
         }
         Optional<Member> member = memberRepository.findById(request.getId());
 
@@ -111,13 +105,10 @@ public class SignService {
     }
 
     public boolean delete(String id) {
-        System.out.println("delete service");
         try {
             memberRepository.deleteById(id);
-            System.out.println("deleted");
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }

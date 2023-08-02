@@ -45,7 +45,7 @@ public class MemberController {
         if(signService.register(request)) return "login";
 
 
-        return "register";
+        return "joinMember";
     }
 
     @PostMapping(value = "/login")
