@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing
-public class OjeomMoApplication {
+public class OJeomMoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OjeomMoApplication.class, args);
+		SpringApplication.run(OJeomMoApplication.class, args);
 	}
 
 }
