@@ -11,7 +11,7 @@ import org.kcsmini2.ojeommo.board.repository.BoardRepository;
 import org.kcsmini2.ojeommo.board.repository.GatherBoardRepository;
 import org.kcsmini2.ojeommo.category.entity.Category;
 import org.kcsmini2.ojeommo.category.repository.CategoryRepository;
-import org.kcsmini2.ojeommo.comment.CommentRepository;
+import org.kcsmini2.ojeommo.comment.repository.CommentRepository;
 import org.kcsmini2.ojeommo.member.data.PartyRepository;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
@@ -24,7 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
