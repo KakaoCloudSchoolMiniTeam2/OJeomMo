@@ -15,14 +15,19 @@ import java.io.PrintWriter;
 
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+    private final HandlerExceptionResolver resolver;
 
+    public JwtAuthenticationEntryPoint(@Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
+        this.resolver = resolver;
+    }
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("text/html; charset=UTF-8");
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        PrintWriter out = response.getWriter();
-        out.println("<script>alert('" + "로그인 후 사용가능합니다." + "'); history.go(-1); </script> ");
-        out.flush();
+        resolver.resolveException(request, response, null, authException);
+//        response.setCharacterEncoding("utf-8");
+//        response.setContentType("text/html; charset=UTF-8");
+//        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+//        PrintWriter out = response.getWriter();
+//        out.println("<script>alert('" + "로그인 후 사용가능합니다." + "'); history.go(-1); </script> ");
+//        out.flush();
     }
 }
