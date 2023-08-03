@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, String> {
     Optional<Member> findByEmail(String email);
 
-    @Query(value = "SELECT * FROM MEMBER WHERE (id != :id) and (email = :email)", nativeQuery = true)
-    Optional<Member> findByEmailWithOutSelf(@Param("id") String id, @Param("email") String email);
+    boolean findByEmailAndIdNot(String email, String id);
+
+    boolean existsByEmail(String email);
+
 }
