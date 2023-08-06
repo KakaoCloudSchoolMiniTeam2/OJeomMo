@@ -1,5 +1,6 @@
 package org.kcsmini2.ojeommo.member.data.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.kcsmini2.ojeommo.member.data.entity.Authority;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,10 +23,15 @@ import java.util.stream.Collectors;
 @Setter
 public class MemberDTO {
     private String token;
+    @NotBlank
     private String id;
+    @NotBlank
     private String pw;
+    @NotBlank
     private String nickname;
+    @NotBlank
     private String name;
+    @NotBlank
     private String email;
     private List<Authority> roles = new ArrayList<>();
 

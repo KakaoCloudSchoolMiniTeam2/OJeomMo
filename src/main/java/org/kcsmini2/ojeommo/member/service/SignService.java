@@ -3,6 +3,8 @@ package org.kcsmini2.ojeommo.member.service;
 import lombok.RequiredArgsConstructor;
 import org.kcsmini2.ojeommo.category.entity.FavoriteCategory;
 import org.kcsmini2.ojeommo.config.jwt.JwtProvider;
+import org.kcsmini2.ojeommo.exception.ApplicationException;
+import org.kcsmini2.ojeommo.exception.ErrorCode;
 import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
 import org.kcsmini2.ojeommo.member.data.dto.SignResponse;
 import org.kcsmini2.ojeommo.member.data.entity.Authority;
@@ -16,15 +18,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
 /**
  * 작성자: 김준연
- *
+ * <p>
  * 설명: member CRUD + a 서비스
- *
- * 최종 수정 일자: 2023/07/24
+ * <p>
+ * 최종 수정 일자: 2023/07/31
  */
 @Service
 @Transactional
@@ -38,38 +41,25 @@ public class SignService {
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public boolean register(SignRequest request) throws Exception {
-        try {
-            Member member = Member.builder()
-                    .id(request.getId())
-                    .pw(passwordEncoder.encode(request.getPw()))
-                    .name(request.getName())
-                    .nickname(request.getNickname())
-                    .email(request.getEmail())
-                    .build();
 
-            member.setRoles(Collections.singletonList(Authority.builder().name("ROLE_USER").build()));
+        if (memberRepository.existsById(request.getId())) throw new ApplicationException(ErrorCode.DUPLICATED_ID);
 
-            memberRepository.save(member);
+        if (memberRepository.existsByEmail(request.getEmail()))
+            throw new ApplicationException(ErrorCode.DUPLICATED_EMAIL);
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new Exception("잘못된 요청입니다.");
+        Member member = request.toEntity(passwordEncoder);
 
-        }
-        try {
-            for(String str : request.getCategoryIds()) {
-                Long id = Long.parseLong(str);
-                FavoriteCategory favoriteCategory = FavoriteCategory.builder()
-                        .categoryId(id)
+        member.setRoles(Collections.singletonList(Authority.builder().name("ROLE_USER").build()));
+
+        memberRepository.save(member);
+
+        Arrays.stream(request.getCategoryIds())
+                .map(Long::parseLong)
+                .map(categoryId -> FavoriteCategory.builder()
+                        .categoryId(categoryId)
                         .memberId(request.getId())
-                        .build();
-                favoriteCategoryRepository.save(favoriteCategory);
-            }
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new Exception("catgoryIds가 비어있음.");
-        }
+                        .build())
+                .forEach(favoriteCategoryRepository::save);
 
 
         return true;
@@ -77,10 +67,10 @@ public class SignService {
 
     public SignResponse login(SignRequest request) throws Exception {
         Member member = memberRepository.findById(request.getId()).orElseThrow(() ->
-                new BadCredentialsException("잘못된 계정정보입니다."));
+                new ApplicationException(ErrorCode.NONEXISTENT_ID));
 
-        if (!passwordEncoder.matches(request.getPw(), member.getPw())) {
-            throw new BadCredentialsException("잘못된 계정정보입니다.");
+        if (!request.isSamePassword(passwordEncoder, member)) {
+            throw new ApplicationException(ErrorCode.UNCORRECTED_PW);
         }
 
         return SignResponse.builder()
@@ -96,26 +86,23 @@ public class SignService {
 
     public boolean update(SignRequest request) {
 
-        if (request.getPw() != null ){
+        if(memberRepository.findByEmailAndIdNot(request.getEmail(), request.getId())) {
+            throw new ApplicationException(ErrorCode.DUPLICATED_EMAIL);
+        }
+
+        if (!request.isPasswordBlank()) {
             request.setPw(passwordEncoder.encode(request.getPw()));
         }
-
         Optional<Member> member = memberRepository.findById(request.getId());
 
-        if(member.isPresent()) {
-            return member.get().updateMember(request);
-        }
-        else return false;
+        return member.map(value -> value.updateMember(request)).orElse(false);
     }
 
     public boolean delete(String id) {
-        System.out.println("delete service");
         try {
             memberRepository.deleteById(id);
-            System.out.println("deleted");
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
