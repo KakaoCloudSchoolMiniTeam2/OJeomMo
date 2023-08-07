@@ -29,5 +29,7 @@ public interface GatherBoardService {
 
     public Page<BoardDetailResponseDTO> readBoardPage(Pageable pageable, MemberDTO memberDTO);
 
+    public Page<BoardDetailResponseDTO> readMyBoardPage(Pageable pageable, MemberDTO memberDTO);
+
 
 }

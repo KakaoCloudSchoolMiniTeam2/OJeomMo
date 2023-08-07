@@ -173,5 +173,18 @@ public class GatherBoardServiceImpl implements GatherBoardService {
                 });
     }
 
+    @Override
+    public Page<BoardDetailResponseDTO> readMyBoardPage(Pageable pageable, MemberDTO memberDTO) {
+        //현재 페이지에 포함된 게시글들을 가져온다
+        Page<GatherBoard> gatherBoardPage = gatherBoardRepository.findAllByBoard_Author_Id(memberDTO.getId(), pageable);
+        //엔티티를 Dto로 변환하고 반환한다
+        return gatherBoardPage
+                .map(gatherBoard -> {
+                    boolean isJoined = getGatherJoinStatus(memberDTO, gatherBoard);
+                    Integer partyNumber = partyRepository.countByBoardId(gatherBoard.getId());
+                    return GatherBoardDetailResponseDTO.from(gatherBoard, isJoined, partyNumber);
+                });
+    }
+
 
 }
