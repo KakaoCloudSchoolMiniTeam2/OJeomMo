@@ -111,6 +111,11 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         GatherBoard board = gatherBoardRepository.findById(boardId)
                 .orElseThrow(() -> new RuntimeException("게시글이 존재하지 않습니다."));
 
+        //작성자와 요청자가 같다면 예외 반환
+        if(board.isSameMember(partyMember)){
+            throw new RuntimeException("내가 쓴 글은 조인이 불가능합니다.");
+        }
+        
         //파티엔티티를 만들어줌
         Party party = Party.builder()
                 .member(partyMember)
