@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{/fragment/header :: headerFragment}"></head>
+<body>
+<nav th:replace="~{/fragment/navbar :: navbarFragment}"></nav>
+<div class="container">
+    <div class="content-margin"></div>
+    <div class="content">
+        <div class="board-wrapper">
+            <ul class="board">
+            <th:block th:each="article : ${articles}">
+            	<article class="postit" th:id="${article.getId()}">
+                <!--<article class="postit" th:each="article : ${articles}">-->
+                    <header class="postit__header">
+                    <button class="postit_btn" th:data-board-id="${article.getId()}"></button>
+                        <i th:if="${article.getIsDelivery()}" class="fa-solid fa-motorcycle"></i>
+                        <i th:unless="${article.getIsDelivery()}" class="fa-solid fa-utensils"></i>
+                        <h1 th:text="${article.getDinerName()}"/>
+                    </header>
+                    <ul class="postit__message">
+                        <li th:text="${article.getCategory()}"/>
+                        <li th:text="${article.getAuthorNickname()}"/>
+                        <li th:text="${article.getContent()}"/>
+                        <li class="party"><i class="fa-solid fa-user-group"> </i>
+                            <span>&nbsp</span>
+                            <span th:text="${article.getInitNumber()}">1</span>
+                            <span>/</span>
+                            <span th:text="${article.getGatherNumber()}">4</span>
+                        </li>
+                    </ul>
+                </article>
+            </th:block>
+            </ul>
+
+            <div class="join-wrapper">
+                <a class="createBtn" th:href="@{/create}">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </a>
+            </div>
+
+            <div class="pagination">
+                <span th:each="pageNumber : ${pageNumbers}">
+                    <a th:class="'page-item page-char ' + (${#strings.isEmpty(param.page) and pageNumber == 0} or ${#strings.equals(param.page, #strings.toString(pageNumber))} ? 'active' : '')"
+                       th:href="@{?page=__${pageNumber}__}">ㅇ</a>
+                </span>
+                <div class="page-char">ㅈ</div>
+                <div class="page-char">ㅁ</div>
+                <div class="page-char">?</div>
+            </div>
+        </div>
+    </div>
+    <div class="content-margin">
+        <div th:replace="~{/fragment/profile :: profileFragment}"></div>
+    </div>
+
+
+</div>
+
+<div class="modal" id="modal">
+    <div class="modal_body detailPostit"></div>
+</div>
+
+</body>
+<script th:inline="javascript">
+    // 서버에서 전달받은 JWT 값을 Thymeleaf를 통해 JavaScript로 추출하여 저장
+    /*<![CDATA[*/
+    var data = [[${data}]];
+
+    if (data != null) {
+        var jwt = data.token;
+        setCookie("Authorization", jwt, 1); // 예시로 쿠키의 만료일을 1일로 설정
+    }
+
+    // 쿠키를 설정하는 함수를 정의
+    function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + "; path=/";
+    }
+
+    // JWT를 쿠키에 저장
+
+    /*]]>*/
+</script>
+</html>
