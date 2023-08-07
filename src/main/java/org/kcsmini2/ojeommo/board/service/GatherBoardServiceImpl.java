@@ -66,7 +66,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         boolean isJoined = getGatherJoinStatus(memberDTO, board);
         Integer partyNumber = partyRepository.countByBoardId(boardId);
 
-        return GatherBoardDetailResponseDTO.from(board, isJoined, partyNumber);
+        return GatherBoardDetailResponseDTO.from(board, isJoined, partyNumber, memberDTO);
     }
 
     // 끌어올리기
@@ -112,10 +112,10 @@ public class GatherBoardServiceImpl implements GatherBoardService {
                 .orElseThrow(() -> new RuntimeException("게시글이 존재하지 않습니다."));
 
         //작성자와 요청자가 같다면 예외 반환
-        if(board.isSameMember(partyMember)){
+        if(board.isSameMember(memberDTO)){
             throw new RuntimeException("내가 쓴 글은 조인이 불가능합니다.");
         }
-        
+
         //파티엔티티를 만들어줌
         Party party = Party.builder()
                 .member(partyMember)
@@ -173,7 +173,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
                 .map(gatherBoard -> {
                     boolean isJoined = getGatherJoinStatus(memberDTO, gatherBoard);
                     Integer partyNumber = partyRepository.countByBoardId(gatherBoard.getId());
-                    return GatherBoardDetailResponseDTO.from(gatherBoard, isJoined, partyNumber);
+                    return GatherBoardDetailResponseDTO.from(gatherBoard, isJoined, partyNumber, memberDTO);
                 });
     }
 
