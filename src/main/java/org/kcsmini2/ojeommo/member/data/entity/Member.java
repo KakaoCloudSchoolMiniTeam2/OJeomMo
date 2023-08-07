@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-<<<<<<< HEAD
 /**
  * 작성자: 김준연
  *
@@ -21,8 +20,6 @@ import java.util.Objects;
  *
  * 최종 수정 일자: 2023/07/31
  */
-=======
->>>>>>> comment
 @Entity
 @Getter
 @Builder @AllArgsConstructor @NoArgsConstructor
@@ -84,7 +81,7 @@ public class Member{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Member member = (Member) o;
-        return Objects.equals(id, member.id);
+        return Objects.equals(id, member.getId());
     }
 
     @Override

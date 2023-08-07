@@ -8,12 +8,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.category.entity.Category;
+import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
+import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.kcsmini2.ojeommo.member.data.entity.Party;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -83,5 +82,9 @@ public class GatherBoard {
         this.isDelivery = requestDTO.getIsDelivery();
         this.bumpedAt = requestDTO.getBumpedAt();
         this.category = requestDTO.getCategory();
+    }
+
+    public boolean isSameMember(Member partyMember){
+       return board.getAuthor().equals(partyMember);
     }
 }
