@@ -63,7 +63,6 @@ public class SecurityConfig {
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/main").permitAll()
                 .requestMatchers("/board/**").permitAll()
-                .requestMatchers("/create").permitAll()
                 .requestMatchers("/detail").permitAll()
                 .requestMatchers("/").permitAll()
                 .anyRequest().authenticated()
