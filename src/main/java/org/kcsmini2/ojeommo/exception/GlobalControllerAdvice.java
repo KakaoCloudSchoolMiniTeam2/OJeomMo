@@ -38,6 +38,7 @@ public class GlobalControllerAdvice {
         // JWT 토큰 쿠키 삭제
         Cookie authCookie = new Cookie("Authorization", "");
         authCookie.setMaxAge(0);
+        authCookie.setPath("/");
         response.addCookie(authCookie);
 
         // 로그인 페이지로 리다이렉트
