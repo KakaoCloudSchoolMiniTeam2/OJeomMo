@@ -11,7 +11,6 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.category.entity.Category;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
-import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.kcsmini2.ojeommo.member.data.entity.Party;
 
 import java.time.LocalDateTime;
@@ -84,7 +83,10 @@ public class GatherBoard {
         this.category = requestDTO.getCategory();
     }
 
-    public boolean isSameMember(Member partyMember){
-       return board.getAuthor().equals(partyMember);
+    public boolean isSameMember(MemberDTO partyMember) {
+        if (partyMember!=null){
+            return board.getAuthor().getId().equals(partyMember.getId());
+        }
+        return false;
     }
 }

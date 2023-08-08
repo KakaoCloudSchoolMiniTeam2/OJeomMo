@@ -72,12 +72,11 @@
         <p class="category"><span> 종류 : </span><span th:text="${gatherDetail.getCategory()}">카테고리</span></p>
         <p class="detailMore" th:text="${gatherDetail.getContent()}">상세내용</p>
     </div>
-    <th:block th:if="${!gatherDetail.getIsJoined() && !gatherDetail.getIsMyArticle()}">
+    <th:block th:if="${member!=null && !gatherDetail.getIsJoined() && !gatherDetail.getIsMyArticle() }">
         <form th:action="@{/board/joinParty}" method="post">
             <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
             <button class="joinBtn">조인</button>
         </form>
-    </th:block>
 </section>
 <hr class="detailSection-separator">
 <section class="detailPostit__comment">
