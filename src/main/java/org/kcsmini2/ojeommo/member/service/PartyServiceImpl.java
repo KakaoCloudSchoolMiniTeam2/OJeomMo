@@ -26,16 +26,11 @@ public class PartyServiceImpl implements PartyService {
     public List<PartyMemberDetailResponseDTO> readParty(Long boardId) {
 
         List<Party> party = partyRepository.findAllByBoardId(boardId);
-        List<Member> members = new ArrayList<>();
-        party.forEach(person -> {
-            members.add(memberRepository.findById(person.getMemberId()).orElseThrow());
-        });
-        List<PartyMemberDetailResponseDTO> returnValue = new ArrayList<>();
-        members.
-                forEach(member -> {
-                    returnValue.add(PartyMemberDetailResponseDTO.from(member));
-                });
-        return returnValue;
+        return party.stream()
+                .map(person -> memberRepository.findById(person.getMemberId()))
+                .map(foundMember -> foundMember.orElseThrow(()-> new RuntimeException("멤버가 존재하지 않습니다.")))
+                .map(PartyMemberDetailResponseDTO::from)
+                .toList();
     }
 
 }
