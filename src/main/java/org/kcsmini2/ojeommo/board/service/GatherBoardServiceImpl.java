@@ -186,7 +186,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
                 .map(gatherBoard -> {
                     boolean isJoined = getGatherJoinStatus(memberDTO, gatherBoard);
                     Integer partyNumber = partyRepository.countByBoardId(gatherBoard.getId());
-                    return GatherBoardDetailResponseDTO.from(gatherBoard, isJoined, partyNumber);
+                    return GatherBoardDetailResponseDTO.from(gatherBoard, isJoined, partyNumber, memberDTO);
                 });
     }
 
