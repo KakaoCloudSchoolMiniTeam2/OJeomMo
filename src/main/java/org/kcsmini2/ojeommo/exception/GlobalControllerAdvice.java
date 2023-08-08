@@ -1,5 +1,6 @@
 package org.kcsmini2.ojeommo.exception;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
@@ -26,9 +27,25 @@ public class GlobalControllerAdvice {
         return "member_error";
     }
 
+//    @ExceptionHandler(AuthenticationException.class)
+//    public HttpEntity<String> jwtExHandler() {
+//        return new HttpEntity<>("<script>window.location.href = '/login';</script>");
+//    }
+
     @ExceptionHandler(AuthenticationException.class)
-    public HttpEntity<String> jwtExHandler() {
-        return new HttpEntity<>("<script>window.location.href = '/login';</script>");
+    public void jwtExHandler(HttpServletResponse response) {
+
+        // JWT 토큰 쿠키 삭제
+        Cookie authCookie = new Cookie("Authorization", "");
+        authCookie.setMaxAge(0);
+        response.addCookie(authCookie);
+
+        // 로그인 페이지로 리다이렉트
+        try {
+            response.sendRedirect("/login");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 
