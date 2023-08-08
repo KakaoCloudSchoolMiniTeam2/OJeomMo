@@ -61,29 +61,4 @@
 </div>
 
 </body>
-<script th:inline="javascript">
-    // 서버에서 전달받은 JWT 값을 Thymeleaf를 통해 JavaScript로 추출하여 저장
-    /*<![CDATA[*/
-    var data = [[${data}]];
-
-    if (data != null) {
-        var jwt = data.token;
-        setCookie("Authorization", jwt, 1); // 예시로 쿠키의 만료일을 1일로 설정
-    }
-
-    // 쿠키를 설정하는 함수를 정의
-    function setCookie(name, value, days) {
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + value + "; path=/";
-    }
-
-    // JWT를 쿠키에 저장
-
-    /*]]>*/
-</script>
 </html>
