@@ -92,7 +92,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         long diffMin = diff.toMinutes();
 
         if (diffMin < BUMP_LIMIT_TIME) {
-            throw new RuntimeException("끌올 요청 후 1시간이 지나지 않았습니다.");
+            throw new ApplicationException(ErrorCode.INVALID_BUMP);
         }
     }
 
@@ -111,11 +111,11 @@ public class GatherBoardServiceImpl implements GatherBoardService {
 
         //보드엔티티를 불러옴
         GatherBoard board = gatherBoardRepository.findById(boardId)
-                .orElseThrow(() -> new RuntimeException("게시글이 존재하지 않습니다."));
+                .orElseThrow(() -> new ApplicationException(ErrorCode.NONEXISTENT_BOARD));
 
         //작성자와 요청자가 같다면 예외 반환
         if(board.isSameMember(memberDTO)){
-            throw new RuntimeException("내가 쓴 글은 조인이 불가능합니다.");
+            throw new ApplicationException(ErrorCode.INVALID_JOIN);
         }
 
         //파티엔티티를 만들어줌
@@ -189,6 +189,4 @@ public class GatherBoardServiceImpl implements GatherBoardService {
                     return GatherBoardDetailResponseDTO.from(gatherBoard, isJoined, partyNumber, memberDTO);
                 });
     }
-
-
 }
