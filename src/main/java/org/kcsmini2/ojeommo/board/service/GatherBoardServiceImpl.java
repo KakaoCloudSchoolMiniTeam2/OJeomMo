@@ -12,6 +12,8 @@ import org.kcsmini2.ojeommo.board.repository.GatherBoardRepository;
 import org.kcsmini2.ojeommo.category.entity.Category;
 import org.kcsmini2.ojeommo.category.repository.CategoryRepository;
 import org.kcsmini2.ojeommo.comment.repository.CommentRepository;
+import org.kcsmini2.ojeommo.exception.ApplicationException;
+import org.kcsmini2.ojeommo.exception.ErrorCode;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.kcsmini2.ojeommo.member.data.entity.Party;
@@ -152,15 +154,13 @@ public class GatherBoardServiceImpl implements GatherBoardService {
 
     private void checkPermission(Board board, MemberDTO memberDTO) {
         if (!Objects.equals(board.getAuthor().getId(), memberDTO.getId())) {
-            throw new RuntimeException("게시글 소유자가 아닙니다.");
-//            throw new ApplicationException(ErrorCode.INVALID_PERMISSION);//Todo : Error코드 추가 후 변경 요망
+            throw new ApplicationException(ErrorCode.INVALID_PERMISSION);
         }
     }
 
     private void checkPermission(GatherBoard gatherBoard, MemberDTO memberDTO) {
         if (!Objects.equals(gatherBoard.getBoard().getAuthor().getId(), memberDTO.getId())) {
-            throw new RuntimeException("게시글 소유자가 아닙니다.");
-//            throw new ApplicationException(ErrorCode.INVALID_PERMISSION);//Todo : Error코드 추가 후 변경 요망
+            throw new ApplicationException(ErrorCode.INVALID_PERMISSION);
         }
     }
 
