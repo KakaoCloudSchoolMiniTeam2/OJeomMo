@@ -103,6 +103,39 @@
     flex:1;
     padding: 10px;
     margin-left: 40px;
+    position: relative;
+    display: block;
+}
+
+.detailParty .tooltiptext {
+    visibility: hidden;       /* 이벤트가 없으면 툴팁 영역을 숨김 */
+    width: 120px;             /* 툴팁 영역의 넓이를 설정 */
+    background-color: #ecb390;
+    color: #f3f3f3;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    position: absolute;       /* 절대 위치를 사용 */
+    z-index: 1;
+}
+
+.detailParty:hover .tooltiptext {
+    visibility: visible;      /* hover 이벤트 발생시 영역을 보여줌 */
+}
+
+.detailParty .tooltip-bottom {
+    width: 120px;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.detailParty .tooltip-bottom::after {
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-color: transparent transparent black transparent;
 }
 
 .detailIconSection{
