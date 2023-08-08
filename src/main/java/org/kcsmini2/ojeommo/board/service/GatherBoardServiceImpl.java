@@ -48,6 +48,11 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     @Override
     @Transactional
     public void createBoard(GatherBoardCreateRequestDTO requestDTO, MemberDTO memberDTO) {
+
+        if(!categoryRepository.existsByCategoryName(requestDTO.getCategoryName())) {
+            throw new ApplicationException(ErrorCode.NULL_FIELD);
+        }
+
         Member author = memberRepository.findById(memberDTO.getId()).orElseThrow();
         Board board = requestDTO.toEntity(author);
 
