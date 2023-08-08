@@ -7,6 +7,7 @@ import org.kcsmini2.ojeommo.exception.ApplicationException;
 import org.kcsmini2.ojeommo.exception.ErrorCode;
 import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
 import org.kcsmini2.ojeommo.member.data.dto.SignResponse;
+import org.kcsmini2.ojeommo.member.data.dto.UpdateRequest;
 import org.kcsmini2.ojeommo.member.data.entity.Authority;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.kcsmini2.ojeommo.member.repository.MemberRepository;
@@ -84,9 +85,9 @@ public class SignService {
 
     }
 
-    public boolean update(SignRequest request) {
+    public boolean update(UpdateRequest request) {
 
-        if(memberRepository.findByEmailAndIdNot(request.getEmail(), request.getId())) {
+        if(memberRepository.existsByEmailAndIdNot(request.getEmail(), request.getId())) {
             throw new ApplicationException(ErrorCode.DUPLICATED_EMAIL);
         }
 
