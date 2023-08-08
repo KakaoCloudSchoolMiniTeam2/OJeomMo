@@ -7,6 +7,8 @@ import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateReque
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.GatherBoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.service.GatherBoardService;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
+import org.kcsmini2.ojeommo.member.data.dto.PartyMemberDetailResponseDTO;
+import org.kcsmini2.ojeommo.member.service.PartyService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 
 /**
@@ -30,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BoardController {
 
     private final GatherBoardService gatherBoardService;
+    private final PartyService partyService;
 
     @PostMapping("/createGatherBoard")
     public String CreateGatherBoardPOST(GatherBoardCreateRequestDTO requestDTO, @AuthenticationPrincipal MemberDTO memberDTO) throws Exception {
@@ -40,8 +45,13 @@ public class BoardController {
     @GetMapping("/readGatherBoard/{id}")
     public String ReadGatherBoardGET(Model model, @PathVariable("id") Long boardId, @AuthenticationPrincipal MemberDTO memberDTO) {
         GatherBoardDetailResponseDTO dto = gatherBoardService.readBoard(boardId, memberDTO);
+        List<PartyMemberDetailResponseDTO> partyDTO = partyService.readParty(boardId);
+
         if (memberDTO != null) {
             model.addAttribute("member", memberDTO);
+        }
+        if (partyDTO != null) {
+            model.addAttribute("party", partyDTO);
         }
         model.addAttribute("gatherDetail", dto);
         return "/fragment/gather_detail";
