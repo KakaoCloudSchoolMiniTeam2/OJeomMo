@@ -16,7 +16,8 @@
             date.setTime(date.getTime() + (minutes * 60 * 1000));
             expires = "; expires=" + date.toUTCString();
         }
-        document.cookie = name + "=" + value + "; path=/;" + expires;
+        document.cookie = name + "=" + value + "; path=/" + expires;
+
     }
 
     // JWT를 쿠키에 저장
