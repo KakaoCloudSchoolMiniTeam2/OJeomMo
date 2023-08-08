@@ -77,6 +77,7 @@
             <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
             <button class="joinBtn">조인</button>
         </form>
+    </th:block>
 </section>
 <hr class="detailSection-separator">
 <section class="detailPostit__comment">
@@ -86,14 +87,6 @@
 </body>
 
 <script>
-    function deleteAlert() {
-        // Alert 띄우기
-        var confirmed = confirm('정말로 삭제하시겠습니까?');
 
-        // 사용자가 "확인"을 클릭한 경우에만 form 제출
-        if (confirmed) {
-            document.getElementById('myForm').submit();
-        }
-    }
 </script>
 </html>
