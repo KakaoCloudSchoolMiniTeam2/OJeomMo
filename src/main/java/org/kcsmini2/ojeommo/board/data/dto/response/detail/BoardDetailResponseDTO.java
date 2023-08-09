@@ -14,6 +14,7 @@ public class BoardDetailResponseDTO {
     private String title;
     private String content;
     private LocalDateTime createdAt;
+    private String authorId;
     private String authorNickname;
 
     protected BoardDetailResponseDTO(Board board){
@@ -21,6 +22,7 @@ public class BoardDetailResponseDTO {
         this.title = board.getTitle();
         this.content = board.getContent();
         this.createdAt = board.getCreatedAt();
+        this.authorId = board.getAuthor().getId();
         this.authorNickname = board.getAuthor().getNickname();
     }
 

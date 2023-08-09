@@ -205,11 +205,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
                 });
     }
 
-    @Override
-    public String getIDByBoardId(Long boardId) {
-        Board board = boardRepository.findById(boardId).orElseThrow();
-        return board.getAuthor().getId();
-    }
+
 
 
 

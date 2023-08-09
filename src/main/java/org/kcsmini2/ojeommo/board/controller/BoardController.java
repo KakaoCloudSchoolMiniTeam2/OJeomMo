@@ -74,7 +74,7 @@ public class BoardController {
         GatherBoardDetailResponseDTO dto = gatherBoardService.readBoard(boardId, memberDTO);
         List<PartyMemberDetailResponseDTO> partyDTO = partyService.readParty(boardId);
         Page<CommentDetailResponseDTO> commentDTO = commentService.readComments(boardId, pageable, memberDTO);
-        String findID = gatherBoardService.getIDByBoardId(boardId);
+
 
 
         if (memberDTO != null) {
@@ -89,13 +89,12 @@ public class BoardController {
             model.addAttribute("comment",commentDTO);
         }
 
-        model.addAttribute("author_ID",findID);
 
 
 //        현재 사용자의 인증 정보 가져오기
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        MemberDTO curUserDTO = (MemberDTO)authentication.getPrincipal();
-        model.addAttribute("authenID",curUserDTO.getId());
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        MemberDTO curUserDTO = (MemberDTO)authentication.getPrincipal();
+//        model.addAttribute("authenID",curUserDTO.getId());
 
         return "fragment/gather_detail";
     }
