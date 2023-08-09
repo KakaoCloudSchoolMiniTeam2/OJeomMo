@@ -11,7 +11,6 @@ import org.kcsmini2.ojeommo.board.repository.BoardRepository;
 import org.kcsmini2.ojeommo.board.repository.GatherBoardRepository;
 import org.kcsmini2.ojeommo.category.entity.Category;
 import org.kcsmini2.ojeommo.category.repository.CategoryRepository;
-import org.kcsmini2.ojeommo.comment.repository.CommentRepository;
 import org.kcsmini2.ojeommo.exception.ApplicationException;
 import org.kcsmini2.ojeommo.exception.ErrorCode;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
@@ -50,7 +49,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     public void createBoard(GatherBoardCreateRequestDTO requestDTO, MemberDTO memberDTO) {
 
         if(!categoryRepository.existsByCategoryName(requestDTO.getCategoryName())) {
-            throw new ApplicationException(ErrorCode.NONEXISTENT_CATEGORY);
+            throw new ApplicationException(ErrorCode.CATEGORY_NOT_FOUND);
         }
 
         Member author = memberRepository.findById(memberDTO.getId()).orElseThrow();
@@ -125,7 +124,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
 
         //보드엔티티를 불러옴
         GatherBoard board = gatherBoardRepository.findById(boardId)
-                .orElseThrow(() -> new ApplicationException(ErrorCode.NONEXISTENT_BOARD));
+                .orElseThrow(() -> new ApplicationException(ErrorCode.BOARD_NOT_FOUND));
 
         //작성자와 요청자가 같다면 예외 반환
         if(board.isSameMember(memberDTO)){
@@ -149,7 +148,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     @Transactional
     public void updateBoard(GatherBoardUpdateRequestDTO requestDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
         if(!categoryRepository.existsByCategoryName(requestDTO.getCategoryName())) {
-            throw new ApplicationException(ErrorCode.NONEXISTENT_CATEGORY);
+            throw new ApplicationException(ErrorCode.CATEGORY_NOT_FOUND);
         }
 
         GatherBoard gatherBoard = gatherBoardRepository.findById(requestDTO.getBoardId()).orElseThrow();
