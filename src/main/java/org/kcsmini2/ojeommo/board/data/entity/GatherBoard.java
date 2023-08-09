@@ -89,4 +89,8 @@ public class GatherBoard {
         }
         return false;
     }
+
+    public boolean isPartyFull() {
+        return partyList.size() + initNumber >= gatherNumber;
+    }
 }

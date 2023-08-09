@@ -20,7 +20,7 @@
                     <ul class="postit__message">
                         <li th:text="${article.getCategory()}"/>
                         <li th:text="${article.getAuthorNickname()}"/>
-                        <li th:text="${article.getContent()}"/>
+                        <li th:text="${article.getContent()}" class="postitContent"/>
                         <li class="party"><i class="fa-solid fa-user-group"> </i>
                             <span>&nbsp</span>
                             <span th:text="${article.getInitNumber()}">1</span>
@@ -31,12 +31,12 @@
                 </article>
             </th:block>
             </ul>
-
-            <div class="join-wrapper">
-                <a class="createBtn" th:href="@{/create}">
+            <div class="join-wrapper" th:if="${loginCheck != 0}">
+                <a th:disabled="${loginCheck != 0}" class="createBtn" th:href="@{/create}">
                     <i class="fa-regular fa-pen-to-square"></i>
                 </a>
             </div>
+
 
             <div class="pagination">
                 <span th:each="pageNumber : ${pageNumbers}">

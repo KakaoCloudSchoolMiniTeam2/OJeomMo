@@ -13,10 +13,7 @@ public class PaginationService {
 
     public List<Integer> getPaginationBar(int currentPageNumber, int totalPageNumber){
         int startNumber = Math.max(currentPageNumber - (BAR_LENGTH/2), 0);
-        int endNumber = Math.min(startNumber + BAR_LENGTH, totalPageNumber);
-
-//        System.out.println(startNumber);
-//        System.out.println(endNumber);
+        int endNumber = totalPageNumber == 0 ? 1 : Math.min(startNumber + BAR_LENGTH, totalPageNumber);
 
         return IntStream.range(startNumber, endNumber)
                 .boxed()

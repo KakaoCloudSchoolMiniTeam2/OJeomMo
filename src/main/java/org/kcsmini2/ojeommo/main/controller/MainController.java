@@ -34,6 +34,9 @@ public class MainController {
 
         if (memberDTO != null) {
             map.addAttribute("profile", memberDTO);
+            map.addAttribute("loginCheck", 1);
+        } else {
+            map.addAttribute("loginCheck", 0);
         }
 
         map.addAttribute("articles", responseDtoPage);

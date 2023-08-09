@@ -200,6 +200,7 @@
 }
 
 .detailMore{
+    white-space: normal;
     font-size: 25px;
 }
 
@@ -211,10 +212,13 @@
 
 .joinBtn {
     font-size: 20px;
-    color: #544900;
-    font-family: 'omyu_pretty';
-
+    width: 50px;
+    height: 50px;
+    background-color: #f3daa5;
+    border-radius: 50%;
     border: 3px solid white;
-    background-color: transparent;
-    margin: 10px 20px 30px 30px;
+}
+
+.joinBtn.joined {
+    background-color: #fff1d1;
 }

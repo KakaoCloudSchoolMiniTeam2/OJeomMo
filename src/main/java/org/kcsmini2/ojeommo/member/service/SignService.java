@@ -10,9 +10,8 @@ import org.kcsmini2.ojeommo.member.data.dto.SignResponse;
 import org.kcsmini2.ojeommo.member.data.dto.UpdateRequest;
 import org.kcsmini2.ojeommo.member.data.entity.Authority;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
-import org.kcsmini2.ojeommo.member.repository.MemberRepository;
 import org.kcsmini2.ojeommo.member.repository.FavoriteCategoryRepository;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.kcsmini2.ojeommo.member.repository.MemberRepository;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,7 +38,7 @@ public class SignService {
     private final MemberRepository memberRepository;
     private final FavoriteCategoryRepository favoriteCategoryRepository;
     private final JwtProvider jwtProvider;
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public boolean register(SignRequest request) throws Exception {
 
@@ -87,7 +86,7 @@ public class SignService {
 
     public boolean update(UpdateRequest request) {
 
-        if(memberRepository.existsByEmailAndIdNot(request.getEmail(), request.getId())) {
+        if (memberRepository.existsByEmailAndIdNot(request.getEmail(), request.getId())) {
             throw new ApplicationException(ErrorCode.DUPLICATED_EMAIL);
         }
 

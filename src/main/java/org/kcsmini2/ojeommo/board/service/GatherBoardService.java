@@ -25,11 +25,9 @@ public interface GatherBoardService {
 
     public void bumpBoard(Long boardId, MemberDTO memberDTO);
 
-    public boolean joinParty(Long boardId, MemberDTO memberDTO);
-
     public Page<BoardDetailResponseDTO> readBoardPage(Pageable pageable, MemberDTO memberDTO);
 
     public Page<BoardDetailResponseDTO> readMyBoardPage(Pageable pageable, MemberDTO memberDTO);
 
-
+    public void checkPermission(Long boardId, MemberDTO memberDTO);
 }
