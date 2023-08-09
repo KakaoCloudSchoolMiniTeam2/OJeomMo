@@ -16,7 +16,8 @@ public enum ErrorCode {
     INVALID_PERMISSION(HttpStatus.UNAUTHORIZED, "게시글 소유자가 아닙니다."),
     INVALID_BUMP(HttpStatus.FORBIDDEN, "끌올 요청 후 1시간이 지나지 않았습니다."),
     INVALID_JOIN(HttpStatus.FORBIDDEN, "내가 쓴 글은 조인이 불가능합니다."),
-    NONEXISTENT_BOARD(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다.");
+    NONEXISTENT_BOARD(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다."),
+    NONEXISTENT_CATEGORY(HttpStatus.NOT_FOUND, "카테고리가 유효하지 않습니다.");
 
     private final HttpStatus status;
     private final String message;
