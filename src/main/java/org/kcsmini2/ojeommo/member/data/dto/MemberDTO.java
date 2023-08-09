@@ -25,7 +25,7 @@ public class MemberDTO {
     private String token;
     @NotBlank
     private String id;
-    @NotBlank
+
     private String pw;
     @NotBlank
     private String nickname;

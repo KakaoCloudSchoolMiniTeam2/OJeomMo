@@ -11,12 +11,14 @@ import org.kcsmini2.ojeommo.board.repository.BoardRepository;
 import org.kcsmini2.ojeommo.board.repository.GatherBoardRepository;
 import org.kcsmini2.ojeommo.category.entity.Category;
 import org.kcsmini2.ojeommo.category.repository.CategoryRepository;
-import org.kcsmini2.ojeommo.comment.CommentRepository;
-import org.kcsmini2.ojeommo.member.data.PartyRepository;
+import org.kcsmini2.ojeommo.comment.repository.CommentRepository;
+import org.kcsmini2.ojeommo.exception.ApplicationException;
+import org.kcsmini2.ojeommo.exception.ErrorCode;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.kcsmini2.ojeommo.member.data.entity.Party;
 import org.kcsmini2.ojeommo.member.repository.MemberRepository;
+import org.kcsmini2.ojeommo.member.repository.PartyRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,7 +26,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -47,6 +48,11 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     @Override
     @Transactional
     public void createBoard(GatherBoardCreateRequestDTO requestDTO, MemberDTO memberDTO) {
+
+        if(!categoryRepository.existsByCategoryName(requestDTO.getCategoryName())) {
+            throw new ApplicationException(ErrorCode.NULL_FIELD);
+        }
+
         Member author = memberRepository.findById(memberDTO.getId()).orElseThrow();
         Board board = requestDTO.toEntity(author);
 
@@ -67,7 +73,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         boolean isJoined = getGatherJoinStatus(memberDTO, board);
         Integer partyNumber = partyRepository.countByBoardId(boardId);
 
-        return GatherBoardDetailResponseDTO.from(board, isJoined, partyNumber);
+        return GatherBoardDetailResponseDTO.from(board, isJoined, partyNumber, memberDTO);
     }
 
     // 끌어올리기
@@ -91,7 +97,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         long diffMin = diff.toMinutes();
 
         if (diffMin < BUMP_LIMIT_TIME) {
-            throw new RuntimeException("끌올 요청 후 1시간이 지나지 않았습니다.");
+            throw new ApplicationException(ErrorCode.INVALID_BUMP);
         }
     }
 
@@ -110,7 +116,12 @@ public class GatherBoardServiceImpl implements GatherBoardService {
 
         //보드엔티티를 불러옴
         GatherBoard board = gatherBoardRepository.findById(boardId)
-                .orElseThrow(() -> new RuntimeException("게시글이 존재하지 않습니다."));
+                .orElseThrow(() -> new ApplicationException(ErrorCode.NONEXISTENT_BOARD));
+
+        //작성자와 요청자가 같다면 예외 반환
+        if(board.isSameMember(memberDTO)){
+            throw new ApplicationException(ErrorCode.INVALID_JOIN);
+        }
 
         //파티엔티티를 만들어줌
         Party party = Party.builder()
@@ -148,15 +159,20 @@ public class GatherBoardServiceImpl implements GatherBoardService {
 
     private void checkPermission(Board board, MemberDTO memberDTO) {
         if (!Objects.equals(board.getAuthor().getId(), memberDTO.getId())) {
-            throw new RuntimeException("게시글 소유자가 아닙니다.");
-//            throw new ApplicationException(ErrorCode.INVALID_PERMISSION);//Todo : Error코드 추가 후 변경 요망
+            throw new ApplicationException(ErrorCode.INVALID_PERMISSION);
         }
     }
 
     private void checkPermission(GatherBoard gatherBoard, MemberDTO memberDTO) {
         if (!Objects.equals(gatherBoard.getBoard().getAuthor().getId(), memberDTO.getId())) {
-            throw new RuntimeException("게시글 소유자가 아닙니다.");
-//            throw new ApplicationException(ErrorCode.INVALID_PERMISSION);//Todo : Error코드 추가 후 변경 요망
+            throw new ApplicationException(ErrorCode.INVALID_PERMISSION);
+        }
+    }
+
+    public void checkPermission(Long boardId, MemberDTO memberDTO){
+        Board board = boardRepository.findById(boardId).orElseThrow();
+        if (memberDTO == null || !Objects.equals(board.getAuthor().getId(), memberDTO.getId())) {
+            throw new ApplicationException(ErrorCode.INVALID_PERMISSION);
         }
     }
 
@@ -169,9 +185,20 @@ public class GatherBoardServiceImpl implements GatherBoardService {
                 .map(gatherBoard -> {
                     boolean isJoined = getGatherJoinStatus(memberDTO, gatherBoard);
                     Integer partyNumber = partyRepository.countByBoardId(gatherBoard.getId());
-                    return GatherBoardDetailResponseDTO.from(gatherBoard, isJoined, partyNumber);
+                    return GatherBoardDetailResponseDTO.from(gatherBoard, isJoined, partyNumber, memberDTO);
                 });
     }
 
-
+    @Override
+    public Page<BoardDetailResponseDTO> readMyBoardPage(Pageable pageable, MemberDTO memberDTO) {
+        //현재 페이지에 포함된 게시글들을 가져온다
+        Page<GatherBoard> gatherBoardPage = gatherBoardRepository.findAllByBoard_Author_Id(memberDTO.getId(), pageable);
+        //엔티티를 Dto로 변환하고 반환한다
+        return gatherBoardPage
+                .map(gatherBoard -> {
+                    boolean isJoined = getGatherJoinStatus(memberDTO, gatherBoard);
+                    Integer partyNumber = partyRepository.countByBoardId(gatherBoard.getId());
+                    return GatherBoardDetailResponseDTO.from(gatherBoard, isJoined, partyNumber, memberDTO);
+                });
+    }
 }

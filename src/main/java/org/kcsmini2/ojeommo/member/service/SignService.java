@@ -7,6 +7,7 @@ import org.kcsmini2.ojeommo.exception.ApplicationException;
 import org.kcsmini2.ojeommo.exception.ErrorCode;
 import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
 import org.kcsmini2.ojeommo.member.data.dto.SignResponse;
+import org.kcsmini2.ojeommo.member.data.dto.UpdateRequest;
 import org.kcsmini2.ojeommo.member.data.entity.Authority;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.kcsmini2.ojeommo.member.repository.MemberRepository;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -42,30 +44,23 @@ public class SignService {
     public boolean register(SignRequest request) throws Exception {
 
         if (memberRepository.existsById(request.getId())) throw new ApplicationException(ErrorCode.DUPLICATED_ID);
-        else if (memberRepository.findByEmail(request.getEmail()).isPresent())
+
+        if (memberRepository.existsByEmail(request.getEmail()))
             throw new ApplicationException(ErrorCode.DUPLICATED_EMAIL);
 
-        Member member = Member.builder()
-                .id(request.getId())
-                .pw(passwordEncoder.encode(request.getPw()))
-                .name(request.getName())
-                .nickname(request.getNickname())
-                .email(request.getEmail())
-                .build();
+        Member member = request.toEntity(passwordEncoder);
 
         member.setRoles(Collections.singletonList(Authority.builder().name("ROLE_USER").build()));
 
         memberRepository.save(member);
 
-
-        for (String str : request.getCategoryIds()) {
-            Long id = Long.parseLong(str);
-            FavoriteCategory favoriteCategory = FavoriteCategory.builder()
-                    .categoryId(id)
-                    .memberId(request.getId())
-                    .build();
-            favoriteCategoryRepository.save(favoriteCategory);
-        }
+        Arrays.stream(request.getCategoryIds())
+                .map(Long::parseLong)
+                .map(categoryId -> FavoriteCategory.builder()
+                        .categoryId(categoryId)
+                        .memberId(request.getId())
+                        .build())
+                .forEach(favoriteCategoryRepository::save);
 
 
         return true;
@@ -75,7 +70,7 @@ public class SignService {
         Member member = memberRepository.findById(request.getId()).orElseThrow(() ->
                 new ApplicationException(ErrorCode.NONEXISTENT_ID));
 
-        if (!passwordEncoder.matches(request.getPw(), member.getPw())) {
+        if (!request.isSamePassword(passwordEncoder, member)) {
             throw new ApplicationException(ErrorCode.UNCORRECTED_PW);
         }
 
@@ -90,13 +85,13 @@ public class SignService {
 
     }
 
-    public boolean update(SignRequest request) {
+    public boolean update(UpdateRequest request) {
 
-        if(memberRepository.findByEmailWithOutSelf(request.getId(), request.getEmail()).isPresent()) {
+        if(memberRepository.existsByEmailAndIdNot(request.getEmail(), request.getId())) {
             throw new ApplicationException(ErrorCode.DUPLICATED_EMAIL);
         }
 
-        if (request.getPw() != null && !request.getPw().equals("")) {
+        if (!request.isPasswordBlank()) {
             request.setPw(passwordEncoder.encode(request.getPw()));
         }
         Optional<Member> member = memberRepository.findById(request.getId());

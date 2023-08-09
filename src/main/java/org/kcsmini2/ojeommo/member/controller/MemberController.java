@@ -8,6 +8,7 @@ import org.kcsmini2.ojeommo.exception.ErrorCode;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
 import org.kcsmini2.ojeommo.member.data.dto.SignResponse;
+import org.kcsmini2.ojeommo.member.data.dto.UpdateRequest;
 import org.kcsmini2.ojeommo.member.service.SignService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -32,8 +33,9 @@ public class MemberController {
 
     @PostMapping("/register")
     public String signup(@Valid @ModelAttribute SignRequest request,
-                         @RequestParam(name = "categoryId", required = false) String[] categoryIds,
-                         BindingResult bindingResult) throws Exception {
+                         BindingResult bindingResult,
+                         @RequestParam(name = "categoryId", required = false) String[] categoryIds
+                         ) throws Exception {
 
         if(bindingResult.hasErrors()) {
             throw new ApplicationException(ErrorCode.NULL_FIELD);
@@ -60,9 +62,17 @@ public class MemberController {
     }
 
     @PostMapping("/update")
-    public String update(@AuthenticationPrincipal MemberDTO memberDTO, @ModelAttribute SignRequest request) {
+    public String update(@AuthenticationPrincipal MemberDTO memberDTO,
+                         @Valid @ModelAttribute UpdateRequest request,
+                         BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            throw new ApplicationException(ErrorCode.NULL_FIELD);
+        }
+
         String id = memberDTO.getId();
         request.setId(id);
+        request.setPw(request.getPw().trim());
         if (signService.update(request)) return "redirect:/main";
         else return "error";
     }

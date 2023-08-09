@@ -1,20 +1,26 @@
 package org.kcsmini2.ojeommo.board.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.GatherBoardCreateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.JoinPartyRequestDto;
 import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.GatherBoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.service.GatherBoardService;
+import org.kcsmini2.ojeommo.exception.ApplicationException;
+import org.kcsmini2.ojeommo.exception.ErrorCode;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
+import org.kcsmini2.ojeommo.member.data.dto.PartyMemberDetailResponseDTO;
+import org.kcsmini2.ojeommo.member.service.PartyService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -30,35 +36,53 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BoardController {
 
     private final GatherBoardService gatherBoardService;
+    private final PartyService partyService;
 
     @PostMapping("/createGatherBoard")
-    public String CreateGatherBoardPOST(GatherBoardCreateRequestDTO requestDTO, @AuthenticationPrincipal MemberDTO memberDTO) throws Exception {
+    public String CreateGatherBoardPOST(@Valid GatherBoardCreateRequestDTO requestDTO,
+                                        BindingResult bindingResult,
+                                        @AuthenticationPrincipal MemberDTO memberDTO
+                                        ) throws Exception {
+
+        if(bindingResult.hasErrors()) {
+            throw new ApplicationException(ErrorCode.NULL_FIELD);
+        }
+
         gatherBoardService.createBoard(requestDTO, memberDTO);
         return "redirect:/";
+    }
+
+    @GetMapping("/readCreatePage")
+    public String ReadCreatePage(@AuthenticationPrincipal MemberDTO memberDTO) throws Exception{
+        return "/fragment/gather_create";
     }
 
     @GetMapping("/readGatherBoard/{id}")
     public String ReadGatherBoardGET(Model model, @PathVariable("id") Long boardId, @AuthenticationPrincipal MemberDTO memberDTO) {
         GatherBoardDetailResponseDTO dto = gatherBoardService.readBoard(boardId, memberDTO);
+        List<PartyMemberDetailResponseDTO> partyDTO = partyService.readParty(boardId);
+
         if (memberDTO != null) {
             model.addAttribute("member", memberDTO);
+        }
+        if (partyDTO != null) {
+            model.addAttribute("party", partyDTO);
         }
         model.addAttribute("gatherDetail", dto);
         return "/fragment/gather_detail";
     }
 
-    @PostMapping("/toUpdateGatherBoardPage")
-    public String LinkUpdateGatherBoardPagePost(ModelMap model, Long boardId, @AuthenticationPrincipal MemberDTO memberDTO) {
+    @GetMapping("/toUpdateGatherBoardPage/{id}")
+    public String LinkUpdateGatherBoardPagePost(@PathVariable("id") Long boardId, Model model, @AuthenticationPrincipal MemberDTO memberDTO) {
+        gatherBoardService.checkPermission(boardId, memberDTO);
         GatherBoardDetailResponseDTO dto = gatherBoardService.readBoard(boardId, memberDTO);
         model.addAttribute("gatherDetail", dto);
-        return "/fragment/gather_modify";//연수가 update page로 연결시켜야 됨
+        return "/fragment/gather_modify";
     }
 
     @PostMapping("/updateGatherBoardPage")
     public String UpdateGatherBoardPage(GatherBoardUpdateRequestDTO gatherBoardUpdateRequestDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
-        System.out.println("처리전");
         gatherBoardService.updateBoard(gatherBoardUpdateRequestDTO, memberDTO);
-        System.out.println("처리후");
         return "redirect:/";
     }
 

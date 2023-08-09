@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GatherBoardRepository extends JpaRepository<GatherBoard, Long> {
     Page<GatherBoard> findAllBy(Pageable pageable);
+
+    Page<GatherBoard> findAllByBoard_Author_Id(String authorId, Pageable pageable);
 }

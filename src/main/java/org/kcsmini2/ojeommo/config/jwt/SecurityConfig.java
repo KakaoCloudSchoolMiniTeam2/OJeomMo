@@ -8,6 +8,7 @@ import org.kcsmini2.ojeommo.exception.GlobalControllerAdvice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -59,14 +60,14 @@ public class SecurityConfig {
                 .csrf((csrf)->csrf.disable())
                 .sessionManagement((sessionManagement)-> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests()
-                .requestMatchers("/register").permitAll()
-                .requestMatchers("/login").permitAll()
-                .requestMatchers("/main").permitAll()
-                .requestMatchers("/board/**").permitAll()
-                .requestMatchers("/detail").permitAll()
-                .requestMatchers("/").permitAll()
-                .anyRequest().authenticated()
-
+                .requestMatchers(HttpMethod.POST, "/board/**").authenticated()
+                .requestMatchers("/my-board").authenticated()
+                .requestMatchers("/create").authenticated()
+                .requestMatchers("/delete").authenticated()
+                .requestMatchers("/update").authenticated()
+                .requestMatchers("/update").authenticated()
+                .requestMatchers("/mypage").authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exceptionHandling) -> {

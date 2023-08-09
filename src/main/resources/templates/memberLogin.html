@@ -5,18 +5,19 @@
 
     if (data != null) {
         var jwt = data.token;
-        setCookie("Authorization", jwt, 1); // 예시로 쿠키의 만료일을 1일로 설정
+        setCookie("Authorization", jwt, 60); // 쿠키의 만료일을 1일로 설정
     }
 
     // 쿠키를 설정하는 함수를 정의
-    function setCookie(name, value, days) {
+    function setCookie(name, value, minutes) {
         var expires = "";
-        if (days) {
+        if (minutes) {
             var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            date.setTime(date.getTime() + (minutes * 60 * 1000));
             expires = "; expires=" + date.toUTCString();
         }
-        document.cookie = name + "=" + value + "; path=/";
+        document.cookie = name + "=" + value + "; path=/" + expires;
+
     }
 
     // JWT를 쿠키에 저장

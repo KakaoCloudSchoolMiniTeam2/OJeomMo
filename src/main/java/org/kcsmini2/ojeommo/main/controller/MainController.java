@@ -45,6 +45,24 @@ public class MainController {
         return "main";
     }
 
+    @GetMapping("my-board")
+    public String getMyBoard(@AuthenticationPrincipal MemberDTO memberDTO,
+                           @PageableDefault(size = 4, sort = "bumpedAt", direction = Sort.Direction.DESC) Pageable pageable,
+                           ModelMap map) {
+
+        Page<BoardDetailResponseDTO> responseDtoPage = gatherBoardService.readMyBoardPage(pageable, memberDTO);
+        List<Integer> pageNumbers = paginationService.getPaginationBar(pageable.getPageNumber(), responseDtoPage.getTotalPages());
+
+        if (memberDTO != null) {
+            map.addAttribute("profile", memberDTO);
+        }
+
+        map.addAttribute("articles", responseDtoPage);
+        map.addAttribute("pageNumbers", pageNumbers);
+
+        return "myBoard";
+    }
+
     @GetMapping("detail")
     public String detail(){return "fragment/gather_detail";}
 
