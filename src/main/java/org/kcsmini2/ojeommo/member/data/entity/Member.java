@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.kcsmini2.ojeommo.category.entity.FavoriteCategory;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.kcsmini2.ojeommo.member.data.dto.SignRequest;
+import org.kcsmini2.ojeommo.member.data.dto.UpdateRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +67,7 @@ public class Member {
         return memberDTO;
     }
 
-    public boolean updateMember(SignRequest request) {
+    public boolean updateMember(UpdateRequest request) {
         try {
             if (request.getPw() != null && !request.getPw().equals("")) this.pw = request.getPw();
             this.nickname = request.getNickname();

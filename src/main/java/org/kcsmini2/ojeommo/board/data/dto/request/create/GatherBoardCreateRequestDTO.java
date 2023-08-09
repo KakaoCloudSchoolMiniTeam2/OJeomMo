@@ -1,6 +1,8 @@
 package org.kcsmini2.ojeommo.board.data.dto.request.create;
 
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.kcsmini2.ojeommo.board.data.entity.Board;
 import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
@@ -11,10 +13,19 @@ import org.kcsmini2.ojeommo.category.entity.Category;
 @Setter
 @ToString
 public class GatherBoardCreateRequestDTO extends BoardCreateRequestDTO{
+
+    @NotNull
     private Integer gatherNumber;
+
+    @NotNull
     private Integer initNumber;
+
+    @NotNull
     private Boolean isDelivery;
+
+    @NotBlank
     private String categoryName;
+
     @Setter
     private Category category;
 

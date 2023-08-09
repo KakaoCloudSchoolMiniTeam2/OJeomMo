@@ -5,7 +5,7 @@
 
     if (data != null) {
         var jwt = data.token;
-        setCookie("Authorization", jwt, 1); // 쿠키의 만료일을 1일로 설정
+        setCookie("Authorization", jwt, 60); // 쿠키의 만료일을 1일로 설정
     }
 
     // 쿠키를 설정하는 함수를 정의

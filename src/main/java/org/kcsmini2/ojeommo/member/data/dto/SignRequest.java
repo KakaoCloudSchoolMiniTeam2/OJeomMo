@@ -41,7 +41,4 @@ public class SignRequest {
         return passwordEncoder.matches(this.getPw(), member.getPw());
     }
 
-    public boolean isPasswordBlank() {
-        return this.getPw() == null || this.getPw().equals("");
-    }
 }
