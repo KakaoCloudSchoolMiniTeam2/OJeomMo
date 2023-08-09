@@ -56,6 +56,7 @@ const modal = document.querySelector('.modal');
 const btnOpenPopup = document.querySelectorAll('.postit');
 const createBtn = document.querySelector('.createBtn');
 
+
 function getModal(postit) {
 
     const modalContent = document.querySelector('.modal_body')
@@ -190,4 +191,3 @@ function deleteCookie() {
 if (logoutBtn != null) {
     logoutBtn.onclick = deleteCookie;
 }
-

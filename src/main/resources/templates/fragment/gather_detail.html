@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <script src="/js/main.js" defer></script>
 </head>
+
+
 <body class="detailPostit">
 
 <header class="detailPostit__header">
@@ -23,7 +25,7 @@
 </header>
 <section class="detailPostit__body">
     <div class="detailHeader">
-        <div class="detailParty">
+        <span class="detailParty">
             <div class="tooltiptext tooltip-bottom">
                 <th:block th:each="person:${party}">
                     <span th:text="|${person.nickname} (${person.name})|" ></span>
@@ -55,7 +57,7 @@
             </span>
         </div>
         <div class="detailIconSection">
-            <div class="detailIconPartition">
+            <div class="detailIconPartition" th:if="${member!=null && gatherDetail.getIsMyArticle()}">
                 <form th:action="@{/board/bumpGatherBoard}" method="post">
                     <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
                     <button class="detailIconButton">
@@ -78,8 +80,10 @@
                 </form>
                 </button>
             </div>
-        </div>
+        </span>
+
     </div>
+
     <div class="detailContentSection">
         <div class="authorDiv">
             <p><span class="author">글쓴이 : </span><span class="author"
@@ -92,10 +96,69 @@
         <p class="detailMore" th:text="${gatherDetail.getContent()}">상세내용</p>
     </div>
 </section>
+
+
 <hr class="detailSection-separator">
+
+
+
+
 <section class="detailPostit__comment">
 
+    <form th:if="${member != null}" th:action="@{/board/createComment}" method="post" id="createComment">
+        <div class="comment-form">
+            <div class="comment-form-head">
+                <textarea class="comment-input" name="commentContent"
+                          placeholder="댓글을 작성하세요"></textarea>
+                <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
+                <input type="hidden" th:name="memberId" th:value="${member.getId()}"/>
+                <button type="submit" class="comment-enrollbtn"> 등록</button>
+            </div>
+        </div>
+    </form>
+
+
+    <th:block th:each="comments : ${comment}">
+        <ul id="comments-list" class="comments-list">
+            <li>
+                <div class="comment-main-level">
+                    <div class="comment-box">
+                        <div class="comment-head">
+
+                            <div th:class="${gatherDetail.getAuthorId().equals(comments.getAuthorId()) ? 'comment-name by-author' : 'comment-name'}">
+                                <a th:text="${comments.getAuthorId()}"></a>
+                                <th:block th:if="${member != null}">
+                                    <form action="/board/updateComment" method="post">
+                                        <input type="hidden" th:name="commentId" th:value="${comments.getId()}"/>
+                                        <input type="hidden" th:name="memberId" th:value="${member.getId()}"/>
+
+                                        <button class="updateBtn" type="submit">
+                                            <i class="fa-solid fa-pencil"></i>
+                                        </button>
+                                    </form>
+                                    <form action="/board/deleteComment" method="post">
+                                        <input type="hidden" th:name="commentId" th:value="${comments.getId()}"/>
+                                        <input type="hidden" th:name="memberId" th:value="${member.getId()}"/>
+                                        <button class="deleteBtn" type="submit">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </form>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="comment-content">
+                            <a th:text="${comments.getContent()}"/>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </th:block>
+
+
+
 </section>
+
 
 </body>
 

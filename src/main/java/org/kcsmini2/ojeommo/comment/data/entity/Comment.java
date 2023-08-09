@@ -45,6 +45,6 @@ public class Comment {
     }
 
     public boolean isWrongAuthor(Member requester) {
-        return !this.author.equals(requester);
+        return !this.author.getId().equals(requester.getId());
     }
 }
