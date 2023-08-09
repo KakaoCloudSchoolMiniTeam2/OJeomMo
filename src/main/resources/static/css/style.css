@@ -200,7 +200,7 @@ input[type=radio] {
     color: var(--accent-color);
     left: 50%;
     position: relative;
-    transform: translateX(-50%)
+    transform: translateX(-50%);
     text-decoration: none;
 }
 
