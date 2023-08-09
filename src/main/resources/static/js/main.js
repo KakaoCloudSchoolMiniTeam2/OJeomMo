@@ -74,8 +74,8 @@ function getModal(postit) {
             const deleteBtn = document.querySelector("[name = boardDeleteBtn]");
             deleteBtn.onclick = deleteAlert;
             const updateBtn = document.querySelector("[name = boardUpdateBtn]");
-            updateBtn.onclick = function (boardId) {
-                return function (event) {
+            updateBtn.onclick = function(boardId) {
+                return function (event){
                     event.preventDefault();
                     updateModal(boardId);
                 };
@@ -92,9 +92,34 @@ function getModal(postit) {
     }
 }
 
-function updateModal(boardId) {
+function updateModal(boardId){
     //TODO : 글 작성자가 아니어도 접근이 가능한 문제 해결 필요
     const modalContent = document.querySelector('.modal_body')
+
+    const htmlFilePath = '/board/toUpdateGatherBoardPage/'+boardId;
+    
+    fetch(htmlFilePath)
+        .then(response => response.text())
+        .then(html => {
+            modalContent.innerHTML = html;
+            const closeBtn = document.querySelector('.detailCloseIconButton');
+            closeBtn.onclick = closeModal;
+        })
+        .catch(error => {
+            console.error('Error fetching HTML:', error);
+        });
+
+    modal.classList.add('show');
+
+    if (modal.classList.contains('show')) {
+        body.style.overflow = 'hidden';
+    }
+}
+
+btnOpenPopup.forEach(postit => {
+    console.log(postit);
+    postit.onclick = () => getModal(postit);
+});
 
     const htmlFilePath = '/board/toUpdateGatherBoardPage/' + boardId;
 
@@ -175,11 +200,21 @@ function deleteAlert(event) {
     }
 }
 
+// delete 버튼 눌렀을 때 alert 표시
+function deleteAlert(event) {
+    event.preventDefault();
+    // Alert 띄우기
+    const confirmed = confirm('정말로 삭제하시겠습니까?');
+
+    // 사용자가 "확인"을 클릭한 경우에만 form 제출
+    if (confirmed) {
+        document.getElementById('myForm').submit();
+    }
+}
+
 function closeModal() {
     modal.classList.toggle('show');
 }
-
-const logoutBtn = document.querySelector(".logoutBtn");
 
 // 인증 토큰 삭제
 function deleteCookie() {
@@ -187,7 +222,7 @@ function deleteCookie() {
     document.cookie = "Authorization" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
 
-if (logoutBtn != null) {
-    logoutBtn.onclick = deleteCookie;
+if (document.querySelector(".logoutBtn") != null) {
+    document.querySelector(".logoutBtn").onclick = deleteCookie;
 }
 
