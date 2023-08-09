@@ -176,7 +176,8 @@ function deleteAlert(event) {
     }
 }
 
-function closeModal() {
+function closeModal(event) {
+    event.preventDefault();
     modal.classList.toggle('show');
 }
 
