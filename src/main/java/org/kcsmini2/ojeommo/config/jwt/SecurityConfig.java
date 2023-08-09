@@ -68,7 +68,6 @@ public class SecurityConfig {
                 .requestMatchers("/update").authenticated()
                 .requestMatchers("/mypage").authenticated()
                 .anyRequest().permitAll()
-
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exceptionHandling) -> {
