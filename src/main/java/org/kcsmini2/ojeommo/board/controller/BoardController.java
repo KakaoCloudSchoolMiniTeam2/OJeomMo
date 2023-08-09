@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -51,6 +52,11 @@ public class BoardController {
         return "redirect:/";
     }
 
+    @GetMapping("/readCreatePage")
+    public String ReadCreatePage(@AuthenticationPrincipal MemberDTO memberDTO) throws Exception{
+        return "/fragment/gather_create";
+    }
+
     @GetMapping("/readGatherBoard/{id}")
     public String ReadGatherBoardGET(Model model, @PathVariable("id") Long boardId, @AuthenticationPrincipal MemberDTO memberDTO) {
         GatherBoardDetailResponseDTO dto = gatherBoardService.readBoard(boardId, memberDTO);
@@ -66,18 +72,17 @@ public class BoardController {
         return "/fragment/gather_detail";
     }
 
-    @PostMapping("/toUpdateGatherBoardPage")
-    public String LinkUpdateGatherBoardPagePost(ModelMap model, Long boardId, @AuthenticationPrincipal MemberDTO memberDTO) {
+    @GetMapping("/toUpdateGatherBoardPage/{id}")
+    public String LinkUpdateGatherBoardPagePost(@PathVariable("id") Long boardId, Model model, @AuthenticationPrincipal MemberDTO memberDTO) {
+        gatherBoardService.checkPermission(boardId, memberDTO);
         GatherBoardDetailResponseDTO dto = gatherBoardService.readBoard(boardId, memberDTO);
         model.addAttribute("gatherDetail", dto);
-        return "/fragment/gather_modify";//연수가 update page로 연결시켜야 됨
+        return "/fragment/gather_modify";
     }
 
     @PostMapping("/updateGatherBoardPage")
     public String UpdateGatherBoardPage(GatherBoardUpdateRequestDTO gatherBoardUpdateRequestDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
-        System.out.println("처리전");
         gatherBoardService.updateBoard(gatherBoardUpdateRequestDTO, memberDTO);
-        System.out.println("처리후");
         return "redirect:/";
     }
 

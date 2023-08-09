@@ -169,6 +169,13 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         }
     }
 
+    public void checkPermission(Long boardId, MemberDTO memberDTO){
+        Board board = boardRepository.findById(boardId).orElseThrow();
+        if (memberDTO == null || !Objects.equals(board.getAuthor().getId(), memberDTO.getId())) {
+            throw new ApplicationException(ErrorCode.INVALID_PERMISSION);
+        }
+    }
+
     @Override
     public Page<BoardDetailResponseDTO> readBoardPage(Pageable pageable, MemberDTO memberDTO) {
         //현재 페이지에 포함된 게시글들을 가져온다
