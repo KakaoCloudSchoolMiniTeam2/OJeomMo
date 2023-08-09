@@ -274,6 +274,11 @@ body{
 
 .detailPostit__comment {
     padding-top : var(--large-padding);
+    padding-bottom: var(--large-padding);
+}
+
+.detailPostit__comment #createComment {
+    padding-bottom: var(--large-padding);
 }
 
 .comments-list {
@@ -314,7 +319,7 @@ body{
     -moz-border-radius: 4px 4px 0 0;
     border-radius: 4px 4px 0 0;
     display : flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .comment-form .comment-form-head .comment-enrollbtn {
@@ -326,6 +331,7 @@ body{
     border : none;
     border-radius: 4px;
     font-family: var(--first-font);
+    width:20%;
 }
 
 .comments-list .comment-box {
@@ -394,6 +400,7 @@ body{
     font-weight: 700;
     float: left;
     margin-right: 10px;
+    width : 100%;
 }
 
 .comment-box .comment-name a {
@@ -410,7 +417,10 @@ body{
     border-radius: 0 0 4px 4px;
 }
 
-.comment-box .comment-name.by-author, .comment-box .comment-name.by-author a {color: #03658c;}
+.comment-box .comment-name.by-author, .comment-box .comment-name.by-author a {
+    width : 100%;
+    color: #03658c;
+}
 
 .comment-box .comment-name.by-author:after {
     content: '글쓴이';
@@ -425,14 +435,28 @@ body{
     border-radius: 3px;
 }
 
-.comment-box .comment-head .updateBtn, .comment-box .comment-head .deleteBtn{
-    float : right;
-    margin-left : 10px;
-    cursor: pointer;
+.comment-box .comment-head .updateBtn,
+.comment-box .comment-head .deleteBtn{
+    font-size: var(--font-medium);
     color: #A6A6A6;
-    -webkit-transition: color 0.3s ease;
-    -o-transition: color 0.3s ease;
+    cursor: pointer;
     transition: color 0.3s ease;
+    margin-left: 10px;
+    border: 0;
+    background-color: transparent;
+    position: relative;
+    display: inline-block;
+    float : right;
+
+}
+
+.comment-box .comment-head .btnWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    float : right;
 }
 
 /** =====================
