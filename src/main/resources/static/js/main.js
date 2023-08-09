@@ -70,8 +70,39 @@ function getModal(postit) {
             modalContent.innerHTML = html;
             const closeBtn = document.querySelector('.detailCloseIconButton');
             closeBtn.onclick = closeModal;
-            const deleteBtn = document.querySelector("[name = deleteBtn]");
+            const deleteBtn = document.querySelector("[name = boardDeleteBtn]");
             deleteBtn.onclick = deleteAlert;
+            const updateBtn = document.querySelector("[name = boardUpdateBtn]");
+            updateBtn.onclick = function(boardId) {
+                return function (event){
+                    event.preventDefault();
+                    updateModal(boardId);
+                };
+            }(boardId);
+        })
+        .catch(error => {
+            console.error('Error fetching HTML:', error);
+        });
+
+    modal.classList.add('show');
+
+    if (modal.classList.contains('show')) {
+        body.style.overflow = 'hidden';
+    }
+}
+
+function updateModal(boardId){
+    //TODO : 글 작성자가 아니어도 접근이 가능한 문제 해결 필요
+    const modalContent = document.querySelector('.modal_body')
+
+    const htmlFilePath = '/board/toUpdateGatherBoardPage/'+boardId;
+    
+    fetch(htmlFilePath)
+        .then(response => response.text())
+        .then(html => {
+            modalContent.innerHTML = html;
+            const closeBtn = document.querySelector('.detailCloseIconButton');
+            closeBtn.onclick = closeModal;
         })
         .catch(error => {
             console.error('Error fetching HTML:', error);
