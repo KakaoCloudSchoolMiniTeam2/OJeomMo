@@ -89,13 +89,6 @@ public class BoardController {
             model.addAttribute("comment",commentDTO);
         }
 
-
-
-//        현재 사용자의 인증 정보 가져오기
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        MemberDTO curUserDTO = (MemberDTO)authentication.getPrincipal();
-//        model.addAttribute("authenID",curUserDTO.getId());
-
         return "fragment/gather_detail";
     }
 
