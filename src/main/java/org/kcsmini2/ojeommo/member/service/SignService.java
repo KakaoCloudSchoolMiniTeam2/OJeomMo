@@ -67,7 +67,7 @@ public class SignService {
 
     public SignResponse login(SignRequest request) throws Exception {
         Member member = memberRepository.findById(request.getId()).orElseThrow(() ->
-                new ApplicationException(ErrorCode.NONEXISTENT_ID));
+                new ApplicationException(ErrorCode.ID_NOT_FOUND));
 
         if (!request.isSamePassword(passwordEncoder, member)) {
             throw new ApplicationException(ErrorCode.UNCORRECTED_PW);

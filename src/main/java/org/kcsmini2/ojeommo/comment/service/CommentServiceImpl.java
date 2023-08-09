@@ -8,6 +8,8 @@ import org.kcsmini2.ojeommo.comment.data.dto.request.CommentUpdateRequestDTO;
 import org.kcsmini2.ojeommo.comment.data.dto.response.CommentDetailResponseDTO;
 import org.kcsmini2.ojeommo.comment.data.entity.Comment;
 import org.kcsmini2.ojeommo.comment.repository.CommentRepository;
+import org.kcsmini2.ojeommo.exception.ApplicationException;
+import org.kcsmini2.ojeommo.exception.ErrorCode;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.kcsmini2.ojeommo.member.repository.MemberRepository;
@@ -49,9 +51,9 @@ public class CommentServiceImpl implements CommentService {
     public void updateComment(CommentUpdateRequestDTO requestDTO, MemberDTO memberDTO) {
         Member requester = memberRepository.getReferenceById(memberDTO.getId());
         Comment foundComment = commentRepository.findById(requestDTO.getCommentId())
-                .orElseThrow(() -> new RuntimeException("해당하는 ID의 댓글이 존재하지 않습니다."));
+                .orElseThrow(() -> new ApplicationException(ErrorCode.COMMENT_NOT_FOUND));
         if (foundComment.isWrongAuthor(requester)) {
-            throw new RuntimeException("요청자와 작성자가 다릅니다.");
+            throw new ApplicationException(ErrorCode.COMMENT_INVALID_PERMISSION);
         }
         foundComment.update(requestDTO);
     }
@@ -60,9 +62,9 @@ public class CommentServiceImpl implements CommentService {
     public void deleteComment(Long commentId, MemberDTO memberDTO) {
         Member requester = memberRepository.getReferenceById(memberDTO.getId());
         Comment foundComment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new RuntimeException("해당하는 ID의 댓글이 존재하지 않습니다."));
+                .orElseThrow(() -> new ApplicationException(ErrorCode.COMMENT_NOT_FOUND));
         if (foundComment.isWrongAuthor(requester)) {
-            throw new RuntimeException("요청자와 작성자가 다릅니다.");
+            throw new ApplicationException(ErrorCode.COMMENT_INVALID_PERMISSION);
         }
         commentRepository.delete(foundComment);
     }
