@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -93,12 +94,21 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     private void checkBumped(GatherBoard gatherBoard, LocalDateTime timeNow) {
         LocalDateTime beforeBumpedAt = gatherBoard.getBumpedAt();
 
-        Duration diff = Duration.between(beforeBumpedAt, timeNow);
-        long diffMin = diff.toMinutes();
-
-        if (diffMin < BUMP_LIMIT_TIME) {
-            throw new ApplicationException(ErrorCode.INVALID_BUMP);
+        // 오늘 날짜 아니면 안됨
+        LocalDate dayNow = timeNow.toLocalDate();
+        LocalDate dayCreate = gatherBoard.getBoard().getCreatedAt().toLocalDate();
+        int diffDay = dayNow.compareTo(dayCreate);
+        if(diffDay > 0){
+            throw new ApplicationException(ErrorCode.INVALID_BUMP_DAY);
         }
+
+        // 끌올 한 지 1시간 안지나면 안됨
+        Duration minuteDiff = Duration.between(beforeBumpedAt, timeNow);
+        long diffMin = minuteDiff.toMinutes();
+        if (diffMin < BUMP_LIMIT_TIME) {
+            throw new ApplicationException(ErrorCode.INVALID_BUMP_TIME);
+        }
+
     }
 
     private boolean getGatherJoinStatus(MemberDTO memberDTO, GatherBoard board) {

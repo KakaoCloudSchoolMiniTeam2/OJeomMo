@@ -15,7 +15,7 @@
                     <button class="postit_btn" th:data-board-id="${article.getId()}"></button>
                         <i th:if="${article.getIsDelivery()}" class="fa-solid fa-motorcycle"></i>
                         <i th:unless="${article.getIsDelivery()}" class="fa-solid fa-utensils"></i>
-                        <h1 th:text="${article.getDinerName()}"/>
+                        <span class="postit__dinerName"> <h1 th:text="${article.getDinerName()}"/></span>
                     </header>
                     <ul class="postit__message">
                         <li th:text="${article.getCategory()}"/>
