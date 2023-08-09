@@ -82,7 +82,14 @@ public class BoardController {
     }
 
     @PostMapping("/updateGatherBoardPage")
-    public String UpdateGatherBoardPage(GatherBoardUpdateRequestDTO gatherBoardUpdateRequestDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
+    public String UpdateGatherBoardPage(@Valid GatherBoardUpdateRequestDTO gatherBoardUpdateRequestDTO,
+                                        BindingResult bindingResult,
+                                        @AuthenticationPrincipal MemberDTO memberDTO) {
+        if(bindingResult.hasErrors()) {
+            throw new ApplicationException(ErrorCode.NULL_FIELD);
+        }
+
+        System.out.println("처리전");
         gatherBoardService.updateBoard(gatherBoardUpdateRequestDTO, memberDTO);
         return "redirect:/";
     }

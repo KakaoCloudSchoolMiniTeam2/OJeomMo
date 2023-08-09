@@ -50,7 +50,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     public void createBoard(GatherBoardCreateRequestDTO requestDTO, MemberDTO memberDTO) {
 
         if(!categoryRepository.existsByCategoryName(requestDTO.getCategoryName())) {
-            throw new ApplicationException(ErrorCode.NULL_FIELD);
+            throw new ApplicationException(ErrorCode.NONEXISTENT_CATEGORY);
         }
 
         Member author = memberRepository.findById(memberDTO.getId()).orElseThrow();
@@ -139,6 +139,10 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     @Override
     @Transactional
     public void updateBoard(GatherBoardUpdateRequestDTO requestDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
+        if(!categoryRepository.existsByCategoryName(requestDTO.getCategoryName())) {
+            throw new ApplicationException(ErrorCode.NONEXISTENT_CATEGORY);
+        }
+
         GatherBoard gatherBoard = gatherBoardRepository.findById(requestDTO.getBoardId()).orElseThrow();
         requestDTO.setCategory(categoryRepository.findCategoryByCategoryName(requestDTO.getCategoryName()));
 
