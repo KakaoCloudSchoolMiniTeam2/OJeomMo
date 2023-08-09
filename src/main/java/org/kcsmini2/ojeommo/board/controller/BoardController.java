@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.GatherBoardCreateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.JoinPartyRequestDto;
+import org.kcsmini2.ojeommo.board.data.dto.request.delete.QuitPartyRequestDto;
 import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.GatherBoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.service.GatherBoardService;
@@ -100,7 +101,14 @@ public class BoardController {
 
     @PostMapping("/joinParty")
     public String JoinParty(JoinPartyRequestDto requestDto, @AuthenticationPrincipal MemberDTO memberDTO) {
-        gatherBoardService.joinParty(requestDto.getBoardId(), memberDTO);
+        partyService.joinParty(requestDto.getBoardId(), memberDTO);
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/quitParty")
+    public String QuitParty(QuitPartyRequestDto requestDto, @AuthenticationPrincipal MemberDTO memberDTO) {
+        partyService.quitParty(requestDto, memberDTO);
 
         return "redirect:/";
     }
