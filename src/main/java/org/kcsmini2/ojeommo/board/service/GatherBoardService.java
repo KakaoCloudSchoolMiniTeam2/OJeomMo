@@ -30,4 +30,5 @@ public interface GatherBoardService {
     public Page<BoardDetailResponseDTO> readMyBoardPage(Pageable pageable, MemberDTO memberDTO);
 
     public void checkPermission(Long boardId, MemberDTO memberDTO);
+    public String getIDByBoardId(Long boardId);
 }

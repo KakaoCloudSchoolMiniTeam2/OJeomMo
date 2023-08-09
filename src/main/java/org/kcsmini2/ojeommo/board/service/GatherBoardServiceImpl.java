@@ -38,7 +38,6 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     private final MemberRepository memberRepository;
     private final PartyRepository partyRepository;
     private final CategoryRepository categoryRepository;
-    private final CommentRepository commentRepository;
 
 
     private static final long BUMP_LIMIT_TIME = 60l;
@@ -162,13 +161,13 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     }
 
     private void checkPermission(Board board, MemberDTO memberDTO) {
-        if (!Objects.equals(board.getAuthor().getId(), memberDTO.getId())) {
+        if (memberDTO == null || !Objects.equals(board.getAuthor().getId(), memberDTO.getId())) {
             throw new ApplicationException(ErrorCode.INVALID_PERMISSION);
         }
     }
 
     private void checkPermission(GatherBoard gatherBoard, MemberDTO memberDTO) {
-        if (!Objects.equals(gatherBoard.getBoard().getAuthor().getId(), memberDTO.getId())) {
+        if (memberDTO == null || !Objects.equals(gatherBoard.getBoard().getAuthor().getId(), memberDTO.getId())) {
             throw new ApplicationException(ErrorCode.INVALID_PERMISSION);
         }
     }
@@ -205,4 +204,14 @@ public class GatherBoardServiceImpl implements GatherBoardService {
                     return GatherBoardDetailResponseDTO.from(gatherBoard, isJoined, partyNumber, memberDTO);
                 });
     }
+
+    @Override
+    public String getIDByBoardId(Long boardId) {
+        Board board = boardRepository.findById(boardId).orElseThrow();
+        return board.getAuthor().getId();
+    }
+
+
+
+
 }

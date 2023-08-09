@@ -79,7 +79,6 @@ public class GatherBoard {
         this.gatherNumber = requestDTO.getGatherNumber();
         this.initNumber = requestDTO.getInitNumber();
         this.isDelivery = requestDTO.getIsDelivery();
-        this.bumpedAt = requestDTO.getBumpedAt();
         this.category = requestDTO.getCategory();
     }
 

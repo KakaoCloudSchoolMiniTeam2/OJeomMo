@@ -8,12 +8,21 @@ import org.kcsmini2.ojeommo.board.data.dto.request.delete.QuitPartyRequestDto;
 import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.GatherBoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.service.GatherBoardService;
+import org.kcsmini2.ojeommo.comment.data.dto.request.CommentCreateRequestDTO;
+import org.kcsmini2.ojeommo.comment.data.dto.request.CommentUpdateRequestDTO;
+import org.kcsmini2.ojeommo.comment.data.dto.response.CommentDetailResponseDTO;
+import org.kcsmini2.ojeommo.comment.service.CommentService;
 import org.kcsmini2.ojeommo.exception.ApplicationException;
 import org.kcsmini2.ojeommo.exception.ErrorCode;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.kcsmini2.ojeommo.member.data.dto.PartyMemberDetailResponseDTO;
+import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.kcsmini2.ojeommo.member.service.PartyService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -38,6 +47,8 @@ public class BoardController {
 
     private final GatherBoardService gatherBoardService;
     private final PartyService partyService;
+    private final CommentService commentService;
+
 
     @PostMapping("/createGatherBoard")
     public String CreateGatherBoardPOST(@Valid GatherBoardCreateRequestDTO requestDTO,
@@ -59,9 +70,12 @@ public class BoardController {
     }
 
     @GetMapping("/readGatherBoard/{id}")
-    public String ReadGatherBoardGET(Model model, @PathVariable("id") Long boardId, @AuthenticationPrincipal MemberDTO memberDTO) {
+    public String ReadGatherBoardGET(Model model, @PathVariable("id") Long boardId, @AuthenticationPrincipal MemberDTO memberDTO, Pageable pageable) {
         GatherBoardDetailResponseDTO dto = gatherBoardService.readBoard(boardId, memberDTO);
         List<PartyMemberDetailResponseDTO> partyDTO = partyService.readParty(boardId);
+        Page<CommentDetailResponseDTO> commentDTO = commentService.readComments(boardId, pageable, memberDTO);
+        String findID = gatherBoardService.getIDByBoardId(boardId);
+
 
         if (memberDTO != null) {
             model.addAttribute("member", memberDTO);
@@ -70,7 +84,20 @@ public class BoardController {
             model.addAttribute("party", partyDTO);
         }
         model.addAttribute("gatherDetail", dto);
-        return "/fragment/gather_detail";
+
+        if(commentDTO!=null){
+            model.addAttribute("comment",commentDTO);
+        }
+
+        model.addAttribute("author_ID",findID);
+
+
+//        현재 사용자의 인증 정보 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        MemberDTO curUserDTO = (MemberDTO)authentication.getPrincipal();
+        model.addAttribute("authenID",curUserDTO.getId());
+
+        return "fragment/gather_detail";
     }
 
     @GetMapping("/toUpdateGatherBoardPage/{id}")
@@ -103,7 +130,7 @@ public class BoardController {
     @PostMapping("/bumpGatherBoard")
     public String BumpedGatherBoardPost(Long boardId, @AuthenticationPrincipal MemberDTO memberDTO) {
         gatherBoardService.bumpBoard(boardId, memberDTO);
-        return "redirect:/board/readGatherBoard/" + boardId;
+        return "redirect:/";
     }
 
     @PostMapping("/joinParty")
@@ -117,6 +144,41 @@ public class BoardController {
     public String QuitParty(QuitPartyRequestDto requestDto, @AuthenticationPrincipal MemberDTO memberDTO) {
         partyService.quitParty(requestDto, memberDTO);
 
+        return "redirect:/";
+    }
+
+    // 댓글 등록
+    @PostMapping("/createComment")
+    public String createCommentPOST(@RequestParam("commentContent") String content, @AuthenticationPrincipal MemberDTO memberDTO, Long boardId, Model model){
+        CommentCreateRequestDTO requestDTO = new CommentCreateRequestDTO();
+        requestDTO.setContent(content);
+        requestDTO.setBoardId(boardId);
+        commentService.createComment(requestDTO,memberDTO);
+
+//        return "fragment/gather_detail";
+//        return "redirect:/board/readGatherBoard/" + boardId;
+        return "redirect:/";
+    }
+
+    // 댓글 수정
+    @PostMapping("/updateComment")
+    public String updateCommentPOST(@RequestParam("memberId") String memberId, @RequestParam("commentId") Long commentId){
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setId(memberId);
+        CommentUpdateRequestDTO requestDTO = new CommentUpdateRequestDTO();
+        requestDTO.setCommentId(commentId);
+
+        commentService.updateComment(requestDTO,memberDTO);
+        return "redirect:/";
+    }
+
+    @PostMapping("/deleteComment")
+    public String deleteCommentPOST(@RequestParam("memberId") String memberId, @RequestParam("commentId") Long commentId){
+
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setId(memberId);
+
+        commentService.deleteComment(commentId,memberDTO);
         return "redirect:/";
     }
 
