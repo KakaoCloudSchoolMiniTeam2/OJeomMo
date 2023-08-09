@@ -52,6 +52,11 @@ public class BoardController {
         return "redirect:/";
     }
 
+    @GetMapping("/readCreatePage")
+    public String ReadCreatePage(@AuthenticationPrincipal MemberDTO memberDTO) throws Exception{
+        return "/fragment/gather_create";
+    }
+
     @GetMapping("/readGatherBoard/{id}")
     public String ReadGatherBoardGET(Model model, @PathVariable("id") Long boardId, @AuthenticationPrincipal MemberDTO memberDTO) {
         GatherBoardDetailResponseDTO dto = gatherBoardService.readBoard(boardId, memberDTO);

@@ -54,6 +54,7 @@ window.addEventListener('resize', activateSideInWideScreen);
 const body = document.querySelector('body');
 const modal = document.querySelector('.modal');
 const btnOpenPopup = document.querySelectorAll('.postit');
+const createBtn = document.querySelector('.createBtn');
 
 function getModal(postit) {
 
@@ -73,8 +74,8 @@ function getModal(postit) {
             const deleteBtn = document.querySelector("[name = boardDeleteBtn]");
             deleteBtn.onclick = deleteAlert;
             const updateBtn = document.querySelector("[name = boardUpdateBtn]");
-            updateBtn.onclick = function(boardId) {
-                return function (event){
+            updateBtn.onclick = function (boardId) {
+                return function (event) {
                     event.preventDefault();
                     updateModal(boardId);
                 };
@@ -91,12 +92,12 @@ function getModal(postit) {
     }
 }
 
-function updateModal(boardId){
+function updateModal(boardId) {
     //TODO : 글 작성자가 아니어도 접근이 가능한 문제 해결 필요
     const modalContent = document.querySelector('.modal_body')
 
-    const htmlFilePath = '/board/toUpdateGatherBoardPage/'+boardId;
-    
+    const htmlFilePath = '/board/toUpdateGatherBoardPage/' + boardId;
+
     fetch(htmlFilePath)
         .then(response => response.text())
         .then(html => {
@@ -115,20 +116,52 @@ function updateModal(boardId){
     }
 }
 
-btnOpenPopup.forEach(postit => {
-    console.log(postit);
-    postit.onclick = () => getModal(postit);
-});
+function createModal(event) {
+    event.preventDefault();
+    const modalContent = document.querySelector('.modal_body')
 
-modal.addEventListener('click', (event) => {
-    if (event.target === modal) {
-        modal.classList.toggle('show');
+    const htmlFilePath = '/board/readCreatePage';
 
-        if (!modal.classList.contains('show')) {
-            body.style.overflow = 'auto';
-        }
+    fetch(htmlFilePath)
+        .then(response => response.text())
+        .then(html => {
+            modalContent.innerHTML = html;
+            const closeBtn = document.querySelector('.detailCloseIconButton');
+            closeBtn.onclick = closeModal;
+        })
+        .catch(error => {
+            console.error('Error fetching HTML:', error);
+        });
+
+    modal.classList.add('show');
+
+    if (modal.classList.contains('show')) {
+        body.style.overflow = 'hidden';
     }
-});
+}
+
+if (btnOpenPopup != null) {
+    btnOpenPopup.forEach(postit => {
+        console.log(postit);
+        postit.onclick = () => getModal(postit);
+    });
+}
+
+if (modal != null) {
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.classList.toggle('show');
+
+            if (!modal.classList.contains('show')) {
+                body.style.overflow = 'auto';
+            }
+        }
+    });
+}
+
+if (createBtn != null) {
+    createBtn.onclick = createModal;
+}
 
 // delete 버튼 눌렀을 때 alert 표시
 function deleteAlert(event) {
@@ -146,13 +179,15 @@ function closeModal() {
     modal.classList.toggle('show');
 }
 
+const logoutBtn = document.querySelector(".logoutBtn");
+
 // 인증 토큰 삭제
 function deleteCookie() {
     alert("요청 처리됨");
     document.cookie = "Authorization" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
 
-if (document.querySelector(".logoutBtn") != null) {
-    document.querySelector(".logoutBtn").onclick = deleteCookie;
+if (logoutBtn != null) {
+    logoutBtn.onclick = deleteCookie;
 }
 
