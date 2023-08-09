@@ -139,6 +139,10 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     @Override
     @Transactional
     public void updateBoard(GatherBoardUpdateRequestDTO requestDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
+        if(!categoryRepository.existsByCategoryName(requestDTO.getCategoryName())) {
+            throw new ApplicationException(ErrorCode.NULL_FIELD);
+        }
+
         GatherBoard gatherBoard = gatherBoardRepository.findById(requestDTO.getBoardId()).orElseThrow();
         requestDTO.setCategory(categoryRepository.findCategoryByCategoryName(requestDTO.getCategoryName()));
 

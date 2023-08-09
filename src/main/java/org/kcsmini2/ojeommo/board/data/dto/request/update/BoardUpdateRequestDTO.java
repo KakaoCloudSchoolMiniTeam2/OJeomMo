@@ -1,6 +1,7 @@
 package org.kcsmini2.ojeommo.board.data.dto.request.update;
 
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class BoardUpdateRequestDTO {
+    @NotBlank
     private String title;
+    @NotBlank
     private String content;
     private LocalDateTime createdAt;
     private Long boardId;
