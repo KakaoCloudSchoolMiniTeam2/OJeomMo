@@ -6,6 +6,7 @@ import org.kcsmini2.ojeommo.board.data.dto.request.create.GatherBoardCreateReque
 import org.kcsmini2.ojeommo.board.data.dto.request.update.BoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.BoardDetailResponseDTO;
+import org.kcsmini2.ojeommo.board.data.dto.response.detail.CategoryResponseDto;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.GatherBoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
@@ -30,4 +31,6 @@ public interface GatherBoardService {
     public Page<BoardDetailResponseDTO> readMyBoardPage(Pageable pageable, MemberDTO memberDTO);
 
     public void checkPermission(Long boardId, MemberDTO memberDTO);
+
+    public CategoryResponseDto getCategory();
 }

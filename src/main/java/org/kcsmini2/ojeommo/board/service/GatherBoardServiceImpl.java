@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.GatherBoardCreateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.BoardDetailResponseDTO;
+import org.kcsmini2.ojeommo.board.data.dto.response.detail.CategoryResponseDto;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.GatherBoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.data.entity.Board;
 import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -214,9 +216,9 @@ public class GatherBoardServiceImpl implements GatherBoardService {
                 });
     }
 
-
-
-
-
-
+    @Override
+    public CategoryResponseDto getCategory() {
+        List<Category> categories = categoryRepository.findAll();
+        return CategoryResponseDto.from(categories);
+    }
 }
