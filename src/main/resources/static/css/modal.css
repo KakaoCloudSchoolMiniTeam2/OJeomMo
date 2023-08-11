@@ -32,3 +32,9 @@
 
     transform: translateX(-50%) translateY(-50%);
 }
+
+@media screen and (max-width: 600px) {
+    .modal_body {
+        width:100vw;
+    }
+}
