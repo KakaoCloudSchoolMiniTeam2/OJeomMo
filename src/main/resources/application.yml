@@ -9,9 +9,8 @@ spring:
         default_batch_fetch_size: 100
       open-in-view: false
       database-platform: org.hibernate.dialect.MariaDBDialect
-#    테이블 생성
-#    hibernate:
-#      ddl-auto: create
+    hibernate:
+      ddl-auto: ${DDL_MODE}
 
 #  css livereload
 #  devtools:
@@ -25,7 +24,7 @@ spring:
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/ojeommo
+    url: jdbc:mariadb://${DB_IP}:${DB_PORT}/ojeommo
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
