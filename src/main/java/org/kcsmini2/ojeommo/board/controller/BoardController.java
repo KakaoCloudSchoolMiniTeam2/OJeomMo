@@ -66,7 +66,7 @@ public class BoardController {
 
     @GetMapping("/readCreatePage")
     public String ReadCreatePage(@AuthenticationPrincipal MemberDTO memberDTO) throws Exception{
-        return "/fragment/gather_create";
+        return "fragment/gather_create";
     }
 
     @GetMapping("/readGatherBoard/{id}")
@@ -97,7 +97,7 @@ public class BoardController {
         gatherBoardService.checkPermission(boardId, memberDTO);
         GatherBoardDetailResponseDTO dto = gatherBoardService.readBoard(boardId, memberDTO);
         model.addAttribute("gatherDetail", dto);
-        return "/fragment/gather_modify";
+        return "fragment/gather_modify";
     }
 
     @PostMapping("/updateGatherBoardPage")
