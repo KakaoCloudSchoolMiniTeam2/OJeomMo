@@ -45,11 +45,8 @@
                 </label>
             </div>
             <p class="category">음식 종류 : <input list="foodCategory" th:value="${gatherDetail.getCategory()}" id="category" name="categoryName" placeholder="음식 종류를 선택하세요."></p>
-            <datalist id="foodCategory">
-                <option value="한식">
-                <option value="중식">
-                <option value="일식">
-                <option value="양식">
+            <datalist id="foodCategory" th:each="category : ${categories.getCategoryNames()}">
+                <option th:value="${category}">
             </datalist>
             <input type="textarea" id="content" th:value="${gatherDetail.getContent()}" name="content" placeholder="추가적인 내용을 입력해주세요.">
         </div>
