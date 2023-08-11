@@ -18,7 +18,7 @@ public class ViewController {
 
     private final CategoryRepository categoryRepository;
 
-    @GetMapping("/register")
+    @GetMapping("register")
     public String register(Model model) {
         List<Category> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
@@ -26,18 +26,18 @@ public class ViewController {
         return "joinMember";
     }
 
-    @GetMapping("/login")
+    @GetMapping("login")
     public String loginView() {
         return "login";
     }
 
-    @GetMapping("/mypage")
+    @GetMapping("mypage")
     public String myPageView(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
         model.addAttribute("data", memberDTO);
         return "mypage";
     }
 
-    @GetMapping("/update")
+    @GetMapping("update")
     public String updateView(@AuthenticationPrincipal MemberDTO memberDTO, Model model) {
 
         model.addAttribute("data", memberDTO);
