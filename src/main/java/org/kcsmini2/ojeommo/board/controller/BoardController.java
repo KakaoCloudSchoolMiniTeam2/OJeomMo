@@ -41,7 +41,7 @@ import java.util.Map;
  * 최종 수정 일자: 2023.07.22
  */
 @Controller
-@RequestMapping("/board")
+@RequestMapping("board")
 @RequiredArgsConstructor
 public class BoardController {
 

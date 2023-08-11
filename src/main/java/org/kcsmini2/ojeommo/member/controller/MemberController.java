@@ -31,7 +31,7 @@ public class MemberController {
 
     private final SignService signService;
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public String signup(@Valid @ModelAttribute SignRequest request,
                          BindingResult bindingResult,
                          @RequestParam(name = "categoryId", required = false) String[] categoryIds
@@ -50,7 +50,7 @@ public class MemberController {
         return "joinMember";
     }
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "login")
     public String login(@ModelAttribute SignRequest request, Model model) throws Exception {
         SignResponse response = signService.login(request);
         System.out.println("provided token is " + response.getToken());
@@ -61,7 +61,7 @@ public class MemberController {
         return "login";
     }
 
-    @PostMapping("/update")
+    @PostMapping("update")
     public String update(@AuthenticationPrincipal MemberDTO memberDTO,
                          @Valid @ModelAttribute UpdateRequest request,
                          BindingResult bindingResult) {
@@ -77,7 +77,7 @@ public class MemberController {
         else return "error";
     }
 
-    @PostMapping("/delete")
+    @PostMapping("delete")
     public String delete(@AuthenticationPrincipal MemberDTO memberDTO) {
 
         if(signService.delete(memberDTO.getId())) return "memberDeleted";
