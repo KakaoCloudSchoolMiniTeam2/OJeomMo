@@ -15,9 +15,8 @@
 <header class="detailPostit__header">
     <div class="title">
         <i class="fa-solid fa-utensils"></i>
+        <span class="detailPostit__dinerName">&nbsp <h1 th:text="${gatherDetail.getDinerName()}"> 제목</h1></span>
 
-        <span>&nbsp</span>
-        <h1 th:text="${gatherDetail.getDinerName()}"> 제목</h1>
     </div>
     <button class="detailCloseIconButton">
         <i class="fa-regular fa-circle-xmark"></i>
@@ -26,9 +25,10 @@
 <section class="detailPostit__body">
     <div class="detailHeader">
         <span class="detailParty">
+            <span class="detailShowParty">
             <div class="tooltiptext tooltip-bottom">
                 <th:block th:each="person:${party}">
-                    <span th:text="|${person.nickname} (${person.name})|" ></span>
+                    <span th:text="|${person.nickname} (${person.name})|"></span>
                 </th:block>
             </div>
             <i class="fa-solid fa-user-group"> </i>
@@ -36,7 +36,7 @@
             <span th:text="${gatherDetail.getInitNumber()}">1</span>
             <span>/</span>
             <span th:text="${gatherDetail.getGatherNumber()}">4</span>
-
+            </span>
             <span class="joinBtnWrapper" th:if="${member!=null && !gatherDetail.getIsMyArticle()}">
                 <th:block th:if="${gatherDetail.getIsJoined()}">
                     <form th:action="@{/board/quitParty}" method="post">
@@ -47,7 +47,8 @@
                     </form>
                 </th:block>
                 <th:block th:unless="${gatherDetail.getIsJoined()}">
-                    <form th:if="${gatherDetail.getInitNumber() < gatherDetail.getGatherNumber()}" th:action="@{/board/joinParty}" method="post">
+                    <form th:if="${gatherDetail.getInitNumber() < gatherDetail.getGatherNumber()}"
+                          th:action="@{/board/joinParty}" method="post">
                         <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
                         <button class="joinBtn joined">
                             <i class="fa-solid fa-user-plus"></i>
@@ -55,52 +56,55 @@
                     </form>
                 </th:block>
             </span>
-        </div>
-        <div class="detailIconSection">
-            <div class="detailIconPartition" th:if="${member!=null && gatherDetail.getIsMyArticle()}">
-                <form th:action="@{/board/bumpGatherBoard}" method="post">
-                    <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
-                    <button class="detailIconButton">
-                        <i class="fa-regular fa-circle-up"></i>
-                    </button>
-                </form>
-                <span>|</span>
-                <form th:action="@{/board/toUpdateGatherBoardPage}" method="post">
-                    <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
-                    <button class="detailIconButton" name="boardUpdateBtn">
-                        <i class="fa-solid fa-pencil"></i>
-                    </button>
-                </form>
-                <span>|</span>
-                <form th:action="@{/board/deleteGatherBoard}" method="post" id="myForm">
-                    <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
-                    <button class="detailIconButton" name="boardDeleteBtn">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                </form>
-                </button>
-            </div>
         </span>
+        <div class="authorDiv">
+            <div>
+                <span class="author">글쓴이 : </span>
+                <span class="author" th:text=" ${gatherDetail.getAuthorNickname()}">작성자</span>
+            </div>
+            <div>
+                <span class="author">글쓴날 : </span>
+                <span class="author" th:text=" ${#temporals.format(gatherDetail.createdAt, 'yyyy-MM-dd')}">0000-00-00</span>
+            </div>
+        </div>
+    </div>
+    <div class="detailIconSection">
+        <div class="detailIconPartition" th:if="${member!=null && gatherDetail.getIsMyArticle()}">
+            <form th:action="@{/board/bumpGatherBoard}" method="post">
+                <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
+                <button class="detailIconButton">
+                    <i class="fa-regular fa-circle-up"></i>
+                </button>
+            </form>
+            <span>|</span>
+            <form th:action="@{/board/toUpdateGatherBoardPage}" method="post">
+                <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
+                <button class="detailIconButton" name="boardUpdateBtn">
+                    <i class="fa-solid fa-pencil"></i>
+                </button>
+            </form>
+            <span>|</span>
+            <form th:action="@{/board/deleteGatherBoard}" method="post" id="myForm">
+                <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
+                <button class="detailIconButton" name="boardDeleteBtn">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </form>
+            </button>
+        </div>
+
 
     </div>
 
     <div class="detailContentSection">
-        <div class="authorDiv">
-            <p><span class="author">글쓴이 : </span><span class="author"
-                                                       th:text=" ${gatherDetail.getAuthorNickname()}">작성자</span></p>
-            <p><span class="author">글쓴날 : </span><span class="author"
-                                                       th:text=" ${#temporals.format(gatherDetail.createdAt, 'yyyy-MM-dd')}">0000-00-00</span>
-            </p>
-        </div>
+
         <p class="category"><span> 종류 : </span><span th:text="${gatherDetail.getCategory()}">카테고리</span></p>
-        <section class="detailMore" th:text="${gatherDetail.getContent()}" >상세내용</section>
+        <section class="detailMore" th:text="${gatherDetail.getContent()}">상세내용</section>
     </div>
 </section>
 
 
 <hr class="detailSection-separator">
-
-
 
 
 <section class="detailPostit__comment">
@@ -161,7 +165,6 @@
     </th:block>
 
 
-
 </section>
 
 
@@ -171,3 +174,5 @@
 
 </script>
 </html>
+
+

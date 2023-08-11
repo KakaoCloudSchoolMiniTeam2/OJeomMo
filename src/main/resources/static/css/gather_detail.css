@@ -61,10 +61,14 @@ body{
     border-radius: 3px;
     font-size: var(--font-medium);
     /*position: relative;*/
-    max-height : 70%;
+    max-height: 70%;
     /* 스크롤바 추가 */
-    overflow-y : auto;
+    overflow-y: auto;
+}
 
+.detailPostit__dinerName{
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .detailPostit::-webkit-scrollbar {
@@ -98,6 +102,10 @@ body{
     position: relative; /* 부모 요소에 상대적인 위치를 설정 */
 }
 
+i.fa-solid.fa-utensils {
+    align-self: center;
+}
+
 .detailPostit header {
     padding: 20px 20px;
     background: var(--light-beige-color);
@@ -109,9 +117,20 @@ body{
     display: flex;
 }
 .detailPostit__header .title{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    text-align: center;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
     flex: 1;
     text-align: center;
 }
+
+.joinBtnWrapper form {
+    display: inline;
+}
+
 
 .detailPostit h1 {
     display: inline;
@@ -129,6 +148,8 @@ body{
 
 .detailHeader{
     margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .detailParty{
@@ -143,7 +164,7 @@ body{
     /*display: block;*/
 }
 
-.detailParty .tooltiptext {
+.detailShowParty .tooltiptext {
     visibility: hidden;       /* 이벤트가 없으면 툴팁 영역을 숨김 */
     width: 120px;             /* 툴팁 영역의 넓이를 설정 */
     background-color: #ecb390;
@@ -156,18 +177,18 @@ body{
     z-index: 1;
 }
 
-.detailParty:hover .tooltiptext {
+.detailShowParty:hover .tooltiptext {
     visibility: visible;      /* hover 이벤트 발생시 영역을 보여줌 */
 }
 
-.detailParty .tooltip-bottom {
+.detailShowParty .tooltip-bottom {
     width: 120px;
     top: 100%;
-    left: 50%;
+    left: 20%;
     margin-left: -60px;
 }
 
-.detailParty .tooltip-bottom::after {
+.detailShowParty .tooltip-bottom::after {
     bottom: 100%;
     left: 50%;
     margin-left: -5px;
@@ -216,12 +237,17 @@ body{
     font-size: var(--font-slarge);
 }
 
-.detailContentSection .authorDiv{
+.detailHeader .authorDiv{
     display: flex;
-    align-self: end;
+    align-items: center;
+    margin-right: 10px;
 }
 
-.detailContentSection .authorDiv p{
+.authorDiv div {
+    margin-right: 25px; /* 원하는 간격 값으로 조정 */
+}
+
+.detailHeader .authorDiv p{
     display: flex;
     flex-direction: row;
     text-align: right;
@@ -264,6 +290,7 @@ body{
     border: 3px solid white;
     width: 50px;
     height: 50px;
+    display: inline;
 }
 
 .joinBtn.joined {
