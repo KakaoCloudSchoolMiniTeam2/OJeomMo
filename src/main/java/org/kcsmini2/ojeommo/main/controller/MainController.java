@@ -83,4 +83,9 @@ public class MainController {
     public String Roulette() {
         return "roulette";
     }
+
+    @GetMapping("menucommend")
+    public String menuCommend() {
+        return "menuCommend";
+    }
 }
