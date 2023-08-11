@@ -1,0 +1,28 @@
+<body>
+<nav th:fragment="navbarFragment" class="navbar">
+    <a class="navbar_logo" th:href="@{/}">
+        <i class="fa-solid fa-bowl-food"></i>
+        <p>ㅇㅈㅁ?</p>
+    </a>
+
+    <a href="javascript:;" class="navbar_profileBtn">
+        <i class="fa-regular fa-circle-user"></i>
+    </a>
+
+    <a href="javascript:;" class="navbar_menuBtn">
+        <i class="fa-solid fa-bars"></i>
+    </a>
+
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-nav-title">MENU
+                <li class="sidebar-nav-item">
+                    <a th:href="@{total}">모집 게시판</a>
+                    <a th:href="@{review}">리뷰 게시판</a>
+                    <a th:href="@{roulette}">메뉴 추천 룰렛</a>
+                </li>
+            </li>
+        </ul>
+    </div>
+</nav>
+</body>

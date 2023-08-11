@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:fragment="headerFragment">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/gather_detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <script src="/js/main.js" defer></script>
+</head>
+
+
+<body class="detailPostit">
+
+<header class="detailPostit__header">
+    <div class="title">
+        <i class="fa-solid fa-utensils"></i>
+
+        <span>&nbsp</span>
+        <h1 th:text="${gatherDetail.getDinerName()}"> 제목</h1>
+    </div>
+    <button class="detailCloseIconButton">
+        <i class="fa-regular fa-circle-xmark"></i>
+    </button>
+</header>
+<section class="detailPostit__body">
+    <div class="detailHeader">
+        <span class="detailParty">
+            <div class="tooltiptext tooltip-bottom">
+                <th:block th:each="person:${party}">
+                    <span th:text="|${person.nickname} (${person.name})|" ></span>
+                </th:block>
+            </div>
+            <i class="fa-solid fa-user-group"> </i>
+            <span>&nbsp</span>
+            <span th:text="${gatherDetail.getInitNumber()}">1</span>
+            <span>/</span>
+            <span th:text="${gatherDetail.getGatherNumber()}">4</span>
+
+            <span class="joinBtnWrapper" th:if="${member!=null && !gatherDetail.getIsMyArticle()}">
+                <th:block th:if="${gatherDetail.getIsJoined()}">
+                    <form th:action="@{/board/quitParty}" method="post">
+                        <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
+                        <button class="joinBtn">
+                            <i class="fa-solid fa-user-xmark"></i>
+                        </button>
+                    </form>
+                </th:block>
+                <th:block th:unless="${gatherDetail.getIsJoined()}">
+                    <form th:if="${gatherDetail.getInitNumber() < gatherDetail.getGatherNumber()}" th:action="@{/board/joinParty}" method="post">
+                        <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
+                        <button class="joinBtn joined">
+                            <i class="fa-solid fa-user-plus"></i>
+                        </button>
+                    </form>
+                </th:block>
+            </span>
+        </div>
+        <div class="detailIconSection">
+            <div class="detailIconPartition" th:if="${member!=null && gatherDetail.getIsMyArticle()}">
+                <form th:action="@{/board/bumpGatherBoard}" method="post">
+                    <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
+                    <button class="detailIconButton">
+                        <i class="fa-regular fa-circle-up"></i>
+                    </button>
+                </form>
+                <span>|</span>
+                <form th:action="@{/board/toUpdateGatherBoardPage}" method="post">
+                    <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
+                    <button class="detailIconButton" name="boardUpdateBtn">
+                        <i class="fa-solid fa-pencil"></i>
+                    </button>
+                </form>
+                <span>|</span>
+                <form th:action="@{/board/deleteGatherBoard}" method="post" id="myForm">
+                    <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
+                    <button class="detailIconButton" name="boardDeleteBtn">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </form>
+                </button>
+            </div>
+        </span>
+
+    </div>
+
+    <div class="detailContentSection">
+        <div class="authorDiv">
+            <p><span class="author">글쓴이 : </span><span class="author"
+                                                       th:text=" ${gatherDetail.getAuthorNickname()}">작성자</span></p>
+            <p><span class="author">글쓴날 : </span><span class="author"
+                                                       th:text=" ${#temporals.format(gatherDetail.createdAt, 'yyyy-MM-dd')}">0000-00-00</span>
+            </p>
+        </div>
+        <p class="category"><span> 종류 : </span><span th:text="${gatherDetail.getCategory()}">카테고리</span></p>
+        <section class="detailMore" th:text="${gatherDetail.getContent()}" >상세내용</section>
+    </div>
+</section>
+
+
+<hr class="detailSection-separator">
+
+
+
+
+<section class="detailPostit__comment">
+
+    <form th:if="${member != null}" th:action="@{/board/createComment}" method="post" id="createComment">
+        <div class="comment-form">
+            <div class="comment-form-head">
+                <textarea class="comment-input" name="commentContent"
+                          placeholder="댓글을 작성하세요"></textarea>
+                <input type="hidden" th:name="boardId" th:value="${gatherDetail.getId()}"/>
+                <input type="hidden" th:name="memberId" th:value="${member.getId()}"/>
+                <button type="submit" class="comment-enrollbtn"> 등록</button>
+            </div>
+        </div>
+    </form>
+
+
+    <th:block th:each="comments : ${comment}">
+        <ul id="comments-list" class="comments-list">
+            <li>
+                <div class="comment-main-level">
+                    <div class="comment-box">
+                        <div class="comment-head">
+
+                            <div th:class="${gatherDetail.getAuthorId().equals(comments.getAuthorId()) ? 'comment-name by-author' : 'comment-name'}">
+                                <a th:text="${comments.getAuthorId()}"></a>
+                                <th:block th:if="${member != null}">
+                                    <span class="btnWrapper">
+                                        <form action="/board/updateComment" method="post">
+                                            <input type="hidden" th:name="commentId" th:value="${comments.getId()}"/>
+                                            <input type="hidden" th:name="memberId" th:value="${member.getId()}"/>
+                                            <span th:if="${comments.getAuthorId().equals(member.getId())}">
+                                                <button class="updateBtn" type="submit">
+                                                    <i class="fa-solid fa-pencil"></i>
+                                                </button>
+                                            </span>
+                                        </form>
+                                        <form action="/board/deleteComment" method="post">
+                                            <input type="hidden" th:name="commentId" th:value="${comments.getId()}"/>
+                                            <input type="hidden" th:name="memberId" th:value="${member.getId()}"/>
+                                            <span th:if="${comments.getAuthorId().equals(member.getId())}">
+                                                <button class="deleteBtn" type="submit">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                            </span>
+                                        </form>
+                                    </span>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="comment-content">
+                            <a th:text="${comments.getContent()}"/>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </th:block>
+
+
+
+</section>
+
+
+</body>
+
+<script>
+
+</script>
+</html>

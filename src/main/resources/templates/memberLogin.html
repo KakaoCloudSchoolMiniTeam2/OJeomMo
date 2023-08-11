@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<script th:inline="javascript">
+    var data = [[${data}]];
+
+    if (data != null) {
+        var jwt = data.token;
+        setCookie("Authorization", jwt, 60); // 쿠키의 만료일을 1일로 설정
+    }
+
+    // 쿠키를 설정하는 함수를 정의
+    function setCookie(name, value, minutes) {
+        var expires = "";
+        if (minutes) {
+            var date = new Date();
+            date.setTime(date.getTime() + (minutes * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + "; path=/" + expires;
+
+    }
+
+    // JWT를 쿠키에 저장
+
+    window.location.href = '/main';
+</script>
+</html>

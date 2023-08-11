@@ -1,0 +1,477 @@
+:root {
+    /* font Size */
+    --font-xlarge : 50px;
+    --font-large : 35px;
+    --font-slarge : 25px;
+    --font-medium : 20px;
+    --font-small : 15px;
+
+    /* Color */
+    --black-color : #000000;
+    --white-color : #FFFFFF;
+    --light-white-color : #FCFCFC;
+    --transparent-white-color : #FFFFFFCC;
+    --beige-color : #fbe6af;
+    --light-beige-color : #fef6e5;
+    --dark-brown-color : #544900;
+
+
+
+    /* Padding */
+    --small-padding : 10px;
+    --medium-padding : 20px;
+    --large-padding : 50px;
+
+    /* size */
+    --large-height : 100px;
+
+    /* font */
+    --first-font : 'omyu_pretty';
+
+}
+
+
+@font-face {
+    font-family: var(--first-font);
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    padding : 0;
+    margin : 0;
+}
+
+body{
+    font-family: var(--first-font);
+}
+
+.detailContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.detailPostit {
+    background: var(--white-color);
+    color: var(--black-color);
+    /*margin: 20px 0px;*/
+    border-radius: 3px;
+    font-size: var(--font-medium);
+    /*position: relative;*/
+    max-height : 70%;
+    /* 스크롤바 추가 */
+    overflow-y : auto;
+
+}
+
+.detailPostit::-webkit-scrollbar {
+    width: 0px;  /* 스크롤바의 너비 */
+}
+
+
+
+.detailPostit:after {
+    border-width: 0;
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 0;
+    height: 0;
+    content: "";
+    border-style: solid;
+    border-color: transparent transparent var(--beige-color) var(--transparent-white-color);
+}
+
+.detailCloseIconButton{
+    border: transparent;
+    font-size: var(--font-medium);
+    width: 30px;
+    height: 30px;
+    margin-right: 30px;
+    color : var(--black-color);
+    cursor: pointer;
+    background-color: transparent; /* 배경색을 투명으로 설정하여 아이콘 버튼을 보이게 함 */
+    border: none; /* 버튼 스타일 초기화 */
+    position: relative; /* 부모 요소에 상대적인 위치를 설정 */
+}
+
+.detailPostit header {
+    padding: 20px 20px;
+    background: var(--light-beige-color);
+    color: var(--black-color);
+    border-radius: 3px 3px 0 0;
+    position: relative;
+    text-align: center;
+    font-size: var(--font-large);
+    display: flex;
+}
+.detailPostit__header .title{
+    flex: 1;
+    text-align: center;
+}
+
+.detailPostit h1 {
+    display: inline;
+    font-size: var(--font-xlarge);
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
+}
+.detailPostit ul {
+    list-style: none;
+}
+.detailPostit li + li {
+    margin-top: 15px;
+}
+
+.detailHeader{
+    margin-top: 20px;
+}
+
+.detailParty{
+    line-height: 50px;
+    width: 160px;
+    height: 50px;
+    font-size: var(--font-medium);
+    flex:1;
+    padding: var(--small-padding);
+    margin-left: 40px;
+    position: relative;
+    /*display: block;*/
+}
+
+.detailParty .tooltiptext {
+    visibility: hidden;       /* 이벤트가 없으면 툴팁 영역을 숨김 */
+    width: 120px;             /* 툴팁 영역의 넓이를 설정 */
+    background-color: #ecb390;
+    color: #f3f3f3;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    position: absolute;       /* 절대 위치를 사용 */
+    z-index: 1;
+}
+
+.detailParty:hover .tooltiptext {
+    visibility: visible;      /* hover 이벤트 발생시 영역을 보여줌 */
+}
+
+.detailParty .tooltip-bottom {
+    width: 120px;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.detailParty .tooltip-bottom::after {
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-color: transparent transparent black transparent;
+}
+
+.detailIconSection{
+    float: right;
+    display: flex;
+    padding: var(--small-padding);
+    margin-right: 40px;
+}
+
+.detailIconPartition {
+    display: flex;
+    align-items: center; /* 세로 방향으로 아이콘들을 가운데 정렬 */
+}
+
+.detailIconButton {
+    border: transparent;
+    font-size: var(--font-medium);
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    color: var(--black-color);
+    text-align: center;
+    top:15%;
+    background-color: transparent; /* 배경색을 투명으로 설정하여 아이콘 버튼을 보이게 함 */
+    border: none; /* 버튼 스타일 초기화 */
+    position: relative; /* 부모 요소에 상대적인 위치를 설정 */
+}
+
+.detailIconButton:hover {
+    cursor: pointer;
+}
+
+.category {
+    font-size: var(--font-medium);
+}
+
+.detailContentSection{
+    display: flex;
+    flex-direction: column;
+    padding: var(--large-padding) var(--large-padding) var(--large-padding) var(--large-padding);
+    margin: 0px 30px 5px 30px;
+    font-size: var(--font-slarge);
+}
+
+.detailContentSection .authorDiv{
+    display: flex;
+    align-self: end;
+}
+
+.detailContentSection .authorDiv p{
+    display: flex;
+    flex-direction: row;
+    text-align: right;
+    margin-right: 20px;
+    font-size: var(--font-medium);
+    padding:0;
+}
+
+.detailContentSection p {
+    padding-bottom : var(--large-padding);
+}
+
+
+.detailContentSection .category{
+    flex: 1;
+}
+
+.detailMore{
+    white-space: normal;
+    font-size: var(--font-slarge);
+}
+
+.detailSection-separator {
+    /*border: none; !* 기본 구분선 스타일 초기화 *!*/
+    /*border-top: 2px solid #505f4e; !* 원하는 구분선 스타일 설정 *!*/
+    margin: 0px 30px; /* 원하는 간격 설정 */
+    height : 1px;
+    background: var(--black-color);
+    background-image : -webkit-linear-gradient(left,#eee,#777,#eee);
+    /*background-image : -moz-linear-gradient(left,#eee,#777,#eee);*/
+    /*background-image : -ms-linear-gradient(left,#eee,#777,#eee);*/
+    /*background-image : -o-linear-gradient(left,#eee,#777,#eee);*/
+
+}
+
+.joinBtn {
+    font-size: var(--font-medium);
+    border-radius: 50%;
+    background-color: #f3daa5;
+    border: 3px solid white;
+    width: 50px;
+    height: 50px;
+}
+
+.joinBtn.joined {
+    background-color: #fff1d1;
+}
+
+/*댓글관련 css*/
+
+.detailPostit__comment {
+    padding-top : var(--large-padding);
+    padding-bottom: var(--large-padding);
+}
+
+.detailPostit__comment #createComment {
+    padding-bottom: var(--large-padding);
+}
+
+.comments-list {
+    width: 80%; /* 모달의 80% 너비에 맞춤 */
+    height : 20%;
+    margin: 0 auto; /* 가운데 정렬 */
+    padding-top : var(--small-padding); /* 여백 제거 */
+}
+
+.comment-form{
+    width: 80%;
+    height : var(--large-height);
+    margin: 0 auto; /* 가운데 정렬 */
+    padding-top : var(--small-padding); /* 여백 제거 */
+}
+
+
+
+.comment-form .comment-form-head .comment-input {
+    width: 80%;
+    height : 100%;
+    margin: 0; /* 가운데 정렬 */
+    padding-bottom : var(--small-padding);
+    border : none;
+    resize : none;
+    font-family: var(--first-font);
+    font-size : var(--font-medium);
+
+}
+
+.comment-form .comment-form-head {
+    background: var(--light-white-color);
+    padding: var(--small-padding);
+    border-bottom: 1px solid #E5E5E5;
+    height : 100%;
+    overflow: hidden;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+    display : flex;
+    justify-content: center;
+}
+
+.comment-form .comment-form-head .comment-enrollbtn {
+    /*-webkit-appearance: none;*/
+    /*-moz-appearance: none;*/
+    /*appearance: none;*/
+    background: var(--light-beige-color);
+    text-align : center;
+    border : none;
+    border-radius: 4px;
+    font-family: var(--first-font);
+    width:20%;
+}
+
+.comments-list .comment-box {
+    width: 100%;
+    margin : 15px 0;
+    float: none;
+    position: relative;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+    -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+}
+
+.comments-list .comment-box:before, .comments-list .comment-box:after {
+    content: '';
+    height: 0;
+    width: 0;
+    position: absolute;
+    display: block;
+    border-width: 10px 12px 10px 0;
+    border-style: solid;
+    border-color: transparent #FCFCFC;
+    top: 8px;
+    left: -11px;
+}
+
+.comments-list .comment-box:before {
+    border-width: 11px 13px 11px 0;
+    border-color: transparent rgba(0,0,0,0.05);
+    left: -12px;
+}
+
+.reply-list .comment-box {
+    width: 100%;
+    margin : 15px 0;
+}
+.comment-box .comment-head {
+    background: #FCFCFC;
+    padding: 10px 12px;
+    border-bottom: 1px solid #E5E5E5;
+    overflow: hidden;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+    position : relative;
+}
+
+.comment-box .comment-head i {
+    float: right;
+    margin-left: 14px;
+    position: relative;
+    top: 2px;
+    color: #A6A6A6;
+    cursor: pointer;
+    -webkit-transition: color 0.3s ease;
+    -o-transition: color 0.3s ease;
+    transition: color 0.3s ease;
+}
+
+.comment-box .comment-head i:hover {
+    color: #03658c;
+}
+
+.comment-box .comment-name {
+    color: #283035;
+    font-size: var(--font-medium);
+    font-weight: 700;
+    float: left;
+    margin-right: 10px;
+    width : 100%;
+}
+
+.comment-box .comment-name a {
+    color: #283035;
+}
+
+.comment-box .comment-content {
+    background: #FFF;
+    padding: 12px;
+    font-size: var(--font-medium);
+    color: #595959;
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
+}
+
+.comment-box .comment-name.by-author, .comment-box .comment-name.by-author a {
+    width : 100%;
+    color: #03658c;
+}
+
+.comment-box .comment-name.by-author:after {
+    content: '글쓴이';
+    background: #03658c;
+    color: #FFF;
+    font-size: 12px;
+    padding: 3px 5px;
+    font-weight: 700;
+    margin-left: 10px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.comment-box .comment-head .updateBtn,
+.comment-box .comment-head .deleteBtn{
+    font-size: var(--font-medium);
+    color: #A6A6A6;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    margin-left: 10px;
+    border: 0;
+    background-color: transparent;
+    position: relative;
+    display: inline-block;
+    float : right;
+
+}
+
+.comment-box .comment-head .btnWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    float : right;
+}
+
+/** =====================
+ * Responsive
+ ========================*/
+@media only screen and (max-width: 766px) {
+    .comments-container {
+        width: 480px;
+    }
+
+    .comments-list .comment-box {
+        width: 390px;
+    }
+
+    .reply-list .comment-box {
+        width: 320px;
+    }
+}

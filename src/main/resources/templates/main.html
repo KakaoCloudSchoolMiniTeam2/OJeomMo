@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{/fragment/header :: headerFragment}"></head>
+<body>
+<nav th:replace="~{/fragment/navbar :: navbarFragment}"></nav>
+<div class="container">
+    <div class="content-margin"></div>
+    <div class="content">
+        <div class="board-wrapper">
+            <ul class="board">
+            <th:block th:each="article : ${articles}">
+            	<article class="postit" th:id="${article.getId()}">
+                <!--<article class="postit" th:each="article : ${articles}">-->
+                    <header class="postit__header">
+                    <button class="postit_btn" th:data-board-id="${article.getId()}"></button>
+                        <i th:if="${article.getIsDelivery()}" class="fa-solid fa-motorcycle"></i>
+                        <i th:unless="${article.getIsDelivery()}" class="fa-solid fa-utensils"></i>
+                        <span class="postit__dinerName"> <h1 th:text="${article.getDinerName()}"/></span>
+                    </header>
+                    <ul class="postit__message">
+                        <li th:text="${article.getCategory()}"/>
+                        <li th:text="${article.getAuthorNickname()}"/>
+                        <li th:text="${article.getContent()}" class="postitContent"/>
+                        <li class="party"><i class="fa-solid fa-user-group"> </i>
+                            <span>&nbsp</span>
+                            <span th:text="${article.getInitNumber()}">1</span>
+                            <span>/</span>
+                            <span th:text="${article.getGatherNumber()}">4</span>
+                        </li>
+                    </ul>
+                </article>
+            </th:block>
+            </ul>
+            <div class="join-wrapper" th:if="${loginCheck != 0}">
+                <a th:disabled="${loginCheck != 0}" class="createBtn" th:href="@{/create}">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </a>
+            </div>
+
+
+            <div class="pagination">
+                <span th:each="pageNumber : ${pageNumbers}">
+                    <a th:class="'page-item page-char ' + (${#strings.isEmpty(param.page) and pageNumber == 0} or ${#strings.equals(param.page, #strings.toString(pageNumber))} ? 'active' : '')"
+                       th:href="@{?page=__${pageNumber}__}">ㅇ</a>
+                </span>
+                <div class="page-char">ㅈ</div>
+                <div class="page-char">ㅁ</div>
+                <div class="page-char">?</div>
+            </div>
+        </div>
+    </div>
+    <div class="content-margin">
+        <div th:replace="~{/fragment/profile :: profileFragment}"></div>
+    </div>
+
+
+</div>
+
+<div class="modal" id="modal">
+    <div class="modal_body detailPostit"></div>
+</div>
+
+</body>
+</html>

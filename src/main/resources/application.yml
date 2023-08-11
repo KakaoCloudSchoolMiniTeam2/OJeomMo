@@ -1,0 +1,46 @@
+spring:
+  jpa:
+    defer-datasource-initialization: false
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MariaDBDialect
+        default_batch_fetch_size: 100
+      open-in-view: false
+      database-platform: org.hibernate.dialect.MariaDBDialect
+    hibernate:
+      ddl-auto: ${DDL_MODE}
+
+#  css livereload
+#  devtools:
+#    restart:
+#      enabled: false
+#    livereload:
+#      enabled: true
+#
+#  freemarker:
+#    cache: false
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://${DB_IP}:${DB_PORT}/ojeommo
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+    sql:
+      init:
+        mode: always
+
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    check-template-location: true
+    mode: HTML
+    cache: false
+
+jwt:
+  secret:
+    key: ${JWT_KEY}
+
+#  비밀키 값 추후에 환경변수로 옮길 것.

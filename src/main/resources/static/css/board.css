@@ -1,0 +1,237 @@
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.board-wrapper {
+    display: block;
+    min-height: 771px;
+    width: 600px;
+    background-color: #fbe6af;
+    border: 5px solid white;
+}
+
+.board{
+    display: flex;
+    min-height: 640px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 30px 0px 0px;
+    margin-bottom: 0px;
+}
+
+.postit {
+    background: #FFFFFFCC;
+    color: #2b2b2b;
+    width: 240px;
+    height: 280px;
+    margin: 20px 0px;
+    border-radius: 3px;
+    font-family: 'omyu_pretty';
+    font-size: 22px;
+    position: relative;
+    transition: transform 0.2s ease-in;
+    box-shadow: 0 0 60px -30px #FFFFFF33;
+}
+
+.postit:after {
+    border-width: 0;
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 0;
+    height: 0;
+    content: "";
+    border-style: solid;
+    border-color: transparent transparent #fbe6af #FFFFFFCC;
+    transition: border-width 0.2s ease-in;
+    box-shadow: -4px -4px 8px -3px #FFFFFF33;
+}
+
+/*.postit:hover {*/
+/*    transform: rotate(0);*/
+/*}*/
+
+.postit:hover:after {
+    border-width: 0 0 21px 21px;
+}
+
+.postit header {
+    padding: 10px 20px;
+    background: #fef6e5;
+    color: #2b2b2b;
+    border-radius: 3px 3px 0 0;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.postit h1 {
+    display: inline;
+    font-family: 'omyu_pretty';
+    font-size: 27px;
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
+    text-wrap: nowrap;
+}
+
+.postit__dinerName{
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.postit ul {
+    list-style: none;
+}
+
+.postit li + li {
+    margin-top: 15px;
+}
+
+.postit__message {
+    padding: 20px;
+    margin: 0;
+    font-size: 25px;
+    /*box-shadow: inset 0 6px 20px -10px #c4aa00;*/
+}
+
+.postitContent {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 50px;
+}
+
+.postit_btn {
+    display: none;
+}
+
+.party {
+    line-height: 50px;
+    width: 160px;
+    height: 50px;
+    position: absolute;
+    bottom: 20px;
+    font-size: 20px;
+}
+
+.more {
+    font-size: 20px;
+    margin-top: 15px;
+}
+
+
+/*글쓰기 버튼*/
+
+.join-wrapper {
+    position: sticky;
+    bottom: 10px;
+    padding-bottom: 30px;
+    display: block;
+    height: 40px;
+    width: 100%;
+}
+
+.createBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 25px;
+    width: 50px;
+    height: 50px;
+    border: 2px solid #ea5b68;
+    background-color: #fbe6af;
+    margin-left: auto;
+    margin-right: 40px;
+}
+
+.createBtn:hover {
+    cursor: pointer;
+}
+
+.joinBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 25px;
+    color: #2b2b2b;
+    width: 50px;
+    height: 50px;
+    border: 2px solid #ea5b68;
+    background-color: #ecb390;
+    margin-left: auto;
+    margin-right: 40px;
+}
+
+.joinBtn:hover {
+    cursor: pointer;
+}
+
+/*페이징 관련 css*/
+.pagination {
+    width: 100%;
+    display: inline-block;
+    position: sticky;
+    bottom: 0px;
+    text-align: center;
+    margin-bottom: 30px;
+    cursor: default;
+}
+
+.page-items {
+    display: inline-block;
+}
+
+.page-char {
+    font-family: 'KBO-Dia-Gothic_bold';
+    font-size: 30px;
+    color: #ecb390;
+    display: inline;
+}
+
+.page-char {
+    cursor: default;
+}
+
+.page-item{
+    flex-direction: column;
+}
+
+.page-item:hover{
+    cursor: pointer;
+}
+
+.page-item.active{
+    color: #ea5b68;
+}
+
+#content {
+    height: 250px;
+    border: 0;
+    vertical-align: top;
+    font-family: 'omyu_pretty';
+    font-size: 25px;
+}
+
+@media screen and (max-width: 630px) {
+    .content {
+        display: block;
+    }
+    .board-wrapper{
+        position: relative;
+        top: 29px;
+        width: auto;
+        height: auto;
+    }
+}
