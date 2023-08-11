@@ -73,14 +73,39 @@ function getModal(postit) {
             const closeBtn = document.querySelector('.detailCloseIconButton');
             closeBtn.onclick = closeModal;
             const deleteBtn = document.querySelector("[name = boardDeleteBtn]");
-            deleteBtn.onclick = deleteAlert;
+            if (deleteBtn != null) {
+                deleteBtn.onclick = deleteAlert;
+            }
+
+            const createCommentForm = document.getElementById("createComment");
+            createCommentForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                const formData = new FormData(createCommentForm);
+
+                fetch("/board/createComment", {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(response => {
+                        if (response) {
+                            getModal(postit)
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error creating comment:", error);
+                    });
+            });
+
             const updateBtn = document.querySelector("[name = boardUpdateBtn]");
-            updateBtn.onclick = function(boardId) {
-                return function (event){
-                    event.preventDefault();
-                    updateModal(boardId);
-                };
-            }(boardId);
+            if (updateBtn != null) {
+                updateBtn.onclick = function (boardId) {
+                    return function (event) {
+                        event.preventDefault();
+                        updateModal(boardId);
+                    };
+                }(boardId);
+            }
         })
         .catch(error => {
             console.error('Error fetching HTML:', error);
@@ -91,14 +116,15 @@ function getModal(postit) {
     if (modal.classList.contains('show')) {
         body.style.overflow = 'hidden';
     }
+
 }
 
-function updateModal(boardId){
+function updateModal(boardId) {
     //TODO : 글 작성자가 아니어도 접근이 가능한 문제 해결 필요
     const modalContent = document.querySelector('.modal_body')
 
-    const htmlFilePath = '/board/toUpdateGatherBoardPage/'+boardId;
-    
+    const htmlFilePath = '/board/toUpdateGatherBoardPage/' + boardId;
+
     fetch(htmlFilePath)
         .then(response => response.text())
         .then(html => {
@@ -175,6 +201,7 @@ function deleteAlert(event) {
         document.getElementById('myForm').submit();
     }
 }
+
 
 function closeModal(event) {
     event.preventDefault();
