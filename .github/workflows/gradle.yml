@@ -33,14 +33,19 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+
+    # build시 gradlew에 실행 권한 부여
+    # 스크립트는 순서대로 실행되므로 권한을 먼저 부여하고 gradle을 build 해야함
+    - name: Run chmod to make gradlew executable
+      run: chmod +x ./gradlew
+
+    
     - name: Build with Gradle
       uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
       with:
         arguments: build
 
-    # build시 gradlew에 실행 권한 부여
-    - name: Run chmod to make gradlew executable
-      run: chmod +x ./gradlew
+    
     
         
     ###############################################################################
