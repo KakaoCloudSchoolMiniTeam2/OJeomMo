@@ -40,7 +40,7 @@ jobs:
     # 깃허브 레포의 코드를 CI서버(여기서는 EC2)로 내려받고 브랜치 전환
     # 매번 CI서버와 코드 저장소간 인증이 필요한 까다로운 절차를 편하게 해주는 라이브러리
     - name: CheckOut
-    - uses: actions/checkout@v3
+      uses: actions/checkout@v3
 
     # 2) JDK 17 설치
     - name: Set up JDK 17
