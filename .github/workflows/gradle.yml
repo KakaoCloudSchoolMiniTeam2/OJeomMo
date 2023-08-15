@@ -19,7 +19,7 @@ env:
   S3_BUCKET_NAME: ojeommo-s3-bucket
   CODE_DEPLOY_APPLICATION_NAME: ojeommo-codedeploy-app
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: ojeommo-codedeploy-deployment-group
-  working-directory: /home/ec2-user/app # 이 코드는 제 프로젝트 경로를 맞춰주기 위해 적어주었습니다. 필요하시면 적으세요 !
+  # working-directory: ./home/ec2-user/app # 이 코드는 제 프로젝트 경로를 맞춰주기 위해 적어주었습니다. 필요하시면 적으세요 !
 
 
 permissions:
@@ -54,12 +54,12 @@ jobs:
     # 스크립트는 순서대로 실행되므로 권한을 먼저 부여하고 gradle을 build 해야함
     - name: Run chmod to make gradlew executable
       run: chmod +x ./gradlew
-      working-directory: ${{ env.working-directory }}
+      # working-directory: ${{ env.working-directory }}
 
     # 4) gradle 빌드
     - name: Build with Gradle
       run: ./gradlew clean build
-      working-directory: ${{ env.working-directory }}
+      # working-directory: ${{ env.working-directory }}
 
     # 5) AWS 인증
     - name: Configure AWS credentials
