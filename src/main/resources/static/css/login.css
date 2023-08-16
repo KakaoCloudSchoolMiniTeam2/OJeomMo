@@ -25,6 +25,11 @@ body{
     color: black;
 }
 
+.content {
+    display: flex;
+    align-items: center;
+}
+
 .wrap {
     max-width: 500px;
     width: 100vw;
