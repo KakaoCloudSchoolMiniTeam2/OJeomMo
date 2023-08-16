@@ -182,7 +182,7 @@ i.fa-solid.fa-utensils {
 }
 
 .detailShowParty .tooltip-bottom {
-    width: 120px;
+    width: max-content;
     top: 100%;
     left: 20%;
     margin-left: -60px;
