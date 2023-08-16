@@ -6,6 +6,7 @@ import org.kcsmini2.ojeommo.board.data.dto.request.create.GatherBoardCreateReque
 import org.kcsmini2.ojeommo.board.data.dto.request.create.JoinPartyRequestDto;
 import org.kcsmini2.ojeommo.board.data.dto.request.delete.QuitPartyRequestDto;
 import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateRequestDTO;
+import org.kcsmini2.ojeommo.board.data.dto.response.detail.CategoryResponseDto;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.GatherBoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.service.GatherBoardService;
 import org.kcsmini2.ojeommo.comment.data.dto.request.CommentCreateRequestDTO;
@@ -16,21 +17,18 @@ import org.kcsmini2.ojeommo.exception.ApplicationException;
 import org.kcsmini2.ojeommo.exception.ErrorCode;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
 import org.kcsmini2.ojeommo.member.data.dto.PartyMemberDetailResponseDTO;
-import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.kcsmini2.ojeommo.member.service.PartyService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -54,9 +52,9 @@ public class BoardController {
     public String CreateGatherBoardPOST(@Valid GatherBoardCreateRequestDTO requestDTO,
                                         BindingResult bindingResult,
                                         @AuthenticationPrincipal MemberDTO memberDTO
-                                        ) throws Exception {
+    ) throws Exception {
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             throw new ApplicationException(ErrorCode.NULL_FIELD);
         }
 
@@ -65,7 +63,9 @@ public class BoardController {
     }
 
     @GetMapping("/readCreatePage")
-    public String ReadCreatePage(@AuthenticationPrincipal MemberDTO memberDTO) throws Exception{
+    public String ReadCreatePage(Model model) {
+        CategoryResponseDto categories = gatherBoardService.getCategory();
+        model.addAttribute("categories", categories);
         return "fragment/gather_create";
     }
 
@@ -76,7 +76,6 @@ public class BoardController {
         Page<CommentDetailResponseDTO> commentDTO = commentService.readComments(boardId, pageable, memberDTO);
 
 
-
         if (memberDTO != null) {
             model.addAttribute("member", memberDTO);
         }
@@ -85,8 +84,8 @@ public class BoardController {
         }
         model.addAttribute("gatherDetail", dto);
 
-        if(commentDTO!=null){
-            model.addAttribute("comment",commentDTO);
+        if (commentDTO != null) {
+            model.addAttribute("comment", commentDTO);
         }
 
         return "fragment/gather_detail";
@@ -97,6 +96,9 @@ public class BoardController {
         gatherBoardService.checkPermission(boardId, memberDTO);
         GatherBoardDetailResponseDTO dto = gatherBoardService.readBoard(boardId, memberDTO);
         model.addAttribute("gatherDetail", dto);
+
+        CategoryResponseDto categories = gatherBoardService.getCategory();
+        model.addAttribute("categories", categories);
         return "fragment/gather_modify";
     }
 
@@ -104,11 +106,9 @@ public class BoardController {
     public String UpdateGatherBoardPage(@Valid GatherBoardUpdateRequestDTO gatherBoardUpdateRequestDTO,
                                         BindingResult bindingResult,
                                         @AuthenticationPrincipal MemberDTO memberDTO) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             throw new ApplicationException(ErrorCode.NULL_FIELD);
         }
-
-        System.out.println("처리전");
         gatherBoardService.updateBoard(gatherBoardUpdateRequestDTO, memberDTO);
         return "redirect:/";
     }
@@ -141,36 +141,34 @@ public class BoardController {
 
     // 댓글 등록
     @PostMapping("/createComment")
-    public String createCommentPOST(@RequestParam("commentContent") String content, @AuthenticationPrincipal MemberDTO memberDTO, Long boardId, Model model){
-        CommentCreateRequestDTO requestDTO = new CommentCreateRequestDTO();
-        requestDTO.setContent(content);
-        requestDTO.setBoardId(boardId);
-        commentService.createComment(requestDTO,memberDTO);
+    public HttpEntity<Boolean> createCommentPOST(@Valid CommentCreateRequestDTO requestDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
+        commentService.createComment(requestDTO, memberDTO);
 
+        return new HttpEntity<>(true);
 //        return "fragment/gather_detail";
-//        return "redirect:/board/readGatherBoard/" + boardId;
-        return "redirect:/";
+//        return "/board/readGatherBoard/" + boardId;
+//        return "redirect:/";
     }
 
     // 댓글 수정
     @PostMapping("/updateComment")
-    public String updateCommentPOST(@RequestParam("memberId") String memberId, @RequestParam("commentId") Long commentId){
+    public String updateCommentPOST(@RequestParam("memberId") String memberId, @RequestParam("commentId") Long commentId) {
         MemberDTO memberDTO = new MemberDTO();
         memberDTO.setId(memberId);
         CommentUpdateRequestDTO requestDTO = new CommentUpdateRequestDTO();
         requestDTO.setCommentId(commentId);
 
-        commentService.updateComment(requestDTO,memberDTO);
+        commentService.updateComment(requestDTO, memberDTO);
         return "redirect:/";
     }
 
     @PostMapping("/deleteComment")
-    public String deleteCommentPOST(@RequestParam("memberId") String memberId, @RequestParam("commentId") Long commentId){
+    public String deleteCommentPOST(@RequestParam("memberId") String memberId, @RequestParam("commentId") Long commentId) {
 
         MemberDTO memberDTO = new MemberDTO();
         memberDTO.setId(memberId);
 
-        commentService.deleteComment(commentId,memberDTO);
+        commentService.deleteComment(commentId, memberDTO);
         return "redirect:/";
     }
 

@@ -6,16 +6,19 @@
 }
 
 .content {
-    display: flex;
+    display: block;
     flex-direction: column;
     justify-content: center;
 }
 
 
 .board-wrapper {
+    position: relative;
+    top: 29px;
     display: block;
     min-height: 771px;
     width: 600px;
+    height: auto;
     background-color: #fbe6af;
     border: 5px solid white;
 }
@@ -71,7 +74,6 @@
     color: #2b2b2b;
     border-radius: 3px 3px 0 0;
     position: relative;
-    display: flex;
     flex-direction: row;
 }
 
@@ -225,13 +227,7 @@
 }
 
 @media screen and (max-width: 630px) {
-    .content {
-        display: block;
-    }
     .board-wrapper{
-        position: relative;
-        top: 29px;
         width: auto;
-        height: auto;
     }
 }

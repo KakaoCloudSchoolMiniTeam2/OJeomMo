@@ -61,10 +61,14 @@ body{
     border-radius: 3px;
     font-size: var(--font-medium);
     /*position: relative;*/
-    max-height : 70%;
+    max-height: 70%;
     /* 스크롤바 추가 */
-    overflow-y : auto;
+    overflow-y: auto;
+}
 
+.detailPostit__dinerName{
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .detailPostit::-webkit-scrollbar {
@@ -98,6 +102,10 @@ body{
     position: relative; /* 부모 요소에 상대적인 위치를 설정 */
 }
 
+i.fa-solid.fa-utensils {
+    align-self: center;
+}
+
 .detailPostit header {
     padding: 20px 20px;
     background: var(--light-beige-color);
@@ -109,9 +117,20 @@ body{
     display: flex;
 }
 .detailPostit__header .title{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    text-align: center;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
     flex: 1;
     text-align: center;
 }
+
+.joinBtnWrapper form {
+    display: inline;
+}
+
 
 .detailPostit h1 {
     display: inline;
@@ -129,6 +148,8 @@ body{
 
 .detailHeader{
     margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .detailParty{
@@ -143,7 +164,7 @@ body{
     /*display: block;*/
 }
 
-.detailParty .tooltiptext {
+.detailShowParty .tooltiptext {
     visibility: hidden;       /* 이벤트가 없으면 툴팁 영역을 숨김 */
     width: 120px;             /* 툴팁 영역의 넓이를 설정 */
     background-color: #ecb390;
@@ -156,18 +177,18 @@ body{
     z-index: 1;
 }
 
-.detailParty:hover .tooltiptext {
+.detailShowParty:hover .tooltiptext {
     visibility: visible;      /* hover 이벤트 발생시 영역을 보여줌 */
 }
 
-.detailParty .tooltip-bottom {
+.detailShowParty .tooltip-bottom {
     width: 120px;
     top: 100%;
-    left: 50%;
+    left: 20%;
     margin-left: -60px;
 }
 
-.detailParty .tooltip-bottom::after {
+.detailShowParty .tooltip-bottom::after {
     bottom: 100%;
     left: 50%;
     margin-left: -5px;
@@ -175,8 +196,8 @@ body{
 }
 
 .detailIconSection{
-    float: right;
     display: flex;
+    justify-content: end;
     padding: var(--small-padding);
     margin-right: 40px;
 }
@@ -211,17 +232,25 @@ body{
 .detailContentSection{
     display: flex;
     flex-direction: column;
-    padding: var(--large-padding) var(--large-padding) var(--large-padding) var(--large-padding);
+    padding: var(--medium-padding);
     margin: 0px 30px 5px 30px;
     font-size: var(--font-slarge);
 }
 
-.detailContentSection .authorDiv{
+.detailHeader .authorDiv{
     display: flex;
+    align-items: center;
+    margin-right: 10px;
+    flex-wrap: wrap;
     align-self: end;
+    line-height: 30px;
 }
 
-.detailContentSection .authorDiv p{
+.authorDiv div {
+    margin-right: 25px; /* 원하는 간격 값으로 조정 */
+}
+
+.detailHeader .authorDiv p{
     display: flex;
     flex-direction: row;
     text-align: right;
@@ -236,11 +265,12 @@ body{
 
 
 .detailContentSection .category{
+    line-height: 30px;
     flex: 1;
 }
 
 .detailMore{
-    white-space: normal;
+    word-break: break-all;
     font-size: var(--font-slarge);
 }
 
@@ -264,10 +294,15 @@ body{
     border: 3px solid white;
     width: 50px;
     height: 50px;
+    display: inline;
 }
 
 .joinBtn.joined {
     background-color: #fff1d1;
+}
+
+.joinLine {
+    display: inline;
 }
 
 /*댓글관련 css*/
@@ -411,7 +446,9 @@ body{
     background: #FFF;
     padding: 12px;
     font-size: var(--font-medium);
-    color: #595959;
+    color: var(--accent-color);
+    word-break: break-all;
+    text-decoration: none;
     -webkit-border-radius: 0 0 4px 4px;
     -moz-border-radius: 0 0 4px 4px;
     border-radius: 0 0 4px 4px;
@@ -462,16 +499,16 @@ body{
 /** =====================
  * Responsive
  ========================*/
-@media only screen and (max-width: 766px) {
+@media only screen and (max-width: 600px) {
     .comments-container {
-        width: 480px;
+        width: 62vw;
     }
 
     .comments-list .comment-box {
-        width: 390px;
+        width: 80vw;
     }
 
     .reply-list .comment-box {
-        width: 320px;
+        width: 41vw;
     }
 }

@@ -290,12 +290,6 @@ a{
 
 /*반응형 미디어 쿼리*/
 @media screen and (max-width: 1550px){
-    .navbar{
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 8px 0px;
-    }
-
     .navbar_profileBtn{
         display: block;
     }

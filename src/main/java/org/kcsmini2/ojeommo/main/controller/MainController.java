@@ -41,7 +41,6 @@ public class MainController {
 
         map.addAttribute("articles", responseDtoPage);
         map.addAttribute("pageNumbers", pageNumbers);
-//        System.out.println(pageNumbers);
         return "main";
     }
 
@@ -82,5 +81,10 @@ public class MainController {
     @GetMapping("roulette")
     public String Roulette() {
         return "roulette";
+    }
+
+    @GetMapping("menucommend")
+    public String menuCommend() {
+        return "menuCommend";
     }
 }

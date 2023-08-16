@@ -1,12 +1,13 @@
 <body>
 <nav th:fragment="navbarFragment" class="navbar">
-    <a class="navbar_logo" th:href="@{/}">
-        <i class="fa-solid fa-bowl-food"></i>
-        <p>ㅇㅈㅁ?</p>
-    </a>
 
     <a href="javascript:;" class="navbar_profileBtn">
         <i class="fa-regular fa-circle-user"></i>
+    </a>
+
+    <a class="navbar_logo" th:href="@{/}">
+        <i class="fa-solid fa-bowl-food"></i>
+        <p>ㅇㅈㅁ?</p>
     </a>
 
     <a href="javascript:;" class="navbar_menuBtn">
@@ -19,7 +20,7 @@
                 <li class="sidebar-nav-item">
                     <a th:href="@{total}">모집 게시판</a>
                     <a th:href="@{review}">리뷰 게시판</a>
-                    <a th:href="@{roulette}">메뉴 추천 룰렛</a>
+                    <a th:href="@{menucommend}">AI 메뉴 추천</a>
                 </li>
             </li>
         </ul>

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.GatherBoardCreateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.BoardDetailResponseDTO;
+import org.kcsmini2.ojeommo.board.data.dto.response.detail.CategoryResponseDto;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.GatherBoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.data.entity.Board;
 import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
@@ -27,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -56,7 +58,6 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         Board board = requestDTO.toEntity(author);
 
         Category foundCategory = categoryRepository.findCategoryByCategoryName(requestDTO.getCategoryName());
-        System.out.println(foundCategory);
         requestDTO.setCategory(foundCategory);
 
         GatherBoardCreateRequestDTO gatherBoardCreateRequestDTO = requestDTO;
@@ -190,8 +191,12 @@ public class GatherBoardServiceImpl implements GatherBoardService {
 
     @Override
     public Page<BoardDetailResponseDTO> readBoardPage(Pageable pageable, MemberDTO memberDTO) {
+        // 오늘 자정 시간을 구한다
+        LocalDate currentDate = LocalDateTime.now().toLocalDate();
+        LocalDateTime todayMidnight = currentDate.atStartOfDay();
+
         //현재 페이지에 포함된 게시글들을 가져온다
-        Page<GatherBoard> gatherBoardPage = gatherBoardRepository.findAllBy(pageable);
+        Page<GatherBoard> gatherBoardPage = gatherBoardRepository.findAllByBumpedAtAfterOrderByBumpedAtDesc(pageable, todayMidnight);
         //엔티티를 Dto로 변환하고 반환한다
         return gatherBoardPage
                 .map(gatherBoard -> {
@@ -214,9 +219,9 @@ public class GatherBoardServiceImpl implements GatherBoardService {
                 });
     }
 
-
-
-
-
-
+    @Override
+    public CategoryResponseDto getCategory() {
+        List<Category> categories = categoryRepository.findAll();
+        return CategoryResponseDto.from(categories);
+    }
 }
