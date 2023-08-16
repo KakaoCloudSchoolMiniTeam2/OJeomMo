@@ -1,5 +1,5 @@
 .modal {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
 
@@ -17,7 +17,7 @@
 }
 
 .modal_body {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
 
@@ -37,4 +37,11 @@
     .modal_body {
         width:100vw;
     }
+}
+
+@media screen and (max-height: 700px) {
+    .modal_body {
+        top: 350px;
+    }
+
 }
