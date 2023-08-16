@@ -185,34 +185,6 @@ input[type=radio] {
     --accent-color: #ecb390;
 }
 
-.navbar{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #FFFFFFCC;
-    padding: 8px 0px;
-    border-bottom: 5px solid var(--accent-color);
-    font-family:'KBO-Dia-Gothic_bold';
-}
-
-.navbar_logo{
-    font-size: 40px;
-    color: var(--accent-color);
-    left: 50%;
-    position: relative;
-    transform: translateX(-50%);
-    text-decoration: none;
-}
-
-.navbar_logo i{
-    display: inline;
-    color:var(--accent-color);
-}
-
-.navbar_logo p{
-    display: inline;
-}
-
 img {
     max-width: 100%;
     height: auto; }

@@ -3,6 +3,7 @@ package org.kcsmini2.ojeommo.member.controller;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.kcsmini2.ojeommo.exception.ApplicationException;
 import org.kcsmini2.ojeommo.exception.ErrorCode;
 import org.kcsmini2.ojeommo.member.data.dto.MemberDTO;
@@ -25,6 +26,7 @@ import java.io.PrintWriter;
  *
  * 최종 수정 일자: 2023/07/31
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
@@ -53,7 +55,7 @@ public class MemberController {
     @PostMapping(value = "login")
     public String login(@ModelAttribute SignRequest request, Model model) throws Exception {
         SignResponse response = signService.login(request);
-        System.out.println("provided token is " + response.getToken());
+        log.debug("provided token is " + response.getToken());
         if (response.getToken() != null) {
             model.addAttribute("data", response);
             return "memberLogin";

@@ -1,5 +1,6 @@
 package org.kcsmini2.ojeommo.comment.data.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import org.kcsmini2.ojeommo.member.data.entity.Member;
 @Setter
 public class CommentCreateRequestDTO {
     protected Long boardId;
+    @NotBlank(message = "댓글을 써주세요.")
     protected String content;
 
     public Comment toEntity(Member author, Board board) {

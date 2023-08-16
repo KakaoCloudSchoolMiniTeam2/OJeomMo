@@ -196,8 +196,8 @@ i.fa-solid.fa-utensils {
 }
 
 .detailIconSection{
-    float: right;
     display: flex;
+    justify-content: end;
     padding: var(--small-padding);
     margin-right: 40px;
 }
@@ -232,7 +232,7 @@ i.fa-solid.fa-utensils {
 .detailContentSection{
     display: flex;
     flex-direction: column;
-    padding: var(--large-padding) var(--large-padding) var(--large-padding) var(--large-padding);
+    padding: var(--medium-padding);
     margin: 0px 30px 5px 30px;
     font-size: var(--font-slarge);
 }
@@ -241,6 +241,9 @@ i.fa-solid.fa-utensils {
     display: flex;
     align-items: center;
     margin-right: 10px;
+    flex-wrap: wrap;
+    align-self: end;
+    line-height: 30px;
 }
 
 .authorDiv div {
@@ -262,11 +265,12 @@ i.fa-solid.fa-utensils {
 
 
 .detailContentSection .category{
+    line-height: 30px;
     flex: 1;
 }
 
 .detailMore{
-    white-space: normal;
+    word-break: break-all;
     font-size: var(--font-slarge);
 }
 
@@ -295,6 +299,10 @@ i.fa-solid.fa-utensils {
 
 .joinBtn.joined {
     background-color: #fff1d1;
+}
+
+.joinLine {
+    display: inline;
 }
 
 /*댓글관련 css*/
@@ -438,7 +446,9 @@ i.fa-solid.fa-utensils {
     background: #FFF;
     padding: 12px;
     font-size: var(--font-medium);
-    color: #595959;
+    color: var(--accent-color);
+    word-break: break-all;
+    text-decoration: none;
     -webkit-border-radius: 0 0 4px 4px;
     -moz-border-radius: 0 0 4px 4px;
     border-radius: 0 0 4px 4px;
@@ -489,16 +499,16 @@ i.fa-solid.fa-utensils {
 /** =====================
  * Responsive
  ========================*/
-@media only screen and (max-width: 766px) {
+@media only screen and (max-width: 600px) {
     .comments-container {
-        width: 480px;
+        width: 62vw;
     }
 
     .comments-list .comment-box {
-        width: 390px;
+        width: 80vw;
     }
 
     .reply-list .comment-box {
-        width: 320px;
+        width: 41vw;
     }
 }
