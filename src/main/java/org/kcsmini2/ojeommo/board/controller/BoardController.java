@@ -20,6 +20,8 @@ import org.kcsmini2.ojeommo.member.data.dto.PartyMemberDetailResponseDTO;
 import org.kcsmini2.ojeommo.member.service.PartyService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -139,15 +141,13 @@ public class BoardController {
 
     // 댓글 등록
     @PostMapping("/createComment")
-    public String createCommentPOST(@RequestParam("commentContent") String content, @AuthenticationPrincipal MemberDTO memberDTO, Long boardId, Model model) {
-        CommentCreateRequestDTO requestDTO = new CommentCreateRequestDTO();
-        requestDTO.setContent(content);
-        requestDTO.setBoardId(boardId);
+    public HttpEntity<Boolean> createCommentPOST(@Valid CommentCreateRequestDTO requestDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
         commentService.createComment(requestDTO, memberDTO);
 
+        return new HttpEntity<>(true);
 //        return "fragment/gather_detail";
-//        return "redirect:/board/readGatherBoard/" + boardId;
-        return "redirect:/";
+//        return "/board/readGatherBoard/" + boardId;
+//        return "redirect:/";
     }
 
     // 댓글 수정

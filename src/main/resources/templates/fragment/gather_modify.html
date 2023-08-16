@@ -9,7 +9,7 @@
     <script src="/js/main.js" defer></script>
 </head>
 <body class="createPostit">
-<form th:action="@{/board/updateGatherBoardPage}" method="post">
+<form th:action="@{/board/updateGatherBoardPage}" method="post" class="updateForm">
     <header class="createPostit__header">
         <input type="hidden" name="boardId" th:value="${gatherDetail.getId()}"/>
         <div class="title">
