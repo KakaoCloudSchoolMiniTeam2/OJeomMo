@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+#환경변수 저장 sh 불러오기
+source environment_variables.sh
+
 PROJECT_ROOT="/home/ec2-user/app/step1/OJeomMo" # 루트 경로
 BUILD_DIR="/home/ec2-user/app/step2/zip/build/libs"
 JAR_NAME="OJeomMo-1.1.1.jar"

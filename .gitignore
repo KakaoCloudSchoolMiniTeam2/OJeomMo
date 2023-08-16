@@ -221,3 +221,5 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,gradle,intellij+all,java,visualstudiocode
+
+environment_variables.sh

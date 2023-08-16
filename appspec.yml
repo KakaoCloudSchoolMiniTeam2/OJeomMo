@@ -13,6 +13,10 @@ permissions:
     group: ec2-user # object의 그룹 이름(Optional)
 
 hooks:
+  BeforeInstall:
+    - location: scripts/environment_variables.sh
+      timeout: 60
+      runas: root
   AfterInstall: # CodeDeploy의 AfterInstall 단계에서 실행
     - location: scripts/stop.sh # hooks에서 실행할 스크립트의 위치
       timeout: 60 # 스크립트 실행에 허용되는 최대 시간, 넘으면 배포 실패(Optional)
