@@ -60,12 +60,7 @@ public class MemberController {
 
     @PostMapping("update")
     public String update(@AuthenticationPrincipal MemberDTO memberDTO,
-                         @Valid @ModelAttribute UpdateRequest request,
-                         BindingResult bindingResult) {
-
-        if(bindingResult.hasErrors()) {
-            throw new ApplicationException(ErrorCode.NULL_FIELD);
-        }
+                         @Valid @ModelAttribute UpdateRequest request) {
 
         String id = memberDTO.getId();
         request.setId(id);
