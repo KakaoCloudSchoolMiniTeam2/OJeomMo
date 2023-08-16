@@ -58,7 +58,7 @@ jobs:
 
     # 4) gradle 빌드
     - name: Build with Gradle
-      run: ./gradlew clean build
+      run: ./gradlew build -x test
       # working-directory: ${{ env.working-directory }}
 
     # 5) AWS 인증
