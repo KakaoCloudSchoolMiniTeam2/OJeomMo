@@ -77,35 +77,20 @@ function getModal(postit) {
                 deleteBtn.onclick = deleteAlert;
             }
 
-            const createCommentForm = document.getElementById("createComment");
-            createCommentForm.addEventListener("submit", function (event) {
-                event.preventDefault();
-
-                const formData = new FormData(createCommentForm);
-
-                fetch("/board/createComment", {
-                    method: "POST",
-                    body: formData
-                })
-                    .then(response => {
-                        if (response) {
-                            getModal(postit)
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error creating comment:", error);
-                    });
-            });
-
             const updateBtn = document.querySelector("[name = boardUpdateBtn]");
             if (updateBtn != null) {
                 updateBtn.onclick = function (boardId) {
                     return function (event) {
                         event.preventDefault();
-                        updateModal(boardId);
+                        updateModal(boardId, postit);
                     };
                 }(boardId);
             }
+
+            const asyncForms = document.querySelectorAll(".asyncSubmit")
+            asyncForms.forEach((form) => {
+                form.addEventListener("submit", (event) => asyncSubmit(event, postit, form));
+            });
         })
         .catch(error => {
             console.error('Error fetching HTML:', error);
@@ -119,7 +104,19 @@ function getModal(postit) {
 
 }
 
-function updateModal(boardId) {
+async function asyncSubmit(event, postit, form) {
+    event.preventDefault();
+    const formData = new FormData(form);
+    const formAction = form.getAttribute('action');
+    await fetch(formAction, {
+        method: "POST",
+        body: formData
+    })
+
+    getModal(postit);
+}
+
+function updateModal(boardId, postit) {
     //TODO : 글 작성자가 아니어도 접근이 가능한 문제 해결 필요
     const modalContent = document.querySelector('.modal_body')
 
@@ -129,8 +126,9 @@ function updateModal(boardId) {
         .then(response => response.text())
         .then(html => {
             modalContent.innerHTML = html;
-            const closeBtn = document.querySelector('.detailCloseIconButton');
-            closeBtn.onclick = closeModal;
+            // const closeBtn = document.querySelector('.detailCloseIconButton');
+            // closeBtn.onclick = closeModal;
+
         })
         .catch(error => {
             console.error('Error fetching HTML:', error);
@@ -169,7 +167,6 @@ function createModal(event) {
 
 if (btnOpenPopup != null) {
     btnOpenPopup.forEach(postit => {
-        console.log(postit);
         postit.onclick = () => getModal(postit);
     });
 }
@@ -205,6 +202,7 @@ function deleteAlert(event) {
 
 function closeModal(event) {
     event.preventDefault();
+    body.style.overflow = 'auto';
     modal.classList.toggle('show');
 }
 

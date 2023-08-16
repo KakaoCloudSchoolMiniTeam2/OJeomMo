@@ -141,10 +141,7 @@ public class BoardController {
 
     // 댓글 등록
     @PostMapping("/createComment")
-    public HttpEntity<Boolean> createCommentPOST(@RequestParam("commentContent") String content, @AuthenticationPrincipal MemberDTO memberDTO, Long boardId, Model model){
-        CommentCreateRequestDTO requestDTO = new CommentCreateRequestDTO();
-        requestDTO.setContent(content);
-        requestDTO.setBoardId(boardId);
+    public HttpEntity<Boolean> createCommentPOST(@Valid CommentCreateRequestDTO requestDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
         commentService.createComment(requestDTO, memberDTO);
 
         return new HttpEntity<>(true);
