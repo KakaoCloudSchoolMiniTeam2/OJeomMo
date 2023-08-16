@@ -24,9 +24,8 @@
             <span class="createParty">
                 <i class="fa-solid fa-user-group"></i>
                 <span>
-                    <input type="text" id="initNumber" name="initNumber" placeholder="0" pattern="[0-9]+" required>
-                    /
-                    <input type="text" id="gatherNumber" name="gatherNumber" placeholder="0" pattern="[0-9]+" required>
+                    <input type="hidden" id="initNumber" name="initNumber" value="1"/>1 /
+                    <input type="text" id="gatherNumber" name="gatherNumber" value="1" pattern="[0-9]+" required>
                 </span>
             </span>
         </div>
@@ -43,10 +42,13 @@
                     <i class="fa-solid fa-motorcycle"></i>
                 </label>
             </div>
-            <p class="category">음식 종류 : <input list="foodCategory" id="category" name="categoryName" placeholder="음식 종류를 선택하세요."/></p>
-            <datalist id="foodCategory" th:each="category : ${categories.getCategoryNames()}">
-                <option th:value="${category}">
-            </datalist>
+            <p class="category">음식 종류 :
+                <select id="category" name="categoryName">
+                    <datalist id="foodCategory" th:each="category : ${categories.getCategoryNames()}">
+                        <option th:value="${category}" th:text="${category}">
+                    </datalist>
+                </select>
+            </p>
             <textarea id="content" name="content" placeholder="추가적인 내용을 입력해주세요."></textarea>
         </div>
     </section>
