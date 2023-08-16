@@ -191,6 +191,16 @@
     cursor: default;
 }
 
+.paginationNumbering{
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.pageNum{
+    font-size: 15px;
+    font-weight: lighter;
+}
+
 .page-items {
     display: inline-block;
 }
