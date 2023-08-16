@@ -27,7 +27,7 @@ public class SignRequest {
     @Pattern(regexp = "^[^\\s]*$", message = "닉네임 내 공백은 허용되지 않습니다.")
     private String nickname;
     @NotBlank(message = "이름을 작성해주세요.")
-    @Pattern(regexp = "^[가-힣]{3,}$", message = "이름은 한글 3글자 이상이어야 합니다.")
+    @Pattern(regexp = "^[가-힣]{2,6}$", message = "이름은 한글 2~6글자여야 합니다.")
     @Pattern(regexp = "^[^\\s]*$", message = "이름 내 공백은 허용되지 않습니다.")
     private String name;
     @NotBlank(message = "이메일을 작성해주세요.")
