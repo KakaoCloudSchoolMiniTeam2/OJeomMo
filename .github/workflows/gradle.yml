@@ -15,7 +15,7 @@ on:
 
 # flow에서 사용할 변수
 env:
-  AWS_REGION: 버지니아 북부
+  AWS_REGION: us-east-1
   S3_BUCKET_NAME: ojeommo-s3-bucket
   CODE_DEPLOY_APPLICATION_NAME: ojeommo-codedeploy-app
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: ojeommo-codedeploy-deployment-group
