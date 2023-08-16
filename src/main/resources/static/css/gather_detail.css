@@ -166,7 +166,7 @@ i.fa-solid.fa-utensils {
 
 .detailShowParty .tooltiptext {
     visibility: hidden;       /* 이벤트가 없으면 툴팁 영역을 숨김 */
-    width: 120px;             /* 툴팁 영역의 넓이를 설정 */
+    width: max-content;             /* 툴팁 영역의 넓이를 설정 */
     background-color: #ecb390;
     color: #f3f3f3;
     text-align: center;
@@ -182,7 +182,7 @@ i.fa-solid.fa-utensils {
 }
 
 .detailShowParty .tooltip-bottom {
-    width: 120px;
+    width: max-content;
     top: 100%;
     left: 20%;
     margin-left: -60px;

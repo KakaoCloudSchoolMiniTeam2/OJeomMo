@@ -35,13 +35,8 @@ public class MemberController {
 
     @PostMapping("register")
     public String signup(@Valid @ModelAttribute SignRequest request,
-                         BindingResult bindingResult,
                          @RequestParam(name = "categoryId", required = false) String[] categoryIds
                          ) throws Exception {
-
-        if(bindingResult.hasErrors()) {
-            throw new ApplicationException(ErrorCode.NULL_FIELD);
-        }
 
         if(categoryIds == null) categoryIds = new String[0];
         request.setCategoryIds(categoryIds);
@@ -65,12 +60,7 @@ public class MemberController {
 
     @PostMapping("update")
     public String update(@AuthenticationPrincipal MemberDTO memberDTO,
-                         @Valid @ModelAttribute UpdateRequest request,
-                         BindingResult bindingResult) {
-
-        if(bindingResult.hasErrors()) {
-            throw new ApplicationException(ErrorCode.NULL_FIELD);
-        }
+                         @Valid @ModelAttribute UpdateRequest request) {
 
         String id = memberDTO.getId();
         request.setId(id);

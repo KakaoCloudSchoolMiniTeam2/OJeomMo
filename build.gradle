@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'org.kcsmini2'
-version = '1.1'
+version = '1.1.1'
 
 java {
 	sourceCompatibility = '17'

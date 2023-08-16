@@ -41,7 +41,12 @@
             <div class="pagination">
                 <span th:each="pageNumber : ${pageNumbers}">
                     <a th:class="'page-item page-char ' + (${#strings.isEmpty(param.page) and pageNumber == 0} or ${#strings.equals(param.page, #strings.toString(pageNumber))} ? 'active' : '')"
-                       th:href="@{?page=__${pageNumber}__}">ㅇ</a>
+                       th:href="@{?page=__${pageNumber}__}">
+                        <span class="paginationNumbering">
+                            <span th:text="ㅇ"></span>
+                            <span class="pageNum" th:text="${pageNumber+1}"></span>
+                        </span>
+                    </a>
                 </span>
                 <div class="page-char">ㅈ</div>
                 <div class="page-char">ㅁ</div>
