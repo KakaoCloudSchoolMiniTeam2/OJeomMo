@@ -1,15 +1,5 @@
-// const profileBtn = document.querySelector(".navbar_profileBtn");
-const profile = document.querySelector(".navbar_profile");
-// const menuBtn = document.querySelector(".navbar_menuBtn");
 const menu = document.querySelector(".navbar_menu");
 
-// profileBtn.addEventListener("click", ()=>{
-//     profile.classList.toggle("active");
-// });
-
-// menuBtn.addEventListener("click", ()=>{
-//     menu.classList.toggle("active");
-// });
 
 // 화면 크기 설정
 const screenHeight = window.innerHeight;
@@ -210,7 +200,7 @@ const logoutBtn = document.querySelector(".logoutBtn");
 
 // 인증 토큰 삭제
 function deleteCookie() {
-    alert("요청 처리됨");
+    alert("로그아웃 되었습니다.");
     document.cookie = "Authorization" + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
 
