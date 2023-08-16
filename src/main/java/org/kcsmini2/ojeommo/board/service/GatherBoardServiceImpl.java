@@ -58,7 +58,6 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         Board board = requestDTO.toEntity(author);
 
         Category foundCategory = categoryRepository.findCategoryByCategoryName(requestDTO.getCategoryName());
-        System.out.println(foundCategory);
         requestDTO.setCategory(foundCategory);
 
         GatherBoardCreateRequestDTO gatherBoardCreateRequestDTO = requestDTO;
