@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 PROJECT_ROOT="/home/ec2-user/app/step1/OJeomMo" # 루트 경로
-JAR_FILE="$PROJECT_ROOT/build/libs/OJeomMo-1.1.jar"
+JAR_FILE="/home/ec2-user/app/step2/zip/build/libs/*.jar"
 
 APP_LOG="$PROJECT_ROOT/application.log"
 ERROR_LOG="$PROJECT_ROOT/error.log"
