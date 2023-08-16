@@ -61,6 +61,23 @@ jobs:
       run: ./gradlew build -x test
       # working-directory: ${{ env.working-directory }}
 
+    # DB 환경변수 추가
+    - name: Set environment variables
+      env:
+        DB_IP: ${{ secrets.DB_IP }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        DB_USERNAME: ${{ secrets.DB_USERNAME }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DDL_MODE: ${{ secrets.DDL_MODE }}
+        JWT_KEY: ${{ secrets.JWT_KEY }}
+      run: |
+        echo "DB_IP=$DB_IP" >> OJeomMo/scripts/environment_variables.sh
+        echo "DB_PORT=$DB_PORT" >> OJeomMo/scripts/environment_variables.sh
+        echo "DB_USERNAME=$DB_USERNAME" >> OJeomMo/scripts/environment_variables.sh
+        echo "DB_PASSWORD=$DB_PASSWORD" >> OJeomMo/scripts/environment_variables.sh
+        echo "DDL_MODE=$DDL_MODE" >> OJeomMo/scripts/environment_variables.sh
+        echo "JWT_KEY=$JWT_KEY" >> OJeomMo/scripts/environment_variables.sh
+
     # 5) AWS 인증
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
