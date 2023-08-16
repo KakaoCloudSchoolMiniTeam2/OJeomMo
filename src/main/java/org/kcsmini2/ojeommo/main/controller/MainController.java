@@ -41,7 +41,6 @@ public class MainController {
 
         map.addAttribute("articles", responseDtoPage);
         map.addAttribute("pageNumbers", pageNumbers);
-//        System.out.println(pageNumbers);
         return "main";
     }
 

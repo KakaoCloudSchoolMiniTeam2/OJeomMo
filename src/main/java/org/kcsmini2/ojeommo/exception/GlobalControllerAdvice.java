@@ -3,6 +3,7 @@ package org.kcsmini2.ojeommo.exception;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.ui.Model;
@@ -10,9 +11,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.xml.bind.ValidationException;
 import java.io.IOException;
 
+@Slf4j
 @ControllerAdvice
 @RequiredArgsConstructor
 public class GlobalControllerAdvice {
@@ -34,11 +35,6 @@ public class GlobalControllerAdvice {
         return "member_error";
     }
 
-//    @ExceptionHandler(AuthenticationException.class)
-//    public HttpEntity<String> jwtExHandler() {
-//        return new HttpEntity<>("<script>window.location.href = '/login';</script>");
-//    }
-
     @ExceptionHandler(AuthenticationException.class)
     public void jwtExHandler(HttpServletResponse response) {
 
@@ -52,7 +48,7 @@ public class GlobalControllerAdvice {
         try {
             response.sendRedirect("/login");
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
         }
     }
 
