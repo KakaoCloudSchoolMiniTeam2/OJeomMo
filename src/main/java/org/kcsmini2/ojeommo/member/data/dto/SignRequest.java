@@ -1,6 +1,8 @@
 package org.kcsmini2.ojeommo.member.data.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,15 +17,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Getter
 @Setter
 public class SignRequest {
-    @NotBlank
+    @NotBlank(message = "id를 작성해주세요.")
+    @Pattern(regexp = "^[^\\s]*$", message = "id 내 공백은 허용되지 않습니다.")
     private String id;
-    @NotBlank
+    @NotBlank(message = "pw를 작성해주세요.")
+    @Pattern(regexp = "^[^\\s]*$", message = "pw 내 공백은 허용되지 않습니다.")
     private String pw;
-    @NotBlank
+    @NotBlank(message = "닉네임을 작성해주세요.")
+    @Pattern(regexp = "^[^\\s]*$", message = "닉네임 내 공백은 허용되지 않습니다.")
     private String nickname;
-    @NotBlank
+    @NotBlank(message = "이름을 작성해주세요.")
+    @Pattern(regexp = "^[가-힣]{2,6}$", message = "이름은 한글 2~6글자여야 합니다.")
+    @Pattern(regexp = "^[^\\s]*$", message = "이름 내 공백은 허용되지 않습니다.")
     private String name;
-    @NotBlank
+    @NotBlank(message = "이메일을 작성해주세요.")
+    @Email(message = "이메일 형식이 유효하지 않습니다.")
     private String email;
     private String[] categoryIds;
 
