@@ -192,8 +192,12 @@ public class GatherBoardServiceImpl implements GatherBoardService {
 
     @Override
     public Page<BoardDetailResponseDTO> readBoardPage(Pageable pageable, MemberDTO memberDTO) {
+        // 오늘 자정 시간을 구한다
+        LocalDate currentDate = LocalDateTime.now().toLocalDate();
+        LocalDateTime todayMidnight = currentDate.atStartOfDay();
+
         //현재 페이지에 포함된 게시글들을 가져온다
-        Page<GatherBoard> gatherBoardPage = gatherBoardRepository.findAllBy(pageable);
+        Page<GatherBoard> gatherBoardPage = gatherBoardRepository.findAllByBumpedAtAfterOrderByBumpedAtDesc(pageable, todayMidnight);
         //엔티티를 Dto로 변환하고 반환한다
         return gatherBoardPage
                 .map(gatherBoard -> {
