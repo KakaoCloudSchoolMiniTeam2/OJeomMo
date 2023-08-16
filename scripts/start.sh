@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PROJECT_ROOT="/home/ec2-user/app" # 루트 경로
+PROJECT_ROOT="/home/ec2-user/app/step1" # 루트 경로
 JAR_FILE="$PROJECT_ROOT/OJeomMo.jar"
 
 APP_LOG="$PROJECT_ROOT/application.log"

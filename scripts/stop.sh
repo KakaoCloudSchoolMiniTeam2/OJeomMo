@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PROJECT_ROOT="/home/ec2-user/app"
+PROJECT_ROOT="/home/ec2-user/app/step1"
 JAR_FILE="$PROJECT_ROOT/OJeomMo.jar" # 여기서 프로젝트 이름은 일단 원하는 프로젝트 이름으로 설정해주세요. 밑에서 추가 설명하겠습니다.
 
 DEPLOY_LOG="$PROJECT_ROOT/deploy.log"
