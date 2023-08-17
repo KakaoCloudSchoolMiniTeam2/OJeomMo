@@ -171,7 +171,7 @@ i.fa-solid.fa-utensils {
     color: #f3f3f3;
     text-align: center;
     border-radius: 6px;
-    padding: 5px 0;
+    padding: 5px;
 
     position: absolute;       /* 절대 위치를 사용 */
     z-index: 1;
@@ -242,8 +242,6 @@ i.fa-solid.fa-utensils {
     align-items: center;
     margin-right: 10px;
     flex-wrap: wrap;
-    align-self: end;
-    line-height: 30px;
 }
 
 .authorDiv div {
