@@ -6,7 +6,7 @@ PROJECT_ROOT="/home/ec2-user/app/step1/OJeomMo"
 #JAR_FILE="/home/ec2-user/app/step2/zip/build/libs/OJeomMo-1.1.1.jar" # 여기서 프로젝트 이름은 일단 원하는 프로젝트 이름으로 설정해주세요. 밑에서 추가 설명하겠습니다.
 BUILD_DIR="/home/ec2-user/app/step2/zip/build/libs"
 #JAR_NAME="OJeomMo-1.1.jar"
-JAR_NAME="*.jar"
+JAR_NAME=*.jar
 
 
 DEPLOY_LOG="$PROJECT_ROOT/deploy.log"
@@ -14,7 +14,7 @@ DEPLOY_LOG="$PROJECT_ROOT/deploy.log"
 TIME_NOW=$(date +%c)
 
 # 현재 구동 중인 애플리케이션 pid 확인
-CURRENT_PID=$(pgrep -f $JAR_NAME)
+CURRENT_PID=$(pgrep -f *.jar)
 
 # 프로세스가 켜져 있으면 종료
 if [ -z $CURRENT_PID ]; then
