@@ -1,7 +1,9 @@
 package org.kcsmini2.ojeommo.board.data.dto.response.create;
 
+import lombok.Getter;
 import org.kcsmini2.ojeommo.board.data.entity.Board;
 
+@Getter
 public class BoardCreateResponseDTO {
 
     private Long id;

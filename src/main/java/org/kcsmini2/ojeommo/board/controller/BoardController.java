@@ -6,6 +6,7 @@ import org.kcsmini2.ojeommo.board.data.dto.request.create.GatherBoardCreateReque
 import org.kcsmini2.ojeommo.board.data.dto.request.create.JoinPartyRequestDto;
 import org.kcsmini2.ojeommo.board.data.dto.request.delete.QuitPartyRequestDto;
 import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateRequestDTO;
+import org.kcsmini2.ojeommo.board.data.dto.response.create.BoardCreateResponseDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.CategoryResponseDto;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.GatherBoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.service.GatherBoardService;
@@ -58,7 +59,8 @@ public class BoardController {
             throw new ApplicationException(ErrorCode.NULL_FIELD);
         }
 
-        gatherBoardService.createBoard(requestDTO, memberDTO);
+        BoardCreateResponseDTO responseDTO = gatherBoardService.createBoard(requestDTO, memberDTO);
+        partyService.joinParty(responseDTO.getId(), memberDTO);
         return "redirect:/";
     }
 
@@ -128,7 +130,6 @@ public class BoardController {
     @PostMapping("/joinParty")
     public String JoinParty(JoinPartyRequestDto requestDto, @AuthenticationPrincipal MemberDTO memberDTO) {
         partyService.joinParty(requestDto.getBoardId(), memberDTO);
-
         return "redirect:/";
     }
 

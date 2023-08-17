@@ -3,6 +3,7 @@ package org.kcsmini2.ojeommo.board.service;
 import lombok.RequiredArgsConstructor;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.GatherBoardCreateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.update.GatherBoardUpdateRequestDTO;
+import org.kcsmini2.ojeommo.board.data.dto.response.create.BoardCreateResponseDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.BoardDetailResponseDTO;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.CategoryResponseDto;
 import org.kcsmini2.ojeommo.board.data.dto.response.detail.GatherBoardDetailResponseDTO;
@@ -48,7 +49,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
 
     @Override
     @Transactional
-    public void createBoard(GatherBoardCreateRequestDTO requestDTO, MemberDTO memberDTO) {
+    public BoardCreateResponseDTO createBoard(GatherBoardCreateRequestDTO requestDTO, MemberDTO memberDTO) {
 
         if(!categoryRepository.existsByCategoryName(requestDTO.getCategoryName())) {
             throw new ApplicationException(ErrorCode.CATEGORY_NOT_FOUND);
@@ -63,6 +64,8 @@ public class GatherBoardServiceImpl implements GatherBoardService {
         GatherBoardCreateRequestDTO gatherBoardCreateRequestDTO = requestDTO;
         GatherBoard gatherBoard = gatherBoardCreateRequestDTO.toEntity(board);
         gatherBoardRepository.save(gatherBoard);
+
+        return BoardCreateResponseDTO.from(board);
     }
 
     // 게시글 조회
@@ -116,33 +119,6 @@ public class GatherBoardServiceImpl implements GatherBoardService {
             return foundParty != null && Objects.equals(foundParty.getMemberId(), memberDTO.getId());
         }
         return false; //로그인하지 않은 익명 사용자의 경우 항상 false를 반환
-    }
-
-    @Transactional
-    public boolean joinParty(Long boardId, MemberDTO memberDTO) {
-        //멤버엔티티를 불러옴
-        Member partyMember = memberRepository.getReferenceById(memberDTO.getId());
-
-        //보드엔티티를 불러옴
-        GatherBoard board = gatherBoardRepository.findById(boardId)
-                .orElseThrow(() -> new ApplicationException(ErrorCode.BOARD_NOT_FOUND));
-
-        //작성자와 요청자가 같다면 예외 반환
-        if(board.isSameMember(memberDTO)){
-            throw new ApplicationException(ErrorCode.INVALID_JOIN);
-        }
-
-        //파티엔티티를 만들어줌
-        Party party = Party.builder()
-                .member(partyMember)
-                .board(board)
-                .joinedAt(LocalDateTime.now())
-                .build();
-
-        //파티엔티티를 저장함
-        partyRepository.save(party);
-
-        return true;
     }
 
     @Override
