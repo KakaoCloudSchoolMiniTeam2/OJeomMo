@@ -14,7 +14,9 @@ DEPLOY_LOG="$PROJECT_ROOT/deploy.log"
 TIME_NOW=$(date +%c)
 
 # 현재 구동 중인 애플리케이션 pid 확인
-CURRENT_PID=$(pgrep -f *.jar)
+#CURRENT_PID=$(pgrep -f *.jar)
+# 8080포트에서 구동중인 애플리케이션 PID확인
+CURRENT_PID=$(lsof -i :8080 -t)
 
 # 프로세스가 켜져 있으면 종료
 if [ -z $CURRENT_PID ]; then
