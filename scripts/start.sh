@@ -22,7 +22,7 @@ cp $BUILD_DIR/*.jar $PROJECT_ROOT/build/libs
 # jar 파일 실행
 echo "$TIME_NOW > $JAR_NAME 파일 실행" >> $DEPLOY_LOG
 #nohup java -jar $JAR_FILE > $APP_LOG 2> $ERROR_LOG &
-nohup java -jar $BUILD_DIR/*.jar> "$APP_LOG" 2> $ERROR_LOG &
+nohup java -jar $BUILD_DIR/OJeomMo-1.1.1.jar> "$APP_LOG" 2> $ERROR_LOG &
 
 #CURRENT_PID=$(pgrep -f $JAR_NAME)
 CURRENT_PID=$(lsof -i :8080 -t)
