@@ -16,7 +16,7 @@
     position: relative;
     top: 29px;
     display: block;
-    min-height: 771px;
+    min-height: 400px;
     width: 600px;
     height: auto;
     background-color: #fbe6af;
@@ -25,7 +25,7 @@
 
 .board{
     display: flex;
-    min-height: 640px;
+    min-height: 400px;
     flex-wrap: wrap;
     justify-content: space-evenly;
     padding: 30px 0px 0px;
