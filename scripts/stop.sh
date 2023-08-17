@@ -5,7 +5,9 @@ source ~/.bash_profile
 PROJECT_ROOT="/home/ec2-user/app/step1/OJeomMo"
 #JAR_FILE="/home/ec2-user/app/step2/zip/build/libs/OJeomMo-1.1.1.jar" # 여기서 프로젝트 이름은 일단 원하는 프로젝트 이름으로 설정해주세요. 밑에서 추가 설명하겠습니다.
 BUILD_DIR="/home/ec2-user/app/step2/zip/build/libs"
-JAR_NAME="OJeomMo-1.1.jar"
+#JAR_NAME="OJeomMo-1.1.jar"
+JAR_NAME="*.jar"
+
 
 DEPLOY_LOG="$PROJECT_ROOT/deploy.log"
 
