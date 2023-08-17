@@ -71,12 +71,12 @@ jobs:
         DDL_MODE: ${{ secrets.DDL_MODE }}
         JWT_KEY: ${{ secrets.JWT_KEY }}
       run: |
-        echo "DB_IP=$DB_IP" >> OJeomMo/scripts/environment_variables.sh
-        echo "DB_PORT=$DB_PORT" >> OJeomMo/scripts/environment_variables.sh
-        echo "DB_USERNAME=$DB_USERNAME" >> OJeomMo/scripts/environment_variables.sh
-        echo "DB_PASSWORD=$DB_PASSWORD" >> OJeomMo/scripts/environment_variables.sh
-        echo "DDL_MODE=$DDL_MODE" >> OJeomMo/scripts/environment_variables.sh
-        echo "JWT_KEY=$JWT_KEY" >> OJeomMo/scripts/environment_variables.sh
+        echo "DB_IP=$DB_IP" >> environment_variables.sh
+        echo "DB_PORT=$DB_PORT" >> environment_variables.sh
+        echo "DB_USERNAME=$DB_USERNAME" >> environment_variables.sh
+        echo "DB_PASSWORD=$DB_PASSWORD" >> environment_variables.sh
+        echo "DDL_MODE=$DDL_MODE" >> environment_variables.sh
+        echo "JWT_KEY=$JWT_KEY" >> environment_variables.sh
 
     # 5) AWS 인증
     - name: Configure AWS credentials
