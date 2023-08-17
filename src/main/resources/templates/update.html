@@ -11,15 +11,23 @@
 
     <!-- Main css -->
     <link type="text/css" th:href="@{/css/style.css}" rel="stylesheet">
+    <link type="text/css" th:href="@{/css/main.css}" rel="stylesheet">
 
 </head>
 <body>
+
+<nav th:fragment="navbarFragment" class="navbar">
+    <a class="navbar_logo" th:href="@{/}">
+        <i class="fa-solid fa-bowl-food"></i>
+        <p>ㅇㅈㅁ?</p>
+    </a>
+</nav>
 
 <div class="main">
 
     <!-- Sign up form -->
     <section class="signup">
-        <div class="container-2">
+        <div class="update-container">
             <div class="signup-content">
                 <div class="signup-form">
                     <h2 class="form-title">회원정보수정</h2>
