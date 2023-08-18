@@ -7,6 +7,17 @@ PROJECT_ROOT="/home/ec2-user/app/step1/OJeomMo" # 루트 경로
 BUILD_DIR="/home/ec2-user/app/step2/zip/build/libs"
 JAR_NAME=$BUILD_DIR/*.jar
 
+# 환경변수 잘 넘어왔나 테스트
+echo "DB_IP=$DB_IP" > $PROJECT_ROOT/environment_variables.txt
+echo "DB_PASSWORD=$DB_PASSWORD" >> $PROJECT_ROOT/environment_variables.txt
+echo "DB_PORT=$DB_PORT" >> $PROJECT_ROOT/environment_variables.txt
+echo "DB_USERNAME=$DB_USERNAME" >> $PROJECT_ROOT/environment_variables.txt
+echo "DDL_MODE=$DDL_MODE" >> $PROJECT_ROOT/environment_variables.txt
+echo "JWT_KEY=$JWT_KEY" >> $PROJECT_ROOT/environment_variables.txt
+echo "SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE" >> $PROJECT_ROOT/environment_variables.txt
+
+
+
 APP_LOG="$PROJECT_ROOT/application.log"
 ERROR_LOG="$PROJECT_ROOT/error.log"
 DEPLOY_LOG="$PROJECT_ROOT/deploy.log"
