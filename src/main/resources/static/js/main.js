@@ -1,6 +1,5 @@
 const menu = document.querySelector(".navbar_menu");
 
-
 // 화면 크기 설정
 const screenHeight = window.innerHeight;
 document.body.style.height = `${screenHeight}px`;
@@ -45,56 +44,52 @@ const body = document.querySelector('body');
 const modal = document.querySelector('.modal');
 const btnOpenPopup = document.querySelectorAll('.postit');
 const createBtn = document.querySelector('.createBtn');
+const modalContent = document.querySelector('.modal_body');
+let dynamicScript = null; // 스크립트 엘리먼트를 저장할 변수
 
+function removeDynamicScript() {
+    if (dynamicScript) {
+        document.head.removeChild(dynamicScript);
+        dynamicScript = null;
+    }
+}
 
-function getModal(postit) {
-
-    const modalContent = document.querySelector('.modal_body')
-
-    //여기부터 Ajax 추가하는 코드
-    ////////////////////////////
-    const boardId = postit.id;
-    const htmlFilePath = '/board/readGatherBoard/' + boardId;
-
+function asyncLoad(htmlFilePath, srcPath) {
     fetch(htmlFilePath)
         .then(response => response.text())
         .then(html => {
             modalContent.innerHTML = html;
-            const closeBtn = document.querySelector('.detailCloseIconButton');
+
+            if(srcPath != null){
+                dynamicScript = document.createElement('script');
+                dynamicScript.src = '/js/'+srcPath+'.js';
+                document.head.appendChild(dynamicScript);
+            }
+
+            const closeBtn = document.querySelector('.closeIconButton');
             closeBtn.onclick = closeModal;
-            const deleteBtn = document.querySelector("[name = boardDeleteBtn]");
-            if (deleteBtn != null) {
-                deleteBtn.onclick = deleteAlert;
-            }
 
-            const updateBtn = document.querySelector("[name = boardUpdateBtn]");
-            if (updateBtn != null) {
-                updateBtn.onclick = function (boardId) {
-                    return function (event) {
-                        event.preventDefault();
-                        updateModal(boardId, postit);
-                    };
-                }(boardId);
-            }
+            modal.classList.add('show');
 
-            const asyncForms = document.querySelectorAll(".asyncSubmit")
-            asyncForms.forEach((form) => {
-                form.addEventListener("submit", (event) => asyncSubmit(event, postit, form));
-            });
+            if (modal.classList.contains('show')) {
+                body.style.overflow = 'hidden';
+            }
         })
         .catch(error => {
             console.error('Error fetching HTML:', error);
         });
+}
 
-    modal.classList.add('show');
+function getModal(boardId) {
+    //여기부터 Ajax 추가하는 코드
+    ////////////////////////////
+    const htmlFilePath = '/board/readGatherBoard/' + boardId;
 
-    if (modal.classList.contains('show')) {
-        body.style.overflow = 'hidden';
-    }
+    asyncLoad(htmlFilePath,"gatherDetail");
 
 }
 
-async function asyncSubmit(event, postit, form) {
+async function asyncSubmit(event, boardId, form) {
     event.preventDefault();
     const formData = new FormData(form);
     const formAction = form.getAttribute('action');
@@ -103,62 +98,22 @@ async function asyncSubmit(event, postit, form) {
         body: formData
     })
 
-    getModal(postit);
-}
-
-function updateModal(boardId, postit) {
-    //TODO : 글 작성자가 아니어도 접근이 가능한 문제 해결 필요
-    const modalContent = document.querySelector('.modal_body')
-
-    const htmlFilePath = '/board/toUpdateGatherBoardPage/' + boardId;
-
-    fetch(htmlFilePath)
-        .then(response => response.text())
-        .then(html => {
-            modalContent.innerHTML = html;
-            // const closeBtn = document.querySelector('.detailCloseIconButton');
-            // closeBtn.onclick = closeModal;
-
-        })
-        .catch(error => {
-            console.error('Error fetching HTML:', error);
-        });
-
-    modal.classList.add('show');
-
-    if (modal.classList.contains('show')) {
-        body.style.overflow = 'hidden';
-    }
+    getModal(boardId);
 }
 
 function createModal(event) {
     event.preventDefault();
-    const modalContent = document.querySelector('.modal_body')
 
     const htmlFilePath = '/board/readCreatePage';
 
-    fetch(htmlFilePath)
-        .then(response => response.text())
-        .then(html => {
-            modalContent.innerHTML = html;
-            const closeBtn = document.querySelector('.detailCloseIconButton');
-            closeBtn.onclick = closeModal;
-        })
-        .catch(error => {
-            console.error('Error fetching HTML:', error);
-        });
-
-    modal.classList.add('show');
-
-    if (modal.classList.contains('show')) {
-        body.style.overflow = 'hidden';
-    }
+    asyncLoad(htmlFilePath);
 }
 
 if (btnOpenPopup != null) {
-    btnOpenPopup.forEach(postit => {
-        postit.onclick = () => getModal(postit);
-    });
+    btnOpenPopup.forEach(postIt => {
+        const boardId = postIt.id;
+        postIt.onclick = () => getModal(boardId);
+    })
 }
 
 if (modal != null) {
@@ -177,23 +132,12 @@ if (createBtn != null) {
     createBtn.onclick = createModal;
 }
 
-// delete 버튼 눌렀을 때 alert 표시
-function deleteAlert(event) {
-    event.preventDefault();
-    // Alert 띄우기
-    const confirmed = confirm('정말로 삭제하시겠습니까?');
-
-    // 사용자가 "확인"을 클릭한 경우에만 form 제출
-    if (confirmed) {
-        document.getElementById('myForm').submit();
-    }
-}
-
-
 function closeModal(event) {
     event.preventDefault();
+    console.log("ttt");
     body.style.overflow = 'auto';
     modal.classList.toggle('show');
+    removeDynamicScript();
 }
 
 const logoutBtn = document.querySelector(".logoutBtn");

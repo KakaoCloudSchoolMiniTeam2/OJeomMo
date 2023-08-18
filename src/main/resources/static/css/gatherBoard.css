@@ -88,7 +88,7 @@ body{
     border-color: transparent transparent var(--beige-color) var(--transparent-white-color);
 }
 
-.detailCloseIconButton{
+.closeIconButton{
     border: transparent;
     font-size: var(--font-medium);
     width: 30px;
