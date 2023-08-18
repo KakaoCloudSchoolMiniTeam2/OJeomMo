@@ -138,7 +138,7 @@
 .join-wrapper {
     position: sticky;
     bottom: 10px;
-    padding-bottom: 50px;
+    padding-bottom: 80px;
     display: block;
     height: 40px;
     width: 100%;
@@ -185,7 +185,6 @@
 .pagination {
     width: 100%;
     display: inline-block;
-    position: sticky;
     bottom: 0px;
     text-align: center;
     padding-bottom: 30px;
