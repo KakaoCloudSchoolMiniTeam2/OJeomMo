@@ -6,25 +6,26 @@
 }
 
 .content {
-    display: block;
+    display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
 }
 
 
 .board-wrapper {
-    position: relative;
-    top: 29px;
-    display: block;
-    min-height: 400px;
-    width: 600px;
-    height: auto;
     background-color: #fbe6af;
     border: 5px solid white;
+    position: relative;
+    top: 29px;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    width: 100%;
 }
 
 .board{
     display: flex;
+    flex-grow: 1;
     min-height: 400px;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -137,7 +138,7 @@
 .join-wrapper {
     position: sticky;
     bottom: 10px;
-    padding-bottom: 30px;
+    padding-bottom: 50px;
     display: block;
     height: 40px;
     width: 100%;
@@ -187,7 +188,7 @@
     position: sticky;
     bottom: 0px;
     text-align: center;
-    margin-bottom: 30px;
+    padding-bottom: 30px;
     cursor: default;
 }
 
@@ -234,10 +235,4 @@
     vertical-align: top;
     font-family: 'omyu_pretty';
     font-size: 25px;
-}
-
-@media screen and (max-width: 630px) {
-    .board-wrapper{
-        width: auto;
-    }
 }
