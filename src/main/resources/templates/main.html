@@ -33,8 +33,8 @@
 
             </ul>
 
-            <div class="join-wrapper" th:if="${loginCheck != 0}">
-                <a th:disabled="${loginCheck != 0}" class="createBtn" th:href="@{/create}">
+            <div class="join-wrapper">
+                <a th:if="${loginCheck != 0}" th:disabled="${loginCheck != 0}" class="createBtn" th:href="@{/create}">
                     <i class="fa-regular fa-pen-to-square"></i>
                 </a>
                 <div class="pagination">
