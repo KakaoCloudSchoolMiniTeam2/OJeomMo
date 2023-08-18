@@ -67,6 +67,12 @@
                             </div>
                         </div>
 
+                        <label class="checkbox-privacy">
+                            <input type="checkbox" id="agreePrivacyPolicy">
+                            개인정보 처리방침에 동의합니다.
+                            <a href="/privacyPolicy" target="_blank">자세히 보기</a>
+                        </label>
+
                         <div class="form-button">
                             <input class="joinMemberBtn" type="submit" value="가입하기">
                         </div>
@@ -87,11 +93,18 @@
     var email = document.getElementById("email").value;
     var name = document.getElementById("name").value;
     var nickname = document.getElementById("Nickname").value;
+    var privacyCheckbox = document.getElementById("agreePrivacyPolicy");
 
     if (id === "" || pw === "" || email === "" || name === "" || nickname === "") {
         alert("모든 필드를 채워주세요.");
         return false;
     }
+
+    if (!privacyCheckbox.checked) {
+        alert("개인정보 처리방침에 동의해주세요.");
+        return false;
+    }
+
     return true;
   }
 
