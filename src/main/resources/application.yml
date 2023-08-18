@@ -13,14 +13,14 @@ spring:
       ddl-auto: ${DDL_MODE}
 
 #  css livereload
-#  devtools:
-#    restart:
-#      enabled: false
-#    livereload:
-#      enabled: true
-#
-#  freemarker:
-#    cache: false
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: true
+
+  freemarker:
+    cache: false
 
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver

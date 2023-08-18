@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/gather_detail.css">
+    <link rel="stylesheet" href="/css/gatherBoard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <script src="/js/main.js" defer></script>
 </head>
@@ -28,7 +28,7 @@
             <span class="detailShowParty">
             <div class="tooltiptext tooltip-bottom">
                 <th:block th:each="person:${party}">
-                    <span th:text="|${person.nickname} (${person.name})|"></span>
+                    <span th:text="|${person.nickname} (${person.name})|"></span></br>
                 </th:block>
             </div>
             <i class="fa-solid fa-user-group"> </i>

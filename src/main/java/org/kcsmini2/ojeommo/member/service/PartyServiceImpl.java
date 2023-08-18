@@ -49,12 +49,6 @@ public class PartyServiceImpl implements PartyService {
             throw new ApplicationException(ErrorCode.PARTY_ALREADY_FULL);
         }
 
-
-        //작성자와 요청자가 같다면 예외 반환
-        if (board.isSameMember(memberDTO)) {
-            throw new ApplicationException(ErrorCode.INVALID_JOIN);
-        }
-
         //멤버엔티티를 불러옴
         Member partyMember = memberRepository.getReferenceById(memberDTO.getId());
 

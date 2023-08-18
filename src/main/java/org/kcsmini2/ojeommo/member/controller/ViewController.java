@@ -44,4 +44,7 @@ public class ViewController {
         return "update";
     }
 
+    @GetMapping("privacyPolicy")
+    public String privacy() { return "privacyPolicy"; }
+
 }
