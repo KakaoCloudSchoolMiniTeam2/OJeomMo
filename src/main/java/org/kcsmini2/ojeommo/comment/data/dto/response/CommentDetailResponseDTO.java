@@ -19,12 +19,11 @@ public class CommentDetailResponseDTO {
         this.authorId = authorId;
         this.id = id;
     }
-
     public static CommentDetailResponseDTO from(Comment comment) {
         return CommentDetailResponseDTO.builder()
                 .id(comment.getId())
                 .content(comment.getContent())
-                .authorId(comment.getAuthor().getId())
+                .authorId(comment.getAuthor().getNickname())
                 .build();
     }
 }
