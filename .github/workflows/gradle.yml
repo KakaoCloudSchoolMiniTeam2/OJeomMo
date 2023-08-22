@@ -107,6 +107,9 @@ jobs:
       uses: webfactory/ssh-agent@v0.5.4
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: check
+      run : ls -al
         
     - name: SCP transfer # ec2에 파일을 옮기는 작업
       run: scp ./build/libs/*.jar ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/app/step2/zip/build/libs # jar파일을 cicd폴더로 보냄
