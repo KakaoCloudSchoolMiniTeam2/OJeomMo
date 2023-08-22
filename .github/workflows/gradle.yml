@@ -19,7 +19,7 @@ env:
   S3_BUCKET_NAME: ojeommo-s3-bucket
   CODE_DEPLOY_APPLICATION_NAME: ojeommo-codedeploy-app
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: ojeommo-codedeploy-deployment-group
-  ENVIRONMENT_VALUE_ROUTE: ../../src/main/resources/application.yml
+  # ENVIRONMENT_VALUE_ROUTE: ../../src/main/resources/application.yml
 
 permissions:
   contents: read
@@ -49,17 +49,17 @@ jobs:
         distribution: 'temurin'
 
     # 환경 변수 설정
-    - name: Set Environment Value
-      uses: microsoft/variable-substitution@v1
-      with:
-        files: ${{ env.ENVIRONMENT_VALUE_ROUTE }} 
-      env:
-        DB_IP: ${{ secrets.DB_IP }} 
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }} 
-        DB_PORT: ${{ secrets.DB_PORT }} 
-        DB_USERNAME: ${{ secrets.DB_USERNAME }}
-        DDL_MODE: ${{ secrets.DDL_MODE }}
-        JWT_KEY: ${{ secrets.JWT_KEY }}
+    # - name: Set Environment Value
+    #   uses: microsoft/variable-substitution@v1
+    #   with:
+    #     files: ${{ env.ENVIRONMENT_VALUE_ROUTE }} 
+    #   env:
+    #     DB_IP: ${{ secrets.DB_IP }} 
+    #     DB_PASSWORD: ${{ secrets.DB_PASSWORD }} 
+    #     DB_PORT: ${{ secrets.DB_PORT }} 
+    #     DB_USERNAME: ${{ secrets.DB_USERNAME }}
+    #     DDL_MODE: ${{ secrets.DDL_MODE }}
+    #     JWT_KEY: ${{ secrets.JWT_KEY }}
 
     # 3) gradlew 권한 설정
     # build시 gradlew에 실행 권한 부여
