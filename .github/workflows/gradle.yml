@@ -109,8 +109,8 @@ jobs:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
         
     - name: SCP transfer # ec2에 파일을 옮기는 작업
-      run: scp ../../build/libs/*.jar ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/app/step2/zip/build/libs # jar파일을 cicd폴더로 보냄
+      run: scp ./build/libs/*.jar ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/app/step2/zip/build/libs # jar파일을 cicd폴더로 보냄
     - name: Execute remote commands
       run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo fuser -k 8080/tcp" # 기존 8080 죽이기
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo nohup java -jar ~/app/step2/zip/build/libs/*.jar -DB_IP="${DB_IP}" -DB_PORT="${DB_PORT}" -DB_USERNAME="${DB_USERNAME}" -DB_PASSWORD="${DB_PASSWORD}" -DDL_MODE="${DDL_MODE}" -JWT_KEY="${JWT_KEY}" &" # 서버 띄우기
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo nohup java -jar ~/app/step2/zip/build/libs/*.jar -DB_IP="${{secrets.DB_IP}}" -DB_PORT="${{secrets.DB_PORT}}" -DB_USERNAME="${{secrets.DB_USERNAME}}" -DB_PASSWORD="${{secrets.DB_PASSWORD}}" -DDL_MODE="${{secrets.DDL_MODE}}" -JWT_KEY="${{secrets.JWT_KEY}}" &" # 서버 띄우기
