@@ -19,7 +19,7 @@ env:
   S3_BUCKET_NAME: ojeommo-s3-bucket
   CODE_DEPLOY_APPLICATION_NAME: ojeommo-codedeploy-app
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: ojeommo-codedeploy-deployment-group
-  ENVIRONMENT_VALUE_ROUTE: OJeomMo/src/main/resources/application.yml
+  ENVIRONMENT_VALUE_ROUTE: ../../src/main/resources/application.yml
 
 permissions:
   contents: read
