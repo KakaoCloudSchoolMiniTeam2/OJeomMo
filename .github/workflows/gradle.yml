@@ -104,23 +104,18 @@ jobs:
           
   
     # ssh를 사용해 jar파일 빌드& ec2에 전달 & 종료 및 실행
-    - name: Setup SSH
-      uses: webfactory/ssh-agent@v0.5.4
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    # - name: Setup SSH
+    #   uses: webfactory/ssh-agent@v0.5.4
+    #   with:
+    #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: check
-      run : ls -al
-
-
-
-      
     # SCP
     # - name: SCP transfer # ec2에 파일을 옮기는 작업
     #   run: scp ./build/libs/*.jar ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/app/step2/zip/build/libs # jar파일을 cicd폴더로 보냄
+
   
-    
-   
+  
+
     # SCP V2
     - name: Deploy Prod use SCP
       uses: appleboy/scp-action@master
@@ -133,9 +128,23 @@ jobs:
         port: 22
 
 
-    - name: Execute remote commands
-      run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo fuser -k 8080/tcp" # 기존 8080 죽이기
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo nohup java -jar ~/app/step2/zip/build/libs/*.jar -DB_IP="${{secrets.DB_IP}}" -DB_PORT="${{secrets.DB_PORT}}" -DB_USERNAME="${{secrets.DB_USERNAME}}" -DB_PASSWORD="${{secrets.DB_PASSWORD}}" -DDL_MODE="${{secrets.DDL_MODE}}" -JWT_KEY="${{secrets.JWT_KEY}}" &" # 서버 띄우기
+    - name: multiple command
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
+              sudo fuser -k 8080/tcp # 기존 8080 죽이기
+              sudo nohup java -jar ~/app/step2/zip/build/libs/*.jar -DB_IP="${{secrets.DB_IP}}" -DB_PORT="${{secrets.DB_PORT}}" -DB_USERNAME="${{secrets.DB_USERNAME}}" -DB_PASSWORD="${{secrets.DB_PASSWORD}}" -DDL_MODE="${{secrets.DDL_MODE}}" -JWT_KEY="${{secrets.JWT_KEY}}" # 서버 띄우기
+
+   
+
+
+    # - name: Execute remote commands
+    #   run: |
+    #       ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo fuser -k 8080/tcp" # 기존 8080 죽이기
+    #       ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo nohup java -jar ~/app/step2/zip/build/libs/*.jar -DB_IP="${{secrets.DB_IP}}" -DB_PORT="${{secrets.DB_PORT}}" -DB_USERNAME="${{secrets.DB_USERNAME}}" -DB_PASSWORD="${{secrets.DB_PASSWORD}}" -DDL_MODE="${{secrets.DDL_MODE}}" -JWT_KEY="${{secrets.JWT_KEY}}" &" # 서버 띄우기
 
 
