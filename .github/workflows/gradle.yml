@@ -136,10 +136,8 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
-              sudo fuser -k 8080/tcp # 기존 8080 죽이기
-              sudo nohup java -jar ~/app/step2/zip/build/libs/*.jar -DB_IP="${{secrets.DB_IP}}" -DB_PORT="${{secrets.DB_PORT}}" -DB_USERNAME="${{secrets.DB_USERNAME}}" -DB_PASSWORD="${{secrets.DB_PASSWORD}}" -DDL_MODE="${{secrets.DDL_MODE}}" -JWT_KEY="${{secrets.JWT_KEY}}" # 서버 띄우기
-
-   
+          sudo fuser -k 8080/tcp # 기존 8080 죽이기
+          sudo nohup java -jar ~/app/step2/zip/build/libs/*.jar --spring.datasource.url=jdbc:mariadb://"${{secrets.DB_IP}}":"${{secrets.DB_PORT}}"/ojeommo --spring.datasource.username="${{secrets.DB_USERNAME}}" --spring.datasource.password="${{secrets.DB_PASSWORD}}" --spring.jpa.hibernate.ddl-auto="${{secrets.DDL_MODE}}" --jwt.secret.key="${{secrets.JWT_KEY}}"
 
 
     # - name: Execute remote commands
