@@ -91,28 +91,26 @@ jobs:
           --source .
 
 
-    # 7) AWS EC2에 Deploy
-    - name: Deploy to AWS EC2 from S3
-      run: |
-        aws deploy create-deployment \
-          --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
-          --deployment-config-name CodeDeployDefault.AllAtOnce \
-          --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
-          --s3-location bucket=$S3_BUCKET_NAME,key=$GITHUB_SHA.zip,bundleType=zip
+    # # 7) AWS EC2에 Deploy
+    # - name: Deploy to AWS EC2 from S3
+    #   run: |
+    #     aws deploy create-deployment \
+    #       --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
+    #       --deployment-config-name CodeDeployDefault.AllAtOnce \
+    #       --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
+    #       --s3-location bucket=$S3_BUCKET_NAME,key=$GITHUB_SHA.zip,bundleType=zip
           
 
-    
-    
+  
+    # ssh를 사용해 jar파일 빌드& ec2에 전달 & 종료 및 실행
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.5.4
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
         
-    ###############################################################################
-    
-    # - name: Setup SSH
-    #   uses: webfactory/ssh-agent@v0.5.4
-    #   with:
-    #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-    # - name: SCP transfer # ec2에 파일을 옮기는 작업
-    #   run: scp ./build/libs/*.jar ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/cicd # jar파일을 cicd폴더로 보냄
-    # - name: Execute remote commands
-    #   run: |
-    #       ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo fuser -k 8080/tcp" # 기존 8080 죽이기
-    #       ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo nohup java -jar ~/cicd/*.jar &" # 서버 띄우기
+    - name: SCP transfer # ec2에 파일을 옮기는 작업
+      run: scp ../../build/libs/*.jar ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/app/step2/zip/build/libs # jar파일을 cicd폴더로 보냄
+    - name: Execute remote commands
+      run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo fuser -k 8080/tcp" # 기존 8080 죽이기
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "sudo nohup java -jar ~/app/step2/zip/build/libs/*.jar -DB_IP="${DB_IP}" -DB_PORT="${DB_PORT}" -DB_USERNAME="${DB_USERNAME}" -DB_PASSWORD="${DB_PASSWORD}" -DDL_MODE="${DDL_MODE}" -JWT_KEY="${JWT_KEY}" &" # 서버 띄우기
