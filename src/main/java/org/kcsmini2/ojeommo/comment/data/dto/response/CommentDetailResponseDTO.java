@@ -12,18 +12,21 @@ public class CommentDetailResponseDTO {
     Long id;
     String content;
     String authorId;
+    String authorNickname;
 
     @Builder
-    protected CommentDetailResponseDTO(String content, String authorId, Long id) {
+    protected CommentDetailResponseDTO(String content, String authorId, String authorNickname, Long id) {
         this.content = content;
         this.authorId = authorId;
+        this.authorNickname = authorNickname;
         this.id = id;
     }
     public static CommentDetailResponseDTO from(Comment comment) {
         return CommentDetailResponseDTO.builder()
                 .id(comment.getId())
                 .content(comment.getContent())
-                .authorId(comment.getAuthor().getNickname())
+                .authorId(comment.getAuthor().getId())
+                .authorNickname(comment.getAuthor().getNickname())
                 .build();
     }
 }

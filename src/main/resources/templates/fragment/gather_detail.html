@@ -128,7 +128,7 @@
                         <div class="comment-head">
 
                             <div th:class="${gatherDetail.getAuthorId().equals(comments.getAuthorId()) ? 'comment-name by-author' : 'comment-name'}">
-                                <a th:text="${comments.getAuthorId()}"></a>
+                                <a th:text="${comments.getAuthorNickname()}"></a>
                                 <th:block th:if="${member != null}">
                                     <span class="btnWrapper">
 <!--                                        댓글 수정 프론트 완료 되면 넣을 것-->
