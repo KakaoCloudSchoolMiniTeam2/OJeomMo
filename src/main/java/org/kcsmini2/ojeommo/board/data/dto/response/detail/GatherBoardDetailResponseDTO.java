@@ -22,7 +22,7 @@ public class GatherBoardDetailResponseDTO extends BoardDetailResponseDTO {
         super(board.getBoard());
         this.dinerName = board.getDinerName();
         this.gatherNumber = board.getGatherNumber();
-        this.initNumber = board.getInitNumber() + joinNumber;
+        this.initNumber = joinNumber;
         this.isDelivery = board.getIsDelivery();
         this.bumpedAt = board.getBumpedAt();
         this.category = board.getCategory().getCategoryName();

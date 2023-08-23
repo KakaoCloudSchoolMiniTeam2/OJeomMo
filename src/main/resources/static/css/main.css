@@ -156,6 +156,10 @@ a{
     text-decoration: none;
 }
 
+.progressing{
+    color: #D3D3D3 !important;
+}
+
 /*프로필 관련 css*/
 #profile-wrapper {
     position: fixed;
