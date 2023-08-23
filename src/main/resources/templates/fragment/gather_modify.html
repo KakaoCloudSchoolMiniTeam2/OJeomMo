@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/gatherBoard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <script src="/js/main.js" defer></script>
+    <script src="/js/gatherModify.js" defer></script>
 </head>
 <body class="createPostit">
 <form th:action="@{/board/updateGatherBoardPage}" method="post" class="updateForm">
@@ -16,7 +16,7 @@
             <label for="title">가게 이름:</label>
             <input type="text" id="title" name="title" th:value="${gatherDetail.getTitle()}" placeholder="가게 이름을 입력하세요">
         </div>
-        <button class="createIconButton">
+        <button class="closeIconButton">
             <i class="fa-regular fa-circle-xmark"></i>
         </button>
     </header>
