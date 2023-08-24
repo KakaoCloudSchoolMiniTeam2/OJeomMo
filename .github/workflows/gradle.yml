@@ -48,19 +48,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    # 환경 변수 설정
-    # - name: Set Environment Value
-    #   uses: microsoft/variable-substitution@v1
-    #   with:
-    #     files: ${{ env.ENVIRONMENT_VALUE_ROUTE }} 
-    #   env:
-    #     DB_IP: ${{ secrets.DB_IP }} 
-    #     DB_PASSWORD: ${{ secrets.DB_PASSWORD }} 
-    #     DB_PORT: ${{ secrets.DB_PORT }} 
-    #     DB_USERNAME: ${{ secrets.DB_USERNAME }}
-    #     DDL_MODE: ${{ secrets.DDL_MODE }}
-    #     JWT_KEY: ${{ secrets.JWT_KEY }}
-
     # 3) gradlew 권한 설정
     # build시 gradlew에 실행 권한 부여
     # 스크립트는 순서대로 실행되므로 권한을 먼저 부여하고 gradle을 build 해야함
@@ -100,22 +87,6 @@ jobs:
     #       --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
     #       --s3-location bucket=$S3_BUCKET_NAME,key=$GITHUB_SHA.zip,bundleType=zip
           
-
-          
-  
-    # ssh를 사용해 jar파일 빌드& ec2에 전달 & 종료 및 실행
-    # - name: Setup SSH
-    #   uses: webfactory/ssh-agent@v0.5.4
-    #   with:
-    #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-    # SCP
-    # - name: SCP transfer # ec2에 파일을 옮기는 작업
-    #   run: scp ./build/libs/*.jar ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/app/step2/zip/build/libs # jar파일을 cicd폴더로 보냄
-
-  
-  
-
     # SCP V2
     - name: Deploy Prod use SCP
       uses: appleboy/scp-action@master
@@ -126,9 +97,10 @@ jobs:
         source: "./build/libs/*.jar"
         target: "~/app/step2/zip/build/libs"
         port: 22
+        overwrite: true
 
 
-    - name: multiple command
+    - name: Kill and Start
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.SERVER_IP }}
