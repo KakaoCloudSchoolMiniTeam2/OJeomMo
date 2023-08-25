@@ -22,6 +22,7 @@ public enum ErrorCode {
     COMMENT_INVALID_PERMISSION(HttpStatus.UNAUTHORIZED, "요청자와 댓글 작성자가 다릅니다."),
     PARTY_ALREADY_FULL(HttpStatus.BAD_REQUEST, "파티가 이미 가득 찼습니다."),
     CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "카테고리가 유효하지 않습니다."),
+    JOIN_NOT_DUPLICATION(HttpStatus.BAD_REQUEST, "조인은 한 게시글에만 가능합니다.")
     ;
 
     private final HttpStatus status;

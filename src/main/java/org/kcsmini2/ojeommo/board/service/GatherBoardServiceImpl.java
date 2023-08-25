@@ -20,6 +20,8 @@ import org.kcsmini2.ojeommo.member.data.entity.Member;
 import org.kcsmini2.ojeommo.member.data.entity.Party;
 import org.kcsmini2.ojeommo.member.repository.MemberRepository;
 import org.kcsmini2.ojeommo.member.repository.PartyRepository;
+import org.kcsmini2.ojeommo.member.service.PartyService;
+import org.kcsmini2.ojeommo.member.service.PartyServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -41,6 +43,7 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     private final MemberRepository memberRepository;
     private final PartyRepository partyRepository;
     private final CategoryRepository categoryRepository;
+    private final PartyService partyService;
 
 
     private static final long BUMP_LIMIT_TIME = 60l;
@@ -50,6 +53,9 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     @Override
     @Transactional
     public BoardCreateResponseDTO createBoard(GatherBoardCreateRequestDTO requestDTO, MemberDTO memberDTO) {
+        if(partyService.joinCheck(memberDTO.getId())){
+            throw new ApplicationException(ErrorCode.JOIN_NOT_DUPLICATION);
+        }
 
         if(!categoryRepository.existsByCategoryName(requestDTO.getCategoryName())) {
             throw new ApplicationException(ErrorCode.CATEGORY_NOT_FOUND);
@@ -124,6 +130,8 @@ public class GatherBoardServiceImpl implements GatherBoardService {
     @Override
     @Transactional
     public void updateBoard(GatherBoardUpdateRequestDTO requestDTO, @AuthenticationPrincipal MemberDTO memberDTO) {
+
+
         if(!categoryRepository.existsByCategoryName(requestDTO.getCategoryName())) {
             throw new ApplicationException(ErrorCode.CATEGORY_NOT_FOUND);
         }
