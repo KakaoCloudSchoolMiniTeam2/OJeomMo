@@ -2,6 +2,7 @@ package org.kcsmini2.ojeommo.board.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.GatherBoardCreateRequestDTO;
 import org.kcsmini2.ojeommo.board.data.dto.request.create.JoinPartyRequestDto;
 import org.kcsmini2.ojeommo.board.data.dto.request.delete.QuitPartyRequestDto;
@@ -21,6 +22,7 @@ import org.kcsmini2.ojeommo.member.data.dto.PartyMemberDetailResponseDTO;
 import org.kcsmini2.ojeommo.member.service.PartyService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -42,6 +44,7 @@ import java.util.List;
 @Controller
 @RequestMapping("board")
 @RequiredArgsConstructor
+@Slf4j
 public class BoardController {
 
     private final GatherBoardService gatherBoardService;
@@ -72,11 +75,11 @@ public class BoardController {
     }
 
     @GetMapping("/readGatherBoard/{id}")
-    public String ReadGatherBoardGET(Model model, @PathVariable("id") Long boardId, @AuthenticationPrincipal MemberDTO memberDTO, Pageable pageable) {
+    public String ReadGatherBoardGET(Model model, @PathVariable("id") Long boardId, @AuthenticationPrincipal MemberDTO memberDTO,
+                                     @PageableDefault(size = 50) Pageable pageable) {
         GatherBoardDetailResponseDTO dto = gatherBoardService.readBoard(boardId, memberDTO);
         List<PartyMemberDetailResponseDTO> partyDTO = partyService.readParty(boardId);
         Page<CommentDetailResponseDTO> commentDTO = commentService.readComments(boardId, pageable, memberDTO);
-
 
         if (memberDTO != null) {
             model.addAttribute("member", memberDTO);

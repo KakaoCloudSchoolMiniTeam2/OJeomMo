@@ -2,12 +2,14 @@ package org.kcsmini2.ojeommo.member.data.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.kcsmini2.ojeommo.board.data.entity.Board;
 import org.kcsmini2.ojeommo.board.data.entity.GatherBoard;
 import org.kcsmini2.ojeommo.member.data.entity.Member;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -37,10 +39,11 @@ public class Party {
     private GatherBoard board;
 
     @Column
-    private LocalDateTime joinedAt;
+    @CreationTimestamp
+    private LocalDate joinedAt;
 
     @Builder
-    public Party(Member member, GatherBoard board, LocalDateTime joinedAt) {
+    public Party(Member member, GatherBoard board, LocalDate joinedAt) {
         this.memberId = member.getId();
         this.boardId = board.getId();
         this.joinedAt = joinedAt;

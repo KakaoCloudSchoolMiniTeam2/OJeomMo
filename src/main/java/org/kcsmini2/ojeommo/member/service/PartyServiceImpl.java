@@ -16,7 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -41,6 +41,10 @@ public class PartyServiceImpl implements PartyService {
 
     @Transactional
     public boolean joinParty(Long boardId, MemberDTO memberDTO) {
+        if (joinCheck(memberDTO.getId())) {
+            throw new ApplicationException(ErrorCode.JOIN_NOT_DUPLICATION);
+        }
+
         //보드엔티티를 불러옴
         GatherBoard board = gatherBoardRepository.findById(boardId)
                 .orElseThrow(() -> new ApplicationException(ErrorCode.BOARD_NOT_FOUND));
@@ -56,7 +60,7 @@ public class PartyServiceImpl implements PartyService {
         Party party = Party.builder()
                 .member(partyMember)
                 .board(board)
-                .joinedAt(LocalDateTime.now())
+                .joinedAt(LocalDate.now())
                 .build();
 
         //파티 엔티티를 저장함
@@ -78,5 +82,11 @@ public class PartyServiceImpl implements PartyService {
         partyRepository.delete(foundParty);
 
         return true;
+    }
+
+    @Override
+    public boolean joinCheck(String memberId) {
+        LocalDate today = LocalDate.now();
+        return partyRepository.findPartyByMemberIdAndJoinedAt(memberId, today).isPresent();
     }
 }
