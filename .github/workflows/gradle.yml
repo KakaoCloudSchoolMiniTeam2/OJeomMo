@@ -94,7 +94,7 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         host: ${{ secrets.SERVER_IP }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
-        source: "./build/libs/*.jar"
+        source: "./*.jar"
         target: "~/app/step2/zip/build/libs"
         port: 22
         overwrite: true
