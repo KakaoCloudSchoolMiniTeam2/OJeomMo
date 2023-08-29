@@ -86,7 +86,7 @@ public class PartyServiceImpl implements PartyService {
 
     @Override
     public boolean joinCheck(String memberId) {
-        LocalDate joinedAt = LocalDate.now();
-        return partyRepository.findPartyByMemberIdAndJoinedAt(memberId, joinedAt).isPresent();
+        LocalDate today = LocalDate.now();
+        return partyRepository.findPartyByMemberIdAndJoinedAt(memberId, today).isPresent();
     }
 }
