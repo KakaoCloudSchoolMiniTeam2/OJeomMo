@@ -86,6 +86,17 @@ jobs:
     #       --deployment-config-name CodeDeployDefault.AllAtOnce \
     #       --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
     #       --s3-location bucket=$S3_BUCKET_NAME,key=$GITHUB_SHA.zip,bundleType=zip
+
+    
+    - name: Delete Old Version
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
+          sudo rm ~/app/step2/zip/build/libs/*.jar
           
     # SCP V2
     - name: Deploy Prod use SCP
