@@ -2,7 +2,6 @@
     let deleteBtn = document.querySelector("[name = boardDeleteBtn]");
 
     let boardId = document.querySelector("[name=boardId]").value;
-// console.log(boardId);
 
     if (deleteBtn != null) {
         deleteBtn.onclick = deleteAlert;
